@@ -17,11 +17,10 @@ const config: Config = {
                               800: '#8C3D21',
                               900: '#6B2F19',
                         },
-                        text: {
-                              DEFAULT: '#000000',
-                              title: '#333333',
-                              paragraph: '#5C5C5C',
-                        },
+
+                        title: '#333333',
+                        paragraph: '#66789C',
+                        subtitle: '#5C5C5C',
                   },
                   container: {
                         center: true,

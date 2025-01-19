@@ -12,7 +12,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                               },
                               components: {
                                     Button: {
-                                          controlHeight: 42,
+                                          controlHeight: 48,
 
                                           fontSize: 16,
                                           paddingInline: 24,
