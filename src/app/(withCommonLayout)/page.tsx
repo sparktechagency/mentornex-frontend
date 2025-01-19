@@ -1,3 +1,4 @@
+import FAQSection from '@/components/pages/home/FAQSection';
 import HeroSection from '@/components/pages/home/HeroSection';
 import IndustrySection from '@/components/pages/home/IndustrySection';
 import MentorshipFeature from '@/components/pages/home/MentorshipFeatures';
@@ -13,6 +14,8 @@ const HomePage = () => {
                   <TopMentors />
                   <IndustrySection />
                   <MentorshipFeature />
+
+                  <FAQSection />
             </div>
       );
 };
