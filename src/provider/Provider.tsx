@@ -8,8 +8,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                   <ConfigProvider
                         theme={{
                               token: {
-                                    colorPrimary: '#FFC61D',
-                                    colorTextLightSolid: '#000000',
+                                    colorPrimary: '#FF6F3C',
                               },
                               components: {
                                     Button: {

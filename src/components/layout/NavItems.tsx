@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation';
 const NavItems = ({ items, onClose }: { items: any[]; onClose?: () => void }) => {
       const pathname = usePathname();
 
+      console.log(pathname);
+
       return (
             <>
                   {items.map((item, index) => (
@@ -11,7 +13,7 @@ const NavItems = ({ items, onClose }: { items: any[]; onClose?: () => void }) =>
                               key={index}
                               onClick={onClose}
                               className={`text-text-primary leading-4 ${
-                                    pathname === item.path ? 'bg-secondary p-2 rounded drop-shadow' : ''
+                                    pathname === item.path ? ' p-2 text-primary rounded drop-shadow' : ''
                               }`}
                               href={item.path}
                         >

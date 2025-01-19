@@ -2,40 +2,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/assets/images/logo.svg';
-
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useState } from 'react';
-
-import { usePathname } from 'next/navigation';
-import { Button, Select } from 'antd';
-
+import { Button } from 'antd';
 import NavItems from './NavItems';
 import MobileDrawer from './MobileDrawer';
-import { TbChevronDown, TbWorld } from 'react-icons/tb';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
-      const pathname = usePathname();
+
       const items = [
             { label: 'Home', path: '/' },
-
-            { label: 'Cannabis Club', path: '/cannabis-club' },
-            { label: 'FAQs', path: '/faqs' },
-            { label: 'Blogs', path: '/blogs' },
-            { label: 'Contact', path: '/contact' },
+            { label: 'Become a Mentor', path: '/become-a-mentor' },
+            { label: 'Become a Mentee', path: '/become-a-mentee' },
+            { label: 'Browse Mentor', path: '/browse-mentor' },
+            { label: 'About Us', path: '/about-us' },
+            { label: 'FAQ', path: '/faq' },
       ];
-      const languageOptions = [
-            { value: 'en', label: 'English', shortLabel: 'EN' },
-            { value: 'bn', label: 'Bengali', shortLabel: 'BN' },
-            { value: 'hi', label: 'Hindi', shortLabel: 'HI' },
-            { value: 'es', label: 'Spanish', shortLabel: 'ES' },
-      ];
-
-      const customLabel = (option: any) => (
-            <div className="flex items-center gap-2">
-                  <span>{option.label}</span>
-            </div>
-      );
 
       return (
             <header className={`bg-[#F9FDF9] shadow-lg`}>
@@ -49,29 +32,25 @@ const Navbar = () => {
                               <div className="hidden md:flex bg-secondary/20 p-2 items-center gap-8">
                                     <NavItems items={items} />
                               </div>
-                              <div className="flex items-center space-x-6">
-                                    <Link href="/login">
-                                          <Button iconPosition="end" type="primary">
-                                                Join Now
+                              <div className="hidden md:flex items-center space-x-6">
+                                    <Link href="/signin">
+                                          <Button
+                                                style={{
+                                                      backgroundColor: 'transparent',
+                                                      color: '#000000',
+
+                                                      border: '2px solid #FF6F3C',
+                                                }}
+                                                type="primary"
+                                          >
+                                                Sign In
                                           </Button>
                                     </Link>
-
-                                    <Select
-                                          defaultValue="en"
-                                          options={languageOptions}
-                                          variant={'borderless'}
-                                          prefix={<TbWorld size={20} />}
-                                          suffixIcon={
-                                                <div className="ml-1">
-                                                      <TbChevronDown size={20} />
-                                                </div>
-                                          }
-                                          labelInValue
-                                          optionLabelProp="label"
-                                          menuItemSelectedIcon={null}
-                                          onChange={(value) => console.log(value)}
-                                          optionRender={customLabel}
-                                    />
+                                    <Link href="/signup">
+                                          <Button iconPosition="end" type="primary">
+                                                Sign Up
+                                          </Button>
+                                    </Link>
                               </div>
                               <div className="md:hidden">
                                     <AiOutlineMenu
