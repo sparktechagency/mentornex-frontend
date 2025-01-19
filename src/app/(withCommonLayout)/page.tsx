@@ -1,3 +1,4 @@
+import ContactSection from '@/components/pages/home/ContactSection';
 import FAQSection from '@/components/pages/home/FAQSection';
 import HeroSection from '@/components/pages/home/HeroSection';
 import IndustrySection from '@/components/pages/home/IndustrySection';
@@ -16,6 +17,7 @@ const HomePage = () => {
                   <MentorshipFeature />
 
                   <FAQSection />
+                  <ContactSection />
             </div>
       );
 };
