@@ -9,6 +9,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                         theme={{
                               token: {
                                     colorPrimary: '#FF6F3C',
+                                    fontFamily: 'Poppins, sans-serif',
                               },
                               components: {
                                     Button: {
