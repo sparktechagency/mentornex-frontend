@@ -18,10 +18,10 @@ const linkSections = [
       {
             title: 'Quick Links',
             links: [
-                  { label: 'Browse Mentor', href: '#' },
-                  { label: 'Become Mentee', href: '#' },
-                  { label: 'About Us', href: '#' },
-                  { label: 'Contact Us', href: '#' },
+                  { label: 'Browse Mentor', href: '/signup' },
+                  { label: 'Become Mentee', href: '/signup' },
+                  { label: 'About Us', href: '/about-us' },
+                  { label: 'Contact Us', href: '/contact-us' },
             ],
       },
       {

@@ -50,7 +50,7 @@ const FAQPage = () => {
       ];
 
       return (
-            <div className="faq-section max-w-4xl mx-auto p-6 my-20">
+            <div className="faq-section min-h-screen max-w-4xl mx-auto p-6 my-20">
                   <h2 className="text-4xl lg:text-[150px] font-bold text-[#05264E] text-start mb-4">FAQs</h2>
                   <p className="text-start text-gray-600 mb-8 mt-20">
                         Get answers to your questions and learn how MentorNex can help you achieve your goals.
