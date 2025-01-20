@@ -23,7 +23,7 @@ const Navbar = () => {
       ];
 
       return (
-            <header className={`bg-white shadow-lg`}>
+            <header className={`bg-white`}>
                   <nav className="container  h-[96px]  relative z-[99]">
                         <div className="flex justify-between items-center h-full">
                               {/* Logo */}

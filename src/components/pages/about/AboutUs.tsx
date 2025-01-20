@@ -1,7 +1,11 @@
+import AboutHero from './AboutHero';
+import AboutZigZag from './AboutZigZag';
+
 const AboutUs = () => {
       return (
-            <div>
-                  <h2>Welcome to the AboutUs page</h2>
+            <div className="container my-10 py-10">
+                  <AboutHero />
+                  <AboutZigZag />
             </div>
       );
 };
