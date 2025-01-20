@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button, Checkbox, Collapse, InputNumber, Slider, Space } from 'antd';
 import { languages } from '@/const/constant';
 import Sider from 'antd/es/layout/Sider';
+import { LiaRedoAltSolid } from 'react-icons/lia';
 
 const MentorFilter = ({ collapsed }: { collapsed: boolean }) => {
       const [min, setMin] = useState(0);
@@ -146,7 +147,7 @@ const MentorFilter = ({ collapsed }: { collapsed: boolean }) => {
                               </Collapse.Panel>
                         </Collapse>
                   </div>
-                  <Button className="w-full mt-6" type="default">
+                  <Button icon={<LiaRedoAltSolid size={20} />} type="primary" className="w-full">
                         Reset Filter
                   </Button>
             </Sider>
