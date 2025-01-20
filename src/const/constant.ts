@@ -227,3 +227,26 @@ export const countries = [
       { label: 'Zambia', value: 'zambia' },
       { label: 'Zimbabwe', value: 'zimbabwe' },
 ];
+
+export const languages = [
+      { label: 'English', value: 'english' },
+      { label: 'Mandarin Chinese', value: 'mandarin' },
+      { label: 'Hindi', value: 'hindi' },
+      { label: 'Spanish', value: 'spanish' },
+      { label: 'French', value: 'french' },
+      { label: 'Arabic', value: 'arabic' },
+      { label: 'Bengali', value: 'bengali' },
+      { label: 'Portuguese', value: 'portuguese' },
+      { label: 'Russian', value: 'russian' },
+      { label: 'Japanese', value: 'japanese' },
+      { label: 'German', value: 'german' },
+      { label: 'Punjabi', value: 'punjabi' },
+      { label: 'Javanese', value: 'javanese' },
+      { label: 'Korean', value: 'korean' },
+      { label: 'Vietnamese', value: 'vietnamese' },
+      { label: 'Telugu', value: 'telugu' },
+      { label: 'Turkish', value: 'turkish' },
+      { label: 'Tamil', value: 'tamil' },
+      { label: 'Italian', value: 'italian' },
+      { label: 'Urdu', value: 'urdu' },
+];

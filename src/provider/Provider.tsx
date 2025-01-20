@@ -1,5 +1,6 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ConfigProvider } from 'antd';
+import NextTopLoader from 'nextjs-toploader';
 import React, { ReactNode } from 'react';
 
 const Provider = ({ children }: { children: ReactNode }) => {
@@ -30,6 +31,9 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                           fontSize: 16,
                                           paddingInline: 24,
                                     },
+                                    InputNumber: {
+                                          controlHeight: 42,
+                                    },
                                     Form: {
                                           marginLG: 10,
                                           labelColor: '#636363',
@@ -38,7 +42,10 @@ const Provider = ({ children }: { children: ReactNode }) => {
                               },
                         }}
                   >
-                        <AntdRegistry>{children}</AntdRegistry>
+                        <AntdRegistry>
+                              <NextTopLoader color="#FF6F3C" />
+                              {children}
+                        </AntdRegistry>
                   </ConfigProvider>
             </div>
       );

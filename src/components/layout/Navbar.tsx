@@ -17,6 +17,7 @@ const Navbar = () => {
             { label: 'Home', path: '/' },
             { label: 'Become a Mentor', path: '/signup' },
             { label: 'Become a Mentee', path: '/signup' },
+            { label: 'Browse Mentors', path: '/mentors' },
 
             { label: 'About Us', path: '/about-us' },
             { label: 'FAQ', path: '/faqs' },

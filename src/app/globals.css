@@ -7,3 +7,25 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-layout {
+      background: transparent !important;
+}
+.custom-scrollbar {
+      &::-webkit-scrollbar {
+            width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+            background: #e6e6e6;
+      }
+
+      &::-webkit-scrollbar-thumb {
+            background: #b3b3b3;
+            border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+            background: rgb(160, 160, 160);
+      }
+}
