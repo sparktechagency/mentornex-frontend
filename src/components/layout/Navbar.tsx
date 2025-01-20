@@ -19,7 +19,7 @@ const Navbar = () => {
             { label: 'Become a Mentee', path: '/become-a-mentee' },
             { label: 'Browse Mentor', path: '/browse-mentor' },
             { label: 'About Us', path: '/about-us' },
-            { label: 'FAQ', path: '/faq' },
+            { label: 'FAQ', path: '/faqs' },
       ];
 
       return (

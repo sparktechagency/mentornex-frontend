@@ -4,7 +4,7 @@ import { Collapse } from 'antd';
 
 const { Panel } = Collapse;
 
-const FAQSection = () => {
+const FAQPage = () => {
       const [activeKey, setActiveKey] = React.useState<string>();
 
       const customPanelStyle = (key: string) => {
@@ -51,8 +51,8 @@ const FAQSection = () => {
 
       return (
             <div className="faq-section max-w-4xl mx-auto p-6 my-20">
-                  <h2 className="text-4xl font-bold text-[#05264E] text-center mb-4">Frequently Asked Questions</h2>
-                  <p className="text-center text-gray-600 mb-8">
+                  <h2 className="text-4xl lg:text-[150px] font-bold text-[#05264E] text-start mb-4">FAQs</h2>
+                  <p className="text-start text-gray-600 mb-8 mt-20">
                         Get answers to your questions and learn how MentorNex can help you achieve your goals.
                   </p>
 
@@ -77,4 +77,4 @@ const FAQSection = () => {
       );
 };
 
-export default FAQSection;
+export default FAQPage;
