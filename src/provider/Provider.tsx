@@ -10,6 +10,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                               token: {
                                     colorPrimary: '#FF6F3C',
                                     fontFamily: 'Poppins, sans-serif',
+                                    fontSize: 16,
                               },
                               components: {
                                     Button: {
@@ -18,11 +19,19 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                           fontSize: 16,
                                           paddingInline: 24,
                                     },
+                                    Typography: {
+                                          colorText: '#333333',
+                                    },
                                     Input: {
                                           controlHeight: 42,
 
                                           fontSize: 16,
                                           paddingInline: 24,
+                                    },
+                                    Form: {
+                                          marginLG: 10,
+                                          labelColor: '#636363',
+                                          labelFontSize: 18,
                                     },
                               },
                         }}
