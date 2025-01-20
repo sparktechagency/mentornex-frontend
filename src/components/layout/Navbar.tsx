@@ -4,9 +4,11 @@ import Link from 'next/link';
 import Logo from '@/assets/images/logo.svg';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useState } from 'react';
-import { Button } from 'antd';
+import { Avatar, Badge, Button, Typography } from 'antd';
 import NavItems from './NavItems';
 import MobileDrawer from './MobileDrawer';
+import { BiMessage } from 'react-icons/bi';
+import { Bell } from 'lucide-react';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
@@ -51,6 +53,25 @@ const Navbar = () => {
                                                 Sign Up
                                           </Button>
                                     </Link>
+
+                                    <div className="flex items-center gap-6 my-8">
+                                          <Badge dot color="#FF6F3C">
+                                                <BiMessage style={{ fontSize: '24px', color: '#333' }} />
+                                          </Badge>
+                                          <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
+                                                <Bell style={{ fontSize: '24px', color: '#333' }} />
+                                          </Badge>
+                                          <div className="flex items-center gap-2">
+                                                <Avatar
+                                                      size={40}
+                                                      src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
+                                                      style={{ border: '2px solid #FF6F3C' }}
+                                                />
+                                                <Typography.Text strong style={{ fontSize: '16px' }}>
+                                                      Sazzad
+                                                </Typography.Text>
+                                          </div>
+                                    </div>
                               </div>
                               <div className="md:hidden">
                                     <AiOutlineMenu
