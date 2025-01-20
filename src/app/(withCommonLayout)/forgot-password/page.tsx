@@ -6,11 +6,11 @@ const ForgotPasswordPage = () => {
       const router = useRouter();
       const onFinish = async (values: any) => {
             console.log('Success:', values);
-            router.push('/set-password');
+            router.push('/verify-otp');
       };
       return (
             <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
-                  <div className="container  w-full max-w-[500px] mx-auto shadow-xl hover:shadow-2xl rounded-lg p-8 my-20">
+                  <div className="container  w-full max-w-[500px] mx-auto shadow-xl  rounded-lg p-8 my-20">
                         <div>
                               <div className="text-center">
                                     <Typography.Title level={2}>Forgot Password</Typography.Title>
