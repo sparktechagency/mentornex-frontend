@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const SignUpPage = () => {
       return (
-            <div className="min-h-screen">
+            <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
                   <div className="container w-full max-w-[500px] mx-auto shadow-xl  rounded-lg p-8 my-20">
                         <div>
                               <div className="text-center">
