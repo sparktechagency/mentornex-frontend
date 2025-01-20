@@ -2,8 +2,21 @@
 import { timeZones } from '@/const/constant';
 import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const SignUpPage = () => {
+      const [role, setRole] = useState('mentee');
+      const router = useRouter();
+      const [form] = Form.useForm();
+
+      const onFinish = async (values: any) => {
+            form.setFieldsValue({
+                  role: role,
+            });
+            console.log('Success:', values);
+            router.push('/');
+      };
       return (
             <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
                   <div className="container w-full max-w-[500px] mx-auto shadow-xl  rounded-lg p-8 my-20">
@@ -13,7 +26,39 @@ const SignUpPage = () => {
                                     <Typography.Paragraph>Join now to connect, learn, and grow with expert mentors.</Typography.Paragraph>
                               </div>
 
-                              <Form layout="vertical" requiredMark={false}>
+                              <Form form={form} onFinish={onFinish} layout="vertical" requiredMark={false}>
+                                    <Form.Item className="flex items-center justify-center" name="role">
+                                          <Button
+                                                onClick={() => setRole('mentee')}
+                                                value="mentee"
+                                                style={{
+                                                      backgroundColor: role === 'mentee' ? '#FF6F3C' : '#fff',
+                                                      color: role === 'mentee' ? '#fff' : '#000',
+                                                      borderRadius: '5px',
+                                                      marginRight: '10px',
+                                                      height: '40px',
+                                                      lineHeight: '40px',
+                                                      padding: '0 20px',
+                                                }}
+                                          >
+                                                Mentee
+                                          </Button>
+                                          <Button
+                                                onClick={() => setRole('mentor')}
+                                                value="mentor"
+                                                style={{
+                                                      backgroundColor: role === 'mentor' ? '#FF6F3C' : '#fff',
+                                                      color: role === 'mentor' ? '#fff' : '#000',
+                                                      border: '1px solid #FF6F3C',
+                                                      borderRadius: '5px',
+                                                      height: '40px',
+                                                      lineHeight: '40px',
+                                                      padding: '0 20px',
+                                                }}
+                                          >
+                                                Mentor
+                                          </Button>
+                                    </Form.Item>
                                     <Form.Item
                                           label="Full Name"
                                           name="fullName"

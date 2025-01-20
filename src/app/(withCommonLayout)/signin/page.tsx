@@ -1,8 +1,14 @@
 'use client';
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const SignInPage = () => {
+      const router = useRouter();
+      const onFinish = async (values: any) => {
+            console.log('Success:', values);
+            router.push('/');
+      };
       return (
             <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
                   <div className="container  w-full max-w-[500px] mx-auto shadow-xl   rounded-lg p-8 my-20">
@@ -12,7 +18,7 @@ const SignInPage = () => {
                                     <Typography.Paragraph>Log in to continue your journey and access your sessions</Typography.Paragraph>
                               </div>
 
-                              <Form layout="vertical" requiredMark={false}>
+                              <Form onFinish={onFinish} layout="vertical" requiredMark={false}>
                                     <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please input your email!' }]}>
                                           <Input placeholder="Enter your email" />
                                     </Form.Item>
