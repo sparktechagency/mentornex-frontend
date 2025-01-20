@@ -23,12 +23,12 @@ const Navbar = () => {
       ];
 
       return (
-            <header className={`bg-[#F9FDF9] shadow-lg`}>
+            <header className={`bg-white shadow-lg`}>
                   <nav className="container  h-[96px]  relative z-[99]">
                         <div className="flex justify-between items-center h-full">
                               {/* Logo */}
                               <Link href={'/'}>
-                                    <Image alt="Logo" src={Logo} width={131} height={30} />
+                                    <Image className="w-[90px] h-[60px]" alt="Logo" src={Logo} width={131} height={30} />
                               </Link>
                               {/* Nav Items for Desktop */}
                               <div className="hidden md:flex bg-secondary/20 p-2 items-center gap-8">
