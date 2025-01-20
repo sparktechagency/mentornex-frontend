@@ -1,4 +1,5 @@
 'use client';
+import { timeZones } from '@/const/constant';
 import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
 import Link from 'next/link';
 
@@ -43,14 +44,14 @@ const SignUpPage = () => {
                                           name="timeZone"
                                           rules={[{ required: true, message: 'Please select your time zone!' }]}
                                     >
-                                          <Select placeholder="GMT 6+">
-                                                <Select.Option value="gmt-5">GMT -5</Select.Option>
-                                                <Select.Option value="gmt">GMT</Select.Option>
-                                                <Select.Option value="gmt+5">GMT +5</Select.Option>
-                                                <Select.Option value="gmt+6">GMT +6</Select.Option>
+                                          <Select placeholder="Select your time zone">
+                                                {timeZones.map((zone) => (
+                                                      <Select.Option key={zone.value} value={zone.value}>
+                                                            {zone.label}
+                                                      </Select.Option>
+                                                ))}
                                           </Select>
                                     </Form.Item>
-
                                     <Form.Item
                                           label="Password"
                                           name="password"
@@ -78,12 +79,22 @@ const SignUpPage = () => {
                                     </Form.Item>
 
                                     <Form.Item
+                                          style={{
+                                                margin: '20px auto',
+                                          }}
                                           name="terms"
                                           valuePropName="checked"
                                           rules={[{ required: true, message: 'You must agree to the terms and conditions!' }]}
                                     >
                                           <Checkbox>
-                                                I agree to <a href="#">Terms of conditions</a> and <a href="#">Privacy Policy</a>.
+                                                I agree to{' '}
+                                                <Link className="text-primary" href="/terms-and-conditions">
+                                                      Terms of conditions
+                                                </Link>{' '}
+                                                and{' '}
+                                                <Link className="text-primary" href="/privacy-policy">
+                                                      Privacy Policy
+                                                </Link>
                                           </Checkbox>
                                     </Form.Item>
 

@@ -22,9 +22,11 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                     Typography: {
                                           colorText: '#333333',
                                     },
+                                    Select: {
+                                          controlHeight: 42,
+                                    },
                                     Input: {
                                           controlHeight: 42,
-
                                           fontSize: 16,
                                           paddingInline: 24,
                                     },
