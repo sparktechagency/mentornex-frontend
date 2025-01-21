@@ -1,10 +1,10 @@
 import { Button } from 'antd';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
-import { BsStarFill } from 'react-icons/bs';
-import { CiMedal } from 'react-icons/ci';
-import { HiOutlineCurrencyDollar, HiOutlineUser } from 'react-icons/hi';
+import { BsMessenger, BsStarFill } from 'react-icons/bs';
+import { FaRegCalendarDays } from 'react-icons/fa6';
 import { IoBriefcaseOutline } from 'react-icons/io5';
+import { PiChatsCircle, PiMapPinLight } from 'react-icons/pi';
 type TMentor = {
       id: number;
       name: string;
@@ -15,7 +15,7 @@ type TMentor = {
       rating: number;
       topRated: boolean;
 };
-const MentorCard = ({ mentor }: { mentor: TMentor }) => {
+const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
       return (
             <div>
                   <div key={mentor.id}>
@@ -49,14 +49,14 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
                                     <div className="flex items-center gap-2 mb-3">
                                           <IoBriefcaseOutline size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">{mentor.role}</span>
+                                          <span className="text-gray-600">Product Designer at Toptaal</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-3">
-                                          <CiMedal size={20} className=" text-gray-500" />
+                                          <PiMapPinLight size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">{mentor.experience}</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-4">
-                                          <HiOutlineCurrencyDollar size={20} className=" text-gray-500" />
+                                          <PiChatsCircle size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">Starts from {mentor.startingPrice}</span>
                                     </div>
                               </div>
@@ -64,10 +64,25 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     <Button
                                           href={`/mentors/${mentor.id}`}
                                           style={{ width: '100%' }}
-                                          icon={<HiOutlineUser size={20} />}
+                                          icon={<FaRegCalendarDays size={20} />}
                                           type="primary"
                                     >
-                                          View Profile
+                                          Book Now
+                                    </Button>
+
+                                    <Button
+                                          // type="primary"
+                                          style={{
+                                                width: '100%',
+                                                marginTop: '10px',
+                                                backgroundColor: 'transparent',
+                                                color: '#FF6F3C',
+                                                border: '2px solid #FF6F3C',
+                                          }}
+                                          icon={<BsMessenger size={20} />}
+                                          variant="outlined"
+                                    >
+                                          Send Message
                                     </Button>
                               </div>
                         </div>
@@ -76,4 +91,4 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
       );
 };
 
-export default MentorCard;
+export default MentorBookCard;
