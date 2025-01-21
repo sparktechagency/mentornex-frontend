@@ -3,6 +3,7 @@ import { mentors } from '@/const/constant';
 import MentorSocialLinks from './MentorSocialLinks';
 import MentorOverviewAndReview from './MentorOverviewAndReview';
 import { PiBriefcaseLight, PiGraduationCapLight } from 'react-icons/pi';
+import MentorshipTabs from './MentorShipTab';
 
 const MentorProfileDetails = () => {
       const experiences = [
@@ -103,7 +104,9 @@ const MentorProfileDetails = () => {
                                                 </div>
                                           </div>
                                     </div>
-                                    <div className="col-span-5 bg-blue-500 "></div>
+                                    <div className="col-span-5">
+                                          <MentorshipTabs />
+                                    </div>
                               </div>
                         </div>
                   </div>
