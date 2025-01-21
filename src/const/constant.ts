@@ -250,3 +250,47 @@ export const languages = [
       { label: 'Italian', value: 'italian' },
       { label: 'Urdu', value: 'urdu' },
 ];
+
+export const mentors = [
+      {
+            id: 1,
+            name: 'Dianne Russell',
+            role: 'Product Designer',
+            experience: '08 Years Experience',
+            rating: 4.8,
+            startingPrice: '30$',
+            topRated: true,
+            image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300&h=300',
+      },
+      {
+            id: 2,
+            name: 'James Cooper',
+            role: 'UX Designer',
+            experience: '06 Years Experience',
+            rating: 4.9,
+            startingPrice: '25$',
+            topRated: false,
+
+            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300&h=300',
+      },
+      {
+            id: 3,
+            name: 'Sarah Chen',
+            role: 'UI Designer',
+            experience: '05 Years Experience',
+            rating: 4.7,
+            startingPrice: '28$',
+            topRated: false,
+            image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300&h=300',
+      },
+      {
+            id: 4,
+            name: 'Michael Davis',
+            role: 'Product Designer',
+            experience: '10 Years Experience',
+            rating: 5.0,
+            startingPrice: '35$',
+            topRated: true,
+            image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300&h=300',
+      },
+];

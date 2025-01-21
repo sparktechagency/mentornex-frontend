@@ -4,6 +4,8 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Input, Layout, Select, theme } from 'antd';
 import { BsSearch } from 'react-icons/bs';
 import MentorFilter from './MentorFilter';
+import { mentors } from '@/const/constant';
+import MentorCard from '@/components/ui/MentorCard';
 
 const { Header, Content } = Layout;
 
@@ -57,11 +59,15 @@ const MentorLayout: React.FC = () => {
                                           margin: '0px 16px',
                                           padding: 24,
                                           minHeight: 280,
-                                          background: colorBgContainer,
+                                          background: 'transparent',
                                           borderRadius: borderRadiusLG,
                                     }}
                               >
-                                    Content
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                          {mentors.map((mentor) => (
+                                                <MentorCard key={mentor.id} mentor={mentor} />
+                                          ))}
+                                    </div>
                               </Content>
                         </Layout>
                   </Layout>
