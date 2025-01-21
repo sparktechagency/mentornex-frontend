@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Button, Input, Layout, Select, theme } from 'antd';
+import { Button, Input, Layout, Pagination, Select, theme } from 'antd';
 import { BsSearch } from 'react-icons/bs';
 import MentorFilter from './MentorFilter';
 import { mentors } from '@/const/constant';
@@ -67,6 +67,9 @@ const MentorLayout: React.FC = () => {
                                           {mentors.map((mentor) => (
                                                 <MentorCard key={mentor.id} mentor={mentor} />
                                           ))}
+                                    </div>
+                                    <div className="flex justify-center my-10">
+                                          <Pagination defaultCurrent={1} total={50} />
                                     </div>
                               </Content>
                         </Layout>
