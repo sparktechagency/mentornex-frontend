@@ -88,7 +88,7 @@ const BookingForm = () => {
 
                   {/* Select Topic */}
                   <div>
-                        <h3 className="text-lg font-semibold">Select Topic</h3>
+                        <h3 className="text-lg mb-2 font-semibold">Select Topic</h3>
                         <Select defaultValue={selectedTopic} onChange={(value) => setSelectedTopic(value)} className="w-full mt-2">
                               <Select.Option value="Career Guidance Session">Career Guidance Session - $99</Select.Option>
                               <Select.Option value="Career Strategy">Career Strategy - $149</Select.Option>
@@ -98,7 +98,7 @@ const BookingForm = () => {
 
                   {/* Additional Question */}
                   <div>
-                        <h3 className="text-lg font-semibold">
+                        <h3 className="text-lg mb-4 font-semibold">
                               What final result do you want to obtain from this session? <span className="text-red-500">*</span>
                         </h3>
                         <TextArea placeholder="Your answer" maxLength={100} rows={3} className="mt-2" />
