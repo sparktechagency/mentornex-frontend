@@ -59,11 +59,18 @@ const MentorReview = () => {
       return (
             <div className="bg-gray-50 py-8 h-[500px] overflow-y-scroll custom-scrollbar">
                   <div className="max-w-3xl mx-auto space-y-6">
-                        <div className="border border-red-400 p-4 rounded-lg">
+                        <div className="border border-primary p-4 rounded-lg">
                               <div className="flex items-center">
                                     <div className="text-4xl font-bold mr-4">4.4</div>
                                     <div>
-                                          <Rate allowHalf defaultValue={4.4} disabled className="text-red-500" />
+                                          <Rate
+                                                style={{
+                                                      color: '#FF6F3C',
+                                                }}
+                                                allowHalf
+                                                defaultValue={4.4}
+                                                disabled
+                                          />
                                           <p className="text-gray-600 text-sm">All Ratings (14)</p>
                                     </div>
                               </div>
@@ -73,8 +80,15 @@ const MentorReview = () => {
                               {reviews.map((review, index) => (
                                     <div key={index} className="border space-y-4 border-gray-200 p-4 rounded-lg">
                                           <div className="flex justify-between items-center">
-                                                <span className="text-title font-medium">{review.name}</span>
-                                                <Rate allowHalf value={review.rating} disabled className="text-red-500" />
+                                                <span className="text-title text-lg font-medium">{review.name}</span>
+                                                <Rate
+                                                      style={{
+                                                            color: '#FF6F3C',
+                                                      }}
+                                                      allowHalf
+                                                      value={review.rating}
+                                                      disabled
+                                                />
                                           </div>
 
                                           <p className="text-gray-600 ">{review.message}</p>
