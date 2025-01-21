@@ -1,17 +1,28 @@
 'use client';
 
+import Modal from '@/components/ui/Modal';
 import { Tabs, Button, Radio, Flex } from 'antd';
+import { useState } from 'react';
 import { IoIosCall, IoMdClock } from 'react-icons/io';
 import { IoChatbox } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import BookingForm from './BookingForm';
 
 const { TabPane } = Tabs;
 
 const MentorshipTabs = () => {
+      const [bookingModal, setBookingModal] = useState(false);
       const options = [
             { label: 'Lite', value: 'lite' },
             { label: 'Standard', value: 'standard' },
             { label: 'Pro', value: 'pro' },
       ];
+
+      const handleSubscribe = () => {
+            toast.success('Subscription successful!');
+            toast.error('Subscription failed!');
+      };
+
       return (
             <div className="bg-white rounded-lg shadow-lg p-6   max-w-md mx-auto">
                   <Tabs defaultActiveKey="1" centered>
@@ -63,13 +74,17 @@ const MentorshipTabs = () => {
                                                 Fast Response Guarantee
                                           </li>
                                     </ul>
-                                    <Button type="primary" block className="mt-6 bg-orange-500 hover:bg-orange-600">
+                                    <Button
+                                          onClick={handleSubscribe}
+                                          type="primary"
+                                          block
+                                          className="mt-6 bg-orange-500 hover:bg-orange-600"
+                                    >
                                           Subscribe Now
                                     </Button>
                               </div>
                         </TabPane>
 
-                        {/* Session Tab */}
                         <TabPane tab={<span className="font-semibold">Session</span>} key="2">
                               <div className="p-4">
                                     <Radio.Group defaultValue="Introductory Call" className="w-full space-y-4">
@@ -93,12 +108,21 @@ const MentorshipTabs = () => {
                                           </div>
                                     </Radio.Group>
 
-                                    <Button type="primary" block className="mt-2 bg-orange-500 hover:bg-orange-600">
+                                    <Button
+                                          onClick={() => setBookingModal(true)}
+                                          type="primary"
+                                          block
+                                          className="mt-2 bg-orange-500 hover:bg-orange-600"
+                                    >
                                           Book Now
                                     </Button>
                               </div>
                         </TabPane>
                   </Tabs>
+
+                  <Modal title="Book a Session" visible={bookingModal} onCancel={() => setBookingModal(false)} width={800}>
+                        <BookingForm />
+                  </Modal>
             </div>
       );
 };

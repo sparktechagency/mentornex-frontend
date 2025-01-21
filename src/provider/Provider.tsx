@@ -2,6 +2,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { ConfigProvider } from 'antd';
 import NextTopLoader from 'nextjs-toploader';
 import React, { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 const Provider = ({ children }: { children: ReactNode }) => {
       return (
@@ -44,6 +45,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                   >
                         <AntdRegistry>
                               <NextTopLoader color="#FF6F3C" />
+                              <ToastContainer />
                               {children}
                         </AntdRegistry>
                   </ConfigProvider>
