@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
-import { BsStarFill } from 'react-icons/bs';
+import { BsMessenger, BsStarFill } from 'react-icons/bs';
 import { CiMedal } from 'react-icons/ci';
 import { HiOutlineCurrencyDollar, HiOutlineUser } from 'react-icons/hi';
 import { IoBriefcaseOutline } from 'react-icons/io5';
@@ -15,7 +15,7 @@ type TMentor = {
       rating: number;
       topRated: boolean;
 };
-const MentorCard = ({ mentor }: { mentor: TMentor }) => {
+const MentorCard = ({ mentor, sendMessage }: { mentor: TMentor; sendMessage?: boolean }) => {
       return (
             <div>
                   <div key={mentor.id}>
@@ -45,7 +45,7 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                               </div>
 
                               {/* Content */}
-                              <div className="p-5">
+                              <div className="p-2">
                                     <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
                                     <div className="flex items-center gap-2 mb-3">
                                           <IoBriefcaseOutline size={20} className=" text-gray-500" />
@@ -59,10 +59,32 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                           <HiOutlineCurrencyDollar size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">Starts from {mentor.startingPrice}</span>
                                     </div>
-
-                                    <Button style={{ width: '100%' }} icon={<HiOutlineUser size={20} />} type="primary">
+                              </div>
+                              <div>
+                                    <Button
+                                          href={`/mentors/${mentor.id}`}
+                                          style={{ width: '100%' }}
+                                          icon={<HiOutlineUser size={20} />}
+                                          type="primary"
+                                    >
                                           View Profile
                                     </Button>
+                                    {sendMessage && (
+                                          <Button
+                                                // type="primary"
+                                                style={{
+                                                      width: '100%',
+                                                      marginTop: '10px',
+                                                      backgroundColor: 'transparent',
+                                                      color: '#FF6F3C',
+                                                      border: '2px solid #FF6F3C',
+                                                }}
+                                                icon={<BsMessenger size={20} />}
+                                                variant="outlined"
+                                          >
+                                                Send Message
+                                          </Button>
+                                    )}
                               </div>
                         </div>
                   </div>

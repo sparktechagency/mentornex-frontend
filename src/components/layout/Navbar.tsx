@@ -24,7 +24,7 @@ const Navbar = () => {
       ];
 
       return (
-            <header className={`bg-white`}>
+            <header className={`bg-white drop-shadow`}>
                   <nav className="container  h-[96px]  relative z-[99]">
                         <div className="flex justify-between items-center h-full">
                               {/* Logo */}
