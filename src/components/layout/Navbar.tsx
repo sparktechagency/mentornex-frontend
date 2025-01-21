@@ -4,11 +4,12 @@ import Link from 'next/link';
 import Logo from '@/assets/images/logo.svg';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { useState } from 'react';
-import { Avatar, Badge, Button, Typography } from 'antd';
+import { Avatar, Badge, Button, Dropdown, Typography } from 'antd';
 import NavItems from './NavItems';
 import MobileDrawer from './MobileDrawer';
 import { BiMessage } from 'react-icons/bi';
 import { Bell } from 'lucide-react';
+import NotificationDropdown from './NotificationDropdown';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
@@ -59,9 +60,16 @@ const Navbar = () => {
                                           <Badge dot color="#FF6F3C">
                                                 <BiMessage style={{ fontSize: '24px', color: '#333' }} />
                                           </Badge>
-                                          <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
-                                                <Bell style={{ fontSize: '24px', color: '#333' }} />
-                                          </Badge>
+
+                                          <Dropdown
+                                                className="cursor-pointer"
+                                                trigger={['click']}
+                                                dropdownRender={() => <NotificationDropdown />}
+                                          >
+                                                <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
+                                                      <Bell style={{ fontSize: '24px', color: '#333' }} />
+                                                </Badge>
+                                          </Dropdown>
                                           <div className="flex items-center gap-2">
                                                 <Avatar
                                                       size={40}
