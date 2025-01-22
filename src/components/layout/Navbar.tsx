@@ -10,6 +10,7 @@ import MobileDrawer from './MobileDrawer';
 import { BiMessage } from 'react-icons/bi';
 import { Bell } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
+import ProfileDropdown from './ProfileDropdown';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
@@ -70,16 +71,23 @@ const Navbar = () => {
                                                       <Bell style={{ fontSize: '24px', color: '#333' }} />
                                                 </Badge>
                                           </Dropdown>
-                                          <div className="flex items-center gap-2">
-                                                <Avatar
-                                                      size={40}
-                                                      src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
-                                                      style={{ border: '2px solid #FF6F3C' }}
-                                                />
-                                                <Typography.Text strong style={{ fontSize: '16px' }}>
-                                                      Sazzad
-                                                </Typography.Text>
-                                          </div>
+                                          <Dropdown
+                                                placement="bottomLeft"
+                                                className="cursor-pointer"
+                                                trigger={['click']}
+                                                dropdownRender={() => <ProfileDropdown />}
+                                          >
+                                                <div className="flex items-center gap-2">
+                                                      <Avatar
+                                                            size={40}
+                                                            src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
+                                                            style={{ border: '2px solid #FF6F3C' }}
+                                                      />
+                                                      <Typography.Text strong style={{ fontSize: '16px' }}>
+                                                            Sazzad
+                                                      </Typography.Text>
+                                                </div>
+                                          </Dropdown>
                                     </div>
                               </div>
                               <div className="md:hidden">
