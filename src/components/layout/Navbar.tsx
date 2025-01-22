@@ -31,14 +31,14 @@ const Navbar = () => {
                         <div className="flex justify-between items-center h-full">
                               {/* Logo */}
                               <Link href={'/'}>
-                                    <Image className="w-[90px] h-[60px]" alt="Logo" src={Logo} width={131} height={30} />
+                                    <Image className="w-[190px] h-[60px]" alt="Logo" src={Logo} width={131} height={30} />
                               </Link>
                               {/* Nav Items for Desktop */}
                               <div className="hidden md:flex bg-secondary/20 p-2 items-center gap-8">
                                     <NavItems items={items} />
                               </div>
                               <div className="hidden md:flex items-center space-x-6">
-                                    <Link href="/signin">
+                                    {/* <Link href="/signin">
                                           <Button
                                                 style={{
                                                       backgroundColor: 'transparent',
@@ -50,7 +50,7 @@ const Navbar = () => {
                                           >
                                                 Sign In
                                           </Button>
-                                    </Link>
+                                    </Link> */}
                                     <Link href="/signup">
                                           <Button iconPosition="end" type="primary">
                                                 Sign Up
@@ -64,7 +64,7 @@ const Navbar = () => {
 
                                           <Dropdown
                                                 className="cursor-pointer"
-                                                trigger={['click']}
+                                                trigger={['click', 'hover']}
                                                 dropdownRender={() => <NotificationDropdown />}
                                           >
                                                 <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
@@ -74,7 +74,7 @@ const Navbar = () => {
                                           <Dropdown
                                                 placement="bottomLeft"
                                                 className="cursor-pointer"
-                                                trigger={['click']}
+                                                trigger={['click', 'hover']}
                                                 dropdownRender={() => <ProfileDropdown />}
                                           >
                                                 <div className="flex items-center gap-2">
