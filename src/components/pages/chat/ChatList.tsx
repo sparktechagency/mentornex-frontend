@@ -11,6 +11,24 @@ const ChatList = () => {
             { name: 'Charlie Brown', message: 'Check this out!', time: '10 mins ago', unread: 1, active: false, id: 3 },
             { name: 'Diana Prince', message: 'Can you send me the report?', time: '15 mins ago', unread: 3, active: false, id: 4 },
             { name: 'Eve Adams', message: 'Let’s catch up soon!', time: '20 mins ago', unread: 0, active: false, id: 5 },
+            { name: 'Florence Nightingale', message: 'I need help with my project', time: '25 mins ago', unread: 2, active: false, id: 6 },
+            { name: 'George Washington', message: 'I need help with my project', time: '30 mins ago', unread: 1, active: false, id: 7 },
+            { name: 'Helen Keller', message: 'I need help with my project', time: '35 mins ago', unread: 0, active: false, id: 8 },
+            { name: 'Isaac Newton', message: 'I need help with my project', time: '40 mins ago', unread: 3, active: false, id: 9 },
+            { name: 'Jane Doe', message: 'I need help with my project', time: '45 mins ago', unread: 2, active: false, id: 10 },
+            { name: 'Katherine Johnson', message: 'I need help with my project', time: '50 mins ago', unread: 1, active: false, id: 11 },
+            { name: 'Leonardo da Vinci', message: 'I need help with my project', time: '55 mins ago', unread: 0, active: false, id: 12 },
+            { name: 'Marie Curie', message: 'I need help with my project', time: '1 hour ago', unread: 3, active: false, id: 13 },
+            { name: 'Nikola Tesla', message: 'I need help with my project', time: '1 hour 5 mins ago', unread: 2, active: false, id: 14 },
+            {
+                  name: 'Olivia Newton-John',
+                  message: 'I need help with my project',
+                  time: '1 hour 10 mins ago',
+                  unread: 1,
+                  active: false,
+                  id: 15,
+            },
+            { name: 'Pablo Picasso', message: 'I need help with my project', time: '1 hour 15 mins ago', unread: 0, active: false, id: 16 },
       ];
 
       return (
@@ -42,7 +60,7 @@ const ChatList = () => {
                               />
                         </Flex>
                   </div>
-                  <div className="p-2 h-[calc(100vh-200px)] overflow-y-auto custom-scrollbar">
+                  <div className="p-2 h-[640.08px] overflow-y-auto custom-scrollbar">
                         {chatList.map((chat, index) => (
                               <div
                                     key={index}

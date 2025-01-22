@@ -35,6 +35,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                     InputNumber: {
                                           controlHeight: 42,
                                     },
+
                                     Form: {
                                           marginLG: 10,
                                           labelColor: '#636363',
