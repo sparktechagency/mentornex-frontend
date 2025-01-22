@@ -71,6 +71,7 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                                     </Button>
 
                                     <Button
+                                          href="/chat/3"
                                           // type="primary"
                                           style={{
                                                 width: '100%',

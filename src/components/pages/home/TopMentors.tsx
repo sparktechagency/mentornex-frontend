@@ -85,6 +85,7 @@ function TopMentors() {
                                                             </div>
 
                                                             <Button
+                                                                  href="/mentors/1"
                                                                   style={{ width: '100%' }}
                                                                   icon={<HiOutlineUser size={20} />}
                                                                   type="primary"

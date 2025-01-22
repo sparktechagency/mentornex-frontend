@@ -1,6 +1,7 @@
-import { Avatar, Badge, Flex, Input } from 'antd';
+import { Avatar, Badge, Flex, Input, Tabs } from 'antd';
 import { useRouter } from 'next/navigation';
 import { BsSearch } from 'react-icons/bs';
+const { TabPane } = Tabs;
 
 const ChatList = () => {
       const router = useRouter();
@@ -32,8 +33,8 @@ const ChatList = () => {
       ];
 
       return (
-            <div className="w-full  bg-white border">
-                  <div className="p-4 border-b">
+            <div className="w-full  bg-white border rounded-lg min-h-[calc(100vh-5rem)]">
+                  <div className="p-4 ">
                         <Flex gap={8}>
                               <Badge
                                     style={{
@@ -60,35 +61,50 @@ const ChatList = () => {
                               />
                         </Flex>
                   </div>
-                  <div className="p-2 h-[640.08px] overflow-y-auto custom-scrollbar">
-                        {chatList.map((chat, index) => (
-                              <div
-                                    key={index}
-                                    onClick={() => router.push(`/chat/${chat.id}`)}
-                                    className={`flex items-center gap-4 p-4 cursor-pointer rounded-lg border-b`}
-                              >
-                                    <Badge
-                                          style={{
-                                                width: '12px',
-                                                height: '12px',
-                                                borderRadius: '6px',
-                                          }}
-                                          offset={[-5, 40]}
-                                          dot
-                                          color={chat.active ? 'green' : 'red'}
-                                    >
-                                          <Avatar size={50} src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`} />
-                                    </Badge>
-                                    <div className="flex-1">
-                                          <h3 className="font-medium">{chat.name}</h3>
-                                          <p className="text-sm text-gray-600 truncate">{chat.message}</p>
+
+                  <div className="h-[62px] mb-2">
+                        <Tabs defaultActiveKey="1" centered>
+                              <TabPane tab="Messages" key="1">
+                                    <div className="p-2 h-[640.08px] overflow-y-auto custom-scrollbar">
+                                          {chatList.map((chat, index) => (
+                                                <div
+                                                      key={index}
+                                                      onClick={() => router.push(`/chat/${chat.id}`)}
+                                                      className={`flex items-center gap-4 p-4 cursor-pointer rounded-lg border-b`}
+                                                >
+                                                      <Badge
+                                                            style={{
+                                                                  width: '12px',
+                                                                  height: '12px',
+                                                                  borderRadius: '6px',
+                                                            }}
+                                                            offset={[-5, 40]}
+                                                            dot
+                                                            color={chat.active ? 'green' : 'red'}
+                                                      >
+                                                            <Avatar
+                                                                  size={50}
+                                                                  src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
+                                                            />
+                                                      </Badge>
+                                                      <div className="flex-1">
+                                                            <h3 className="font-medium">{chat.name}</h3>
+                                                            <p className="text-sm text-gray-600 truncate">{chat.message}</p>
+                                                      </div>
+                                                      <div className="text-right">
+                                                            <p className="text-sm text-gray-500">{chat.time}</p>
+                                                            {chat.unread > 0 && (
+                                                                  <Badge count={chat.unread} style={{ backgroundColor: '#FF6F3C' }} />
+                                                            )}
+                                                      </div>
+                                                </div>
+                                          ))}
                                     </div>
-                                    <div className="text-right">
-                                          <p className="text-sm text-gray-500">{chat.time}</p>
-                                          {chat.unread > 0 && <Badge count={chat.unread} style={{ backgroundColor: '#FF6F3C' }} />}
-                                    </div>
-                              </div>
-                        ))}
+                              </TabPane>
+                              <TabPane tab="Message request  (0)" key="2">
+                                    <div className="p-2 h-[640.08px] overflow-y-auto custom-scrollbar text-center">No message request</div>
+                              </TabPane>
+                        </Tabs>
                   </div>
             </div>
       );

@@ -1,7 +1,7 @@
 'use client';
 import { Avatar, Badge, Button, Input, Upload } from 'antd';
-
 import Image from 'next/image';
+
 import { IoIosAttach } from 'react-icons/io';
 
 const ChatWindow = () => {
@@ -59,10 +59,10 @@ const ChatWindow = () => {
                                                       height={150}
                                                       src={msg.image}
                                                       alt={msg.text}
-                                                      className="rounded h-10 w-10"
+                                                      className="rounded size-20 mt-2"
                                                 />
                                           )}
-                                          <p className="text-xs text-gray-300 mt-1">{msg.time}</p>
+                                          <p className="text-xs mt-1">{msg.time}</p>
                                     </div>
                               </div>
                         ))}
