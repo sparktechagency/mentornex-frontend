@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { IoIosCall, IoMdClock } from 'react-icons/io';
 import { IoChatbox } from 'react-icons/io5';
 import { toast } from 'react-toastify';
-import BookingForm from './BookingForm';
+import BookingForm from './booking-modal/BookingForm';
 
 const { TabPane } = Tabs;
 
@@ -120,7 +120,7 @@ const MentorshipTabs = () => {
                         </TabPane>
                   </Tabs>
 
-                  <Modal title="Book a Session" visible={bookingModal} onCancel={() => setBookingModal(false)} width={800}>
+                  <Modal title="Book a Session" visible={bookingModal} onCancel={() => setBookingModal(false)} width={700}>
                         <BookingForm />
                   </Modal>
             </div>
