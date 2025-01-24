@@ -38,10 +38,14 @@ const ChatWindow = () => {
                         <h3 className="font-medium">Dianne Russell</h3>
                   </div>
 
-                  <div className="flex-1 bg-[#F5F5F6] p-4 h-[550px] overflow-y-auto custom-scrollbar">
+                  <div className="flex-1 bg-[#F5F5F6] p-4 h-[670px] overflow-y-auto custom-scrollbar">
                         {messages.map((msg: any, index: any) => (
                               <div key={index} className={`flex ${msg.mine ? 'justify-end' : 'justify-start'} mb-4`}>
-                                    <div className={`max-w-xs p-3 rounded-lg ${msg.mine ? 'bg-orange-500 text-white' : 'bg-white border'}`}>
+                                    <div
+                                          className={`max-w-xs p-3 rounded-lg ${
+                                                msg.mine ? 'bg-orange-500 text-white' : 'bg-white border text-title '
+                                          }`}
+                                    >
                                           {msg.isImage ? (
                                                 <Image
                                                       width={150}

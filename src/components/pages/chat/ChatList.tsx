@@ -9,7 +9,7 @@ const ChatList = () => {
       const chatList = [
             { name: 'Alice Johnson', message: 'Hello!', time: '1 min ago', unread: 2, active: true, id: 1 },
             { name: 'Bob Smith', message: 'Are we still on for lunch?', time: '5 mins ago', unread: 0, active: false, id: 2 },
-            { name: 'Charlie Brown', message: 'Check this out!', time: '10 mins ago', unread: 1, active: false, id: 3 },
+            { name: 'Charlie Brown', message: 'Check this out!', time: '10 mins ago', unread: 1, active: true, id: 3 },
             { name: 'Diana Prince', message: 'Can you send me the report?', time: '15 mins ago', unread: 3, active: false, id: 4 },
             { name: 'Eve Adams', message: 'Let’s catch up soon!', time: '20 mins ago', unread: 0, active: false, id: 5 },
             { name: 'Florence Nightingale', message: 'I need help with my project', time: '25 mins ago', unread: 2, active: false, id: 6 },

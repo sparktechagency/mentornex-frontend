@@ -2,8 +2,10 @@ import React from 'react';
 import { Menu, Avatar } from 'antd';
 import { EditOutlined, HeartOutlined, CalendarOutlined, SettingOutlined } from '@ant-design/icons';
 import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const ProfileDropdown = () => {
+      const router = useRouter();
       return (
             <div className="">
                   <Menu
@@ -12,13 +14,29 @@ const ProfileDropdown = () => {
                               padding: 15,
                         }}
                   >
-                        <div className="flex items-center text-start gap-2 mb-4">
-                              <Avatar size={40} src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`} />
-                              <div>
-                                    <h3 className="font-semibold">Sazzad Chowdhury</h3>
-                                    <p className="text-orange-500 cursor-pointer text-sm">View Profile</p>
+                        <div
+                              onClick={() => {
+                                    router.push('/dashboard');
+                              }}
+                              className="flex cursor-pointer items-center text-start gap-2 mb-4"
+                        ></div>
+                        <Menu.Item
+                              onClick={() => {
+                                    router.push('/dashboard');
+                              }}
+                              style={{
+                                    marginBottom: 10,
+                              }}
+                              key="dashboard"
+                        >
+                              <div className="flex">
+                                    <Avatar size={40} src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`} />
+                                    <div>
+                                          <h3 className="font-semibold">Sazzad Chowdhury</h3>
+                                          <p className="text-orange-500 cursor-pointer text-sm">View Profile</p>
+                                    </div>
                               </div>
-                        </div>
+                        </Menu.Item>
                         <Menu.Item
                               style={{
                                     marginBottom: 10,
