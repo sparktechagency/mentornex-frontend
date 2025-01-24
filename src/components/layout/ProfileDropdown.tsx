@@ -22,12 +22,12 @@ const ProfileDropdown = () => {
                         ></div>
                         <Menu.Item
                               onClick={() => {
-                                    router.push('/dashboard');
+                                    router.push('/dashboard/mentee/profile');
                               }}
                               style={{
                                     marginBottom: 10,
                               }}
-                              key="dashboard"
+                              key="profile"
                         >
                               <div className="flex">
                                     <Avatar size={40} src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`} />

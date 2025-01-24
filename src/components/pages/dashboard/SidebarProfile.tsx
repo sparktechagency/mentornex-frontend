@@ -11,7 +11,7 @@ import { FaUserFriends } from 'react-icons/fa';
 
 const ProfileSidebar = () => {
       const [previewImage, setPreviewImage] = useState<undefined | string>('https://i.ibb.co.com/yN2vT01/me.jpg');
-      const [userRole] = useState<string>('mentee');
+      const [userRole] = useState<string>('mentor');
 
       const handleFileChange = ({ file }: UploadChangeParam<any>) => {
             const reader = new FileReader();
@@ -26,40 +26,40 @@ const ProfileSidebar = () => {
                   key: 'profile',
                   icon: <FaUserGear size={20} />,
                   label: 'Profile',
-                  href: '/dashboard/profile',
+                  href: '/dashboard/mentee/profile',
             },
             {
                   key: 'dashboard',
                   icon: <MdDashboard size={20} />,
                   label: 'Dashboard',
-                  href: '/dashboard',
+                  href: '/dashboard/mentee/dashboard',
             },
 
             {
                   key: 'my-session',
                   icon: <FaHourglassEnd size={20} />,
                   label: 'My Session',
-                  href: '/dashboard/my-session',
+                  href: '/dashboard/mentee/my-sessions',
             },
 
             {
                   key: 'favorite',
                   icon: <IoHeart size={20} />,
                   label: 'Favorite',
-                  href: '/dashboard/favorite',
+                  href: '/dashboard/mentee/favorite',
             },
 
             {
                   key: 'billing',
                   icon: <MdCurrencyExchange size={20} />,
                   label: 'Billing',
-                  href: '/dashboard/billing',
+                  href: '/dashboard/mentee/billing',
             },
             {
                   key: 'settings',
                   icon: <FaGear size={20} />,
                   label: 'Settings',
-                  href: '/dashboard/settings',
+                  href: '/dashboard/mentee/settings',
             },
             {
                   key: 'logout',
@@ -74,44 +74,44 @@ const ProfileSidebar = () => {
                   key: 'profile',
                   icon: <FaUserGear size={20} className="text-white" />,
                   label: 'Profile',
-                  href: '/dashboard/profile',
+                  href: '/dashboard/mentor/profile',
                   selected: true,
             },
             {
                   key: 'dashboard',
                   icon: <MdDashboard size={20} />,
                   label: 'Dashboard',
-                  href: '/dashboard',
+                  href: '/dashboard/mentor/dashboard',
             },
             {
                   key: 'my-session',
                   icon: <FaHourglassEnd size={20} />,
                   label: 'My Sessions',
-                  href: '/dashboard/my-session',
+                  href: '/dashboard/mentor/my-sessions',
             },
             {
                   key: 'task-notes',
                   icon: <FaClipboardList size={20} />,
                   label: 'Task & Notes',
-                  href: '/dashboard/task-notes',
+                  href: '/dashboard/mentor/tasks-and-notes',
             },
             {
                   key: 'my-mentees',
                   icon: <FaUserFriends size={20} />,
                   label: 'My Mentees',
-                  href: '/dashboard/my-mentees',
+                  href: '/dashboard/mentor/my-mentees',
             },
             {
                   key: 'billing',
                   icon: <MdCurrencyExchange size={20} />,
                   label: 'Billing',
-                  href: '/dashboard/billing',
+                  href: '/dashboard/mentor/billing',
             },
             {
                   key: 'settings',
                   icon: <FaGear size={20} />,
                   label: 'Settings',
-                  href: '/dashboard/settings',
+                  href: '/dashboard/mentor/settings',
             },
             {
                   key: 'logout',

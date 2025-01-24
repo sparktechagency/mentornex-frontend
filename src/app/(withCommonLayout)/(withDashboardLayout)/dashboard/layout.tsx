@@ -6,7 +6,7 @@ import ProfileSidebar from '@/components/pages/dashboard/SidebarProfile';
 
 const { Header, Content, Sider } = Layout;
 
-const ProfileLayout: React.FC = () => {
+const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const {
             token: { colorBgContainer, borderRadiusLG },
       } = theme.useToken();
@@ -65,7 +65,7 @@ const ProfileLayout: React.FC = () => {
                                                 borderRadius: borderRadiusLG,
                                           }}
                                     >
-                                          Responsive Content
+                                          {children}
                                     </div>
                               </Content>
                         </Layout>
