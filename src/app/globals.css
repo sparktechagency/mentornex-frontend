@@ -32,3 +32,9 @@
             background: rgb(160, 160, 160);
       }
 }
+
+.hide-scrollbar {
+      &::-webkit-scrollbar {
+            display: none;
+      }
+}

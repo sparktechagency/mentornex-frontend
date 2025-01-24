@@ -1,8 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Layout, theme, Button, ConfigProvider } from 'antd';
+
+import { Layout, theme, ConfigProvider } from 'antd';
 import ProfileSidebar from '@/components/pages/dashboard/SidebarProfile';
+import { AiOutlineLeftSquare, AiOutlineRightSquare } from 'react-icons/ai';
 
 const { Header, Content, Sider } = Layout;
 
@@ -29,7 +30,7 @@ const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                               <Sider
                                     width={282}
                                     theme="light"
-                                    breakpoint="lg"
+                                    // breakpoint="lg"
                                     collapsedWidth="0"
                                     // collapsible
                                     className="-mt-52 rounded-lg drop-shadow"
@@ -42,21 +43,14 @@ const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                         <Layout>
                               <Header
                                     style={{
-                                          padding: '0 16px',
                                           background: colorBgContainer,
-                                          display: 'flex',
-                                          alignItems: 'center',
-                                          justifyContent: 'space-between',
                                     }}
                               >
-                                    <Button
-                                          type="text"
-                                          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                                          onClick={() => setCollapsed(!collapsed)}
-                                          style={{ fontSize: '16px', width: '48px', height: '48px' }}
-                                    />
+                                    <button onClick={() => setCollapsed(!collapsed)}>
+                                          {collapsed ? <AiOutlineRightSquare size={30} /> : <AiOutlineLeftSquare size={30} />}
+                                    </button>
                               </Header>
-                              <Content style={{ margin: '24px 16px 0' }}>
+                              <Content style={{ margin: '' }}>
                                     <div
                                           style={{
                                                 padding: 24,
@@ -64,6 +58,7 @@ const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                                                 background: colorBgContainer,
                                                 borderRadius: borderRadiusLG,
                                           }}
+                                          className="w-full overflow-x-scroll custom-scrollbar hide-scrollbar"
                                     >
                                           {children}
                                     </div>

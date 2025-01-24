@@ -3,9 +3,17 @@ import { Menu, Avatar } from 'antd';
 import { EditOutlined, HeartOutlined, CalendarOutlined, SettingOutlined } from '@ant-design/icons';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { showLogoutConfirmModal } from '../ui/LogoutModal';
+import { toast } from 'react-toastify';
 
 const ProfileDropdown = () => {
       const router = useRouter();
+
+      const handleLogout = () => {
+            showLogoutConfirmModal(() => {
+                  toast.success('Logout successful!');
+            });
+      };
       return (
             <div className="">
                   <Menu
@@ -74,7 +82,7 @@ const ProfileDropdown = () => {
                               Settings
                         </Menu.Item>
                         <Menu.Divider />
-                        <Menu.Item key="logout" icon={<ArrowRight style={{ color: '#FF6F3C', fontSize: 20 }} />}>
+                        <Menu.Item onClick={handleLogout} key="logout" icon={<ArrowRight style={{ color: '#FF6F3C', fontSize: 20 }} />}>
                               Logout
                         </Menu.Item>
                   </Menu>

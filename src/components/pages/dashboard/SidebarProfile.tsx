@@ -9,6 +9,8 @@ import { FaClipboardList, FaGear, FaHourglassEnd, FaUserGear } from 'react-icons
 import { MdCurrencyExchange, MdDashboard } from 'react-icons/md';
 import { IoHeart, IoLogOut } from 'react-icons/io5';
 import { FaUserFriends } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { showLogoutConfirmModal } from '@/components/ui/LogoutModal';
 
 const ProfileSidebar = () => {
       const [previewImage, setPreviewImage] = useState<undefined | string>('https://i.ibb.co.com/yN2vT01/me.jpg');
@@ -122,6 +124,11 @@ const ProfileSidebar = () => {
             },
       ];
 
+      const handleLogout = () => {
+            showLogoutConfirmModal(() => {
+                  toast.success('Logout successful!');
+            });
+      };
       const generateSidebarByUserRole = (userRole: string) => {
             switch (userRole) {
                   case 'mentee':
@@ -155,11 +162,26 @@ const ProfileSidebar = () => {
 
                   {/* Menu Section */}
                   <Menu mode="vertical" defaultSelectedKeys={['profile']} className="w-full">
-                        {generateSidebarByUserRole(userRole).map((item) => (
-                              <Menu.Item key={item.key} icon={item.icon}>
-                                    <Link href={item.href}>{item.label}</Link>
-                              </Menu.Item>
-                        ))}
+                        {generateSidebarByUserRole(userRole).map((item) => {
+                              if (item.key === 'logout') {
+                                    return (
+                                          <Menu.Item
+                                                onClick={() => {
+                                                      handleLogout();
+                                                }}
+                                                key={item.key}
+                                                icon={item.icon}
+                                          >
+                                                <span>{item.label}</span>
+                                          </Menu.Item>
+                                    );
+                              }
+                              return (
+                                    <Menu.Item key={item.key} icon={item.icon}>
+                                          <Link href={item.href}>{item.label}</Link>
+                                    </Menu.Item>
+                              );
+                        })}
                   </Menu>
             </div>
       );
