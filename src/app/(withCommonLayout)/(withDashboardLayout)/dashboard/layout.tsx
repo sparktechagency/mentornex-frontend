@@ -9,7 +9,7 @@ const { Header, Content, Sider } = Layout;
 
 const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       const {
-            token: { colorBgContainer, borderRadiusLG },
+            token: { colorBgContainer },
       } = theme.useToken();
       const [collapsed, setCollapsed] = useState(false);
 
@@ -40,28 +40,19 @@ const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                                     <ProfileSidebar />
                               </Sider>
                         </ConfigProvider>
-                        <Layout>
+                        <Layout className="-mt-20 ">
                               <Header
                                     style={{
                                           background: colorBgContainer,
+                                          padding: 20,
                                     }}
                               >
                                     <button onClick={() => setCollapsed(!collapsed)}>
                                           {collapsed ? <AiOutlineRightSquare size={30} /> : <AiOutlineLeftSquare size={30} />}
                                     </button>
                               </Header>
-                              <Content style={{ margin: '' }}>
-                                    <div
-                                          style={{
-                                                padding: 24,
-                                                minHeight: 360,
-                                                background: colorBgContainer,
-                                                borderRadius: borderRadiusLG,
-                                          }}
-                                          className="w-full overflow-x-scroll custom-scrollbar hide-scrollbar"
-                                    >
-                                          {children}
-                                    </div>
+                              <Content>
+                                    <div className="w-full p-6 overflow-x-scroll custom-scrollbar hide-scrollbar">{children}</div>
                               </Content>
                         </Layout>
                   </Layout>

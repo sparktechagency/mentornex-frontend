@@ -40,6 +40,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                           marginLG: 10,
                                           labelColor: '#636363',
                                           labelFontSize: 18,
+                                          labelRequiredMarkColor: '#FF6F3C',
                                     },
                               },
                         }}
