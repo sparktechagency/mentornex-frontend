@@ -1,7 +1,9 @@
+import MySessionTab from './MySessionTab';
+
 const MenteeMySessions = () => {
       return (
             <div>
-                  <h2>Welcome to the MenteeMySessions page</h2>
+                  <MySessionTab />
             </div>
       );
 };

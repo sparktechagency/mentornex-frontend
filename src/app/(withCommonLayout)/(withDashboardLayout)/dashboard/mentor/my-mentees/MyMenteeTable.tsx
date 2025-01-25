@@ -82,14 +82,7 @@ const MyMenteeTable = () => {
       ];
 
       return (
-            <Table
-                  columns={columns}
-                  dataSource={data}
-                  pagination={false}
-                  bordered={false}
-                  className="rounded-lg shadow-sm"
-                  rowClassName="hover:bg-gray-50"
-            />
+            <Table columns={columns} dataSource={data} bordered={false} className="rounded-lg shadow-sm" rowClassName="hover:bg-gray-50" />
       );
 };
 

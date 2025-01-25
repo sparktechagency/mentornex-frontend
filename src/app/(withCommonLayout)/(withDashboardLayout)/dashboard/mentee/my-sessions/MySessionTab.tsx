@@ -2,10 +2,10 @@
 
 import { Select } from 'antd';
 import { LuListFilter } from 'react-icons/lu';
-import UpComingSessionTable from './UpComingSessionTable';
-import SessionRequestTable from './SessionRequestTable';
-import SessionHistoryTable from './SessionHistoryTable';
+
 import CustomTab from '@/components/ui/CustomTab';
+import UpComingSessionTable from './UpComingSessionTable';
+import SessionHistoryTable from './SessionHistoryTable';
 
 const { Option } = Select;
 
@@ -34,8 +34,7 @@ const MySessionTab = () => {
                   <CustomTab
                         tabs={[
                               { key: '1', label: 'Upcoming Sessions', content: <UpComingSessionTable /> },
-                              { key: '2', label: 'Session Request', content: <SessionRequestTable /> },
-                              { key: '3', label: 'Session History', content: <SessionHistoryTable /> },
+                              { key: '2', label: 'Session History', content: <SessionHistoryTable /> },
                         ]}
                   />
             </div>
