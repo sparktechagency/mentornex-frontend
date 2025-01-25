@@ -53,11 +53,12 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                                     </div>
                                     <div className="flex items-center gap-2 mb-3">
                                           <PiMapPinLight size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">{mentor.experience}</span>
+                                          <span className="text-gray-600">{'USA'}</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-4">
                                           <PiChatsCircle size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">Starts from {mentor.startingPrice}</span>
+                                          <span className="text-gray-600">Active now</span>
+                                          <span className="inline-block size-2 bg-green-500 rounded-full"></span>
                                     </div>
                               </div>
                               <div>

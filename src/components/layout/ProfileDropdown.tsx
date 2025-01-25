@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, Avatar } from 'antd';
-import { EditOutlined, HeartOutlined, CalendarOutlined, SettingOutlined } from '@ant-design/icons';
+// import { EditOutlined, HeartOutlined, CalendarOutlined, SettingOutlined } from '@ant-design/icons';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
@@ -51,7 +51,7 @@ const ProfileDropdown = () => {
                                     </div>
                               </div>
                         </Menu.Item>
-                        <Menu.Item
+                        {/* <Menu.Item
                               style={{
                                     marginBottom: 10,
                               }}
@@ -86,7 +86,7 @@ const ProfileDropdown = () => {
                               icon={<SettingOutlined style={{ color: '#FF6F3C', fontSize: 20 }} />}
                         >
                               Settings
-                        </Menu.Item>
+                        </Menu.Item> */}
                         <Menu.Divider />
                         <Menu.Item onClick={handleLogout} key="logout" icon={<ArrowRight style={{ color: '#FF6F3C', fontSize: 20 }} />}>
                               Logout
