@@ -9,18 +9,16 @@ const data = [
             dateTime: '05 Jan 2025 9:00 AM',
             mentee: 'Cody Fisher',
             topic: 'Advance UI UX',
-            type: 'Pay Per Session',
+            status: 'cancelled',
             fee: '$30',
-            action: 'cancel',
       },
       {
             key: '2',
             dateTime: '05 Jan 2025 9:00 AM',
             mentee: 'Cody Fisher',
             topic: 'Advance UI UX',
-            type: 'Subscription',
+            status: 'completed',
             fee: '$200/M (2 Left)',
-            action: 'cancel',
       },
 
       {
@@ -28,9 +26,8 @@ const data = [
             dateTime: '05 Jan 2025 9:00 AM',
             mentee: 'Cody Fisher',
             topic: 'Advance UI UX',
-            type: 'Pay Per Session',
+            status: 'rejected',
             fee: '$30',
-            action: 'cancel',
       },
 
       {
@@ -38,9 +35,8 @@ const data = [
             dateTime: '05 Jan 2025 9:00 AM',
             mentee: 'Cody Fisher',
             topic: 'Advance UI UX',
-            type: 'Subscription',
+            status: 'completed',
             fee: '$200/M (2 Left)',
-            action: 'cancel',
       },
 ];
 
@@ -67,9 +63,31 @@ const columns = [
             key: 'topic',
       },
       {
-            title: 'Type',
-            dataIndex: 'type',
-            key: 'type',
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status: string) => {
+                  let bgColor = '';
+
+                  switch (status) {
+                        case 'completed':
+                              bgColor = 'bg-green-500';
+
+                              break;
+                        case 'cancelled':
+                              bgColor = 'bg-yellow-500';
+
+                              break;
+                        case 'rejected':
+                              bgColor = 'bg-red-500';
+
+                              break;
+                        default:
+                              break;
+                  }
+
+                  return <span className={`px-3 py-1 text-white rounded-lg ${bgColor} `}>{status}</span>;
+            },
       },
       {
             title: 'Fee',
