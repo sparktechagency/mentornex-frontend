@@ -1,0 +1,117 @@
+'use client';
+import { Button, Space, Table } from 'antd';
+import Image from 'next/image';
+import { GrCalendar } from 'react-icons/gr';
+import { RxCheck, RxCross2 } from 'react-icons/rx';
+
+const data = [
+      {
+            key: '1',
+            dateTime: '05 Jan 2025 9:00 AM',
+            mentee: 'Cody Fisher',
+            topic: 'Advance UI UX',
+            type: 'Pay Per Session',
+            fee: '$30',
+            action: 'cancel',
+      },
+      {
+            key: '2',
+            dateTime: '05 Jan 2025 9:00 AM',
+            mentee: 'Cody Fisher',
+            topic: 'Advance UI UX',
+            type: 'Subscription',
+            fee: '$200/M (2 Left)',
+            action: 'cancel',
+      },
+
+      {
+            key: '3',
+            dateTime: '05 Jan 2025 9:00 AM',
+            mentee: 'Cody Fisher',
+            topic: 'Advance UI UX',
+            type: 'Pay Per Session',
+            fee: '$30',
+            action: 'cancel',
+      },
+
+      {
+            key: '4',
+            dateTime: '05 Jan 2025 9:00 AM',
+            mentee: 'Cody Fisher',
+            topic: 'Advance UI UX',
+            type: 'Subscription',
+            fee: '$200/M (2 Left)',
+            action: 'cancel',
+      },
+];
+
+const columns = [
+      {
+            title: 'Date & Time',
+            dataIndex: 'dateTime',
+            key: 'dateTime',
+      },
+      {
+            title: 'Mentee',
+            dataIndex: 'mentee',
+            key: 'mentee',
+            render: (text: string) => (
+                  <div className="flex items-center space-x-2">
+                        <Image width={40} height={40} src="https://picsum.photos/40/40" alt="mentee" className="w-8 h-8 rounded-full" />
+                        <span>{text}</span>
+                  </div>
+            ),
+      },
+      {
+            title: 'Topic',
+            dataIndex: 'topic',
+            key: 'topic',
+      },
+      {
+            title: 'Type',
+            dataIndex: 'type',
+            key: 'type',
+      },
+      {
+            title: 'Fee',
+            dataIndex: 'fee',
+            key: 'fee',
+      },
+      {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+            render: () => (
+                  <Space>
+                        <Button
+                              icon={<RxCheck size={16} />}
+                              style={{
+                                    backgroundColor: 'green',
+                              }}
+                              type="primary"
+                              size="small"
+                        />
+                        <Button icon={<RxCross2 size={16} />} type="primary" danger size="small" />
+                        <Button icon={<GrCalendar />} type="primary" size="small" />
+                  </Space>
+            ),
+      },
+];
+
+const SessionRequestTable = () => {
+      return (
+            <div className="">
+                  <Table
+                        columns={columns}
+                        dataSource={data}
+                        pagination={{
+                              pageSize: 5,
+                              showSizeChanger: false,
+                              position: ['bottomCenter'],
+                        }}
+                  />
+            </div>
+      );
+};
+
+export default SessionRequestTable;

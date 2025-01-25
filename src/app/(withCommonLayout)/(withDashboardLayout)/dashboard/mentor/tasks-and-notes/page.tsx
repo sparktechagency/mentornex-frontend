@@ -1,7 +1,9 @@
+import TaskAndNoteTab from './TaskAndNoteTab';
+
 const TasksAndNotes = () => {
       return (
             <div>
-                  <h2>Welcome to the TasksAndNotes page</h2>
+                  <TaskAndNoteTab />
             </div>
       );
 };

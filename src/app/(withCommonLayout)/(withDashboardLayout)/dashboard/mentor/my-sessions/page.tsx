@@ -1,7 +1,9 @@
+import MySessionTab from './MySessionTab';
+
 const MySessions = () => {
       return (
             <div>
-                  <h2>Welcome to the MySessions page</h2>
+                  <MySessionTab />
             </div>
       );
 };
