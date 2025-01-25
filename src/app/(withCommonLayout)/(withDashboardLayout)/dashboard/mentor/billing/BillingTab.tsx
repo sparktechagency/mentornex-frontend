@@ -7,7 +7,6 @@ import BillingTransactionTable from './BillingTransactionTable';
 const BillingTab = () => {
       return (
             <div className="">
-                  <h1 className="text-2xl font-bold mb-2">Tasks & Notes</h1>
                   <CustomTab
                         tabs={[
                               { key: 'billing', label: 'Billing Information', content: <BillingInformation /> },

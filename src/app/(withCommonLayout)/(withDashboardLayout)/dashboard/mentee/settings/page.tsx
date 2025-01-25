@@ -1,7 +1,18 @@
+'use client';
+import CustomTab from '@/components/ui/CustomTab';
+import ChangePassword from '../../mentor/settings/ChangePassword';
+import DeleteAccount from '../../mentor/settings/DeleteAccount';
+
 const Settings = () => {
       return (
             <div>
-                  <h2>Welcome to the Settings page</h2>
+                  <CustomTab
+                        tabs={[
+                              { key: 'change-password', label: 'Change Password', content: <ChangePassword /> },
+                              { key: 'account', label: 'Account', content: <DeleteAccount /> },
+                        ]}
+                        defaultActiveKey="change-password"
+                  />
             </div>
       );
 };

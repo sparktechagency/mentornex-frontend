@@ -1,7 +1,9 @@
+import BillingTab from '../../mentor/billing/BillingTab';
+
 const Billing = () => {
       return (
             <div>
-                  <h2>Welcome to the Billing page</h2>
+                  <BillingTab />
             </div>
       );
 };
