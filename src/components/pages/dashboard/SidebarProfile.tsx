@@ -10,7 +10,7 @@ import { MdCurrencyExchange, MdDashboard } from 'react-icons/md';
 import { IoHeart, IoLogOut } from 'react-icons/io5';
 import { FaUserFriends } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { showLogoutConfirmModal } from '@/components/ui/LogoutModal';
+import { showConfirmModal } from '@/components/ui/LogoutModal';
 
 const ProfileSidebar = () => {
       const [previewImage, setPreviewImage] = useState<undefined | string>('https://i.ibb.co.com/yN2vT01/me.jpg');
@@ -125,8 +125,14 @@ const ProfileSidebar = () => {
       ];
 
       const handleLogout = () => {
-            showLogoutConfirmModal(() => {
-                  toast.success('Logout successful!');
+            showConfirmModal({
+                  title: 'Logout',
+                  content: 'Are you sure you want to logout?',
+                  okText: 'Logout',
+                  cancelText: 'Cancel',
+                  onConfirm: () => {
+                        toast.success('Logout successful!');
+                  },
             });
       };
       const generateSidebarByUserRole = (userRole: string) => {
