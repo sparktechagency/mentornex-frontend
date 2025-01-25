@@ -42,6 +42,9 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                           labelFontSize: 18,
                                           labelRequiredMarkColor: '#FF6F3C',
                                     },
+                                    DatePicker: {
+                                          controlHeight: 42,
+                                    },
                               },
                         }}
                   >
