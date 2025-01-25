@@ -3,15 +3,21 @@ import { Menu, Avatar } from 'antd';
 import { EditOutlined, HeartOutlined, CalendarOutlined, SettingOutlined } from '@ant-design/icons';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { showLogoutConfirmModal } from '../ui/LogoutModal';
 import { toast } from 'react-toastify';
+import { showConfirmModal } from '../ui/LogoutModal';
 
 const ProfileDropdown = () => {
       const router = useRouter();
 
       const handleLogout = () => {
-            showLogoutConfirmModal(() => {
-                  toast.success('Logout successful!');
+            showConfirmModal({
+                  title: 'Logout',
+                  content: 'Are you sure you want to logout?',
+                  okText: 'Logout',
+                  cancelText: 'Cancel',
+                  onConfirm: () => {
+                        toast.success('Logout successful!');
+                  },
             });
       };
       return (

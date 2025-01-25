@@ -1,27 +1,46 @@
 import { Modal } from 'antd';
-import { IoLogOut } from 'react-icons/io5';
+import React from 'react';
 
-export const showLogoutConfirmModal = (onConfirm: () => void) => {
+interface ConfirmModalOptions {
+      title: string;
+      content: string;
+      icon?: React.ReactNode;
+      okText?: string;
+      cancelText?: string;
+      onConfirm: () => void;
+      onCancel?: () => void;
+      okButtonStyle?: React.CSSProperties;
+      cancelButtonStyle?: React.CSSProperties;
+}
+
+export const showConfirmModal = ({
+      title,
+      content,
+      icon,
+      okText = 'OK',
+      cancelText = 'Cancel',
+      onConfirm,
+      onCancel,
+      okButtonStyle = {
+            backgroundColor: '#FF6F3C',
+            color: '#FFFFFF',
+      },
+      cancelButtonStyle = {
+            backgroundColor: 'transparent',
+            color: '#FF6F3C',
+            border: '1px solid #FF6F3C',
+      },
+}: ConfirmModalOptions) => {
       Modal.confirm({
-            title: 'Logout',
+            title,
             centered: true,
-            content: 'Are you sure you want to logout?',
-            icon: <IoLogOut className="text-primary mx-2" size={25} />,
-            okText: 'Logout',
-            cancelText: 'Cancel',
-            okButtonProps: {
-                  style: {
-                        backgroundColor: '#FF6F3C',
-                        color: '#FFFFFF',
-                  },
-            },
-            cancelButtonProps: {
-                  style: {
-                        backgroundColor: 'transparent',
-                        color: '#FF6F3C',
-                        border: '1px solid #FF6F3C',
-                  },
-            },
+            content,
+            icon,
+            okText,
+            cancelText,
+            okButtonProps: { style: okButtonStyle },
+            cancelButtonProps: { style: cancelButtonStyle },
             onOk: onConfirm,
+            onCancel,
       });
 };
