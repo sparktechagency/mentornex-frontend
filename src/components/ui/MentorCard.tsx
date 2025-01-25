@@ -3,7 +3,8 @@ import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import { BsStarFill } from 'react-icons/bs';
 import { CiMedal } from 'react-icons/ci';
-import { HiOutlineCurrencyDollar, HiOutlineUser } from 'react-icons/hi';
+import { FaCalendarDays } from 'react-icons/fa6';
+import { HiOutlineCurrencyDollar } from 'react-icons/hi';
 import { IoBriefcaseOutline } from 'react-icons/io5';
 type TMentor = {
       id: number;
@@ -64,10 +65,10 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     <Button
                                           href={`/mentors/${mentor.id}`}
                                           style={{ width: '100%' }}
-                                          icon={<HiOutlineUser size={20} />}
+                                          icon={<FaCalendarDays size={20} />}
                                           type="primary"
                                     >
-                                          View Profile
+                                          Book Now
                                     </Button>
                               </div>
                         </div>

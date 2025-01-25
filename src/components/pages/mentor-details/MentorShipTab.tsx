@@ -5,23 +5,19 @@ import { Tabs, Button, Radio, Flex } from 'antd';
 import { useState } from 'react';
 import { IoIosCall, IoMdClock } from 'react-icons/io';
 import { IoChatbox } from 'react-icons/io5';
-import { toast } from 'react-toastify';
 import BookingForm from './booking-modal/BookingForm';
+import SubscriptionForm from './booking-modal/SubscriptionForm';
 
 const { TabPane } = Tabs;
 
 const MentorshipTabs = () => {
       const [bookingModal, setBookingModal] = useState(false);
+      const [subscribeModal, setSubscribeModal] = useState(false);
       const options = [
             { label: 'Lite', value: 'lite' },
             { label: 'Standard', value: 'standard' },
             { label: 'Pro', value: 'pro' },
       ];
-
-      const handleSubscribe = () => {
-            toast.success('Subscription successful!');
-            toast.error('Subscription failed!');
-      };
 
       return (
             <div className="bg-white rounded-lg shadow-lg p-6   max-w-md mx-auto">
@@ -75,7 +71,7 @@ const MentorshipTabs = () => {
                                           </li>
                                     </ul>
                                     <Button
-                                          onClick={handleSubscribe}
+                                          onClick={() => setSubscribeModal(true)}
                                           type="primary"
                                           block
                                           className="mt-6 bg-orange-500 hover:bg-orange-600"
@@ -122,6 +118,9 @@ const MentorshipTabs = () => {
 
                   <Modal title="Book a Session" visible={bookingModal} onCancel={() => setBookingModal(false)} width={700}>
                         <BookingForm />
+                  </Modal>
+                  <Modal title="Subscribe Regular Session" visible={subscribeModal} onCancel={() => setSubscribeModal(false)} width={700}>
+                        <SubscriptionForm />
                   </Modal>
             </div>
       );

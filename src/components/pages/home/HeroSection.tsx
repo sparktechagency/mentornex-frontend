@@ -23,25 +23,34 @@ const HeroSection = () => {
                   {/* Main Content */}
                   <div className="container text-center h-full justify-center items-center">
                         <div className="text-[#202124] flex gap-5 items-center text-center justify-center h-full">
-                              <h1 className="text-[66px] font-bold uppercase">Connect</h1>
+                              <h1 className="text-[72px] font-bold uppercase">Connect</h1>
                               <p className="text-[30px] font-bold">X</p>
-                              <h1 className="text-[66px] font-bold uppercase">Share</h1>
+                              <h1 className="text-[72px] font-bold uppercase">Share</h1>
                               <p className="text-[30px] font-bold">X</p>
-                              <h1 className="text-[66px] font-bold uppercase">Thrive</h1>
+                              <h1 className="text-[72px] font-bold uppercase">Thrive</h1>
                         </div>
 
                         <div className="my-4">
-                              <p className="text-paragraph w-full max-w-[1012px] mx-auto">
+                              <p className="text-paragraph w-full max-w-[1012px] text-lg mx-auto">
                                     Discover the world’s first mentorship platform for connecting people across every industry, where anyone
                                     can share knowledge, learn, and grow.
                               </p>
 
-                              <Space className="my-4">
-                                    <Button iconPosition="end" type="primary" icon={<MdOutlineArrowOutward size={20} />}>
+                              <Space className="my-6">
+                                    <Button
+                                          style={{
+                                                fontSize: 20,
+                                          }}
+                                          iconPosition="end"
+                                          type="primary"
+                                          icon={<MdOutlineArrowOutward size={20} />}
+                                    >
                                           Become a Mentor
                                     </Button>
                                     <Button
                                           style={{
+                                                height: 48,
+                                                fontSize: 20,
                                                 backgroundColor: 'transparent',
                                                 color: '#FF6F3C',
                                                 border: '2px solid #FF6F3C',
