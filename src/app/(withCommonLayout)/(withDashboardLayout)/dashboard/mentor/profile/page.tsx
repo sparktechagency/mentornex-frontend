@@ -2,7 +2,7 @@
 import React from 'react';
 import { Form, Input, Select, Button, AutoComplete } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { countries, timeZones } from '@/const/constant';
+import { countries, languages, timeZones } from '@/const/constant';
 import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterCircle } from 'react-icons/ai';
 import { BiWorld } from 'react-icons/bi';
 
@@ -85,7 +85,13 @@ const MentorProfilePage = () => {
                         </Form.Item>
 
                         <Form.Item label="Language" name="language" rules={[{ required: true }]}>
-                              <Select mode="tags" tokenSeparators={[',']} placeholder="Add languages" />
+                              <Select mode="tags" tokenSeparators={[',']} placeholder="Add languages">
+                                    {languages.map((language, i) => (
+                                          <Select.Option key={i} value={language.value}>
+                                                {language.label}
+                                          </Select.Option>
+                                    ))}
+                              </Select>
                         </Form.Item>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

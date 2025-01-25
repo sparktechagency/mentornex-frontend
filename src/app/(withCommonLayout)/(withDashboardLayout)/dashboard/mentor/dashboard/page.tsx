@@ -1,7 +1,9 @@
+import DashboardCards from './DashboardStatCard';
+
 const MentorDashboard = () => {
       return (
             <div>
-                  <h2>Welcome to the MentorDashboard page</h2>
+                  <DashboardCards />
             </div>
       );
 };
