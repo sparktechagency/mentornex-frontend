@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface Tab {
       key: string;
@@ -21,33 +22,47 @@ const CustomTab: React.FC<ReusableTabProps> = ({ tabs, defaultActiveKey }) => {
 
       return (
             <div className="">
-                  {/* Tab Buttons */}
                   <div className="flex border-b border-gray-200 w-fit">
                         {tabs.map((tab) => (
-                              <button
+                              <motion.button
                                     key={tab.key}
-                                    className={`py-2 px-4 border-b-4 transition-all ${
-                                          activeTab === tab.key
-                                                ? 'border-primary text-primary'
-                                                : 'text-title border-transparent hover:border-primary hover:bg-gray-50'
-                                    }`}
+                                    className={`relative py-2 px-4 transition-all ${activeTab === tab.key ? 'text-primary' : 'text-title'}`}
                                     onClick={() => handleTabChange(tab.key)}
                               >
                                     {tab.label}
-                              </button>
+
+                                    <motion.div
+                                          className="absolute -bottom-1 left-0 h-[4px] bg-primary"
+                                          initial={{ width: 0 }}
+                                          whileHover={{ width: '100%' }}
+                                          animate={{ width: activeTab === tab.key ? '100%' : 0 }}
+                                          transition={{ duration: 0.3 }}
+                                    />
+                              </motion.button>
                         ))}
                   </div>
 
-                  {/* Tab Content */}
-                  <div className="p-4">
+                  <motion.div
+                        className="p-4"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ duration: 0.3 }}
+                  >
                         {tabs.map((tab) =>
                               activeTab === tab.key ? (
-                                    <div key={tab.key} className="text-gray-700">
+                                    <motion.div
+                                          key={tab.key}
+                                          className="text-gray-700"
+                                          initial={{ opacity: 0, scale: 0.95 }}
+                                          animate={{ opacity: 1, scale: 1 }}
+                                          transition={{ duration: 0.3 }}
+                                    >
                                           {tab.content}
-                                    </div>
+                                    </motion.div>
                               ) : null
                         )}
-                  </div>
+                  </motion.div>
             </div>
       );
 };
