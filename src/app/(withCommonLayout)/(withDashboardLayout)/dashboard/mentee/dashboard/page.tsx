@@ -1,7 +1,11 @@
+import ActiveMentorTable from './ActiveMentorTable';
+import DashboardStats from './DashboardStats';
+
 const MenteeDashboard = () => {
       return (
             <div>
-                  <h2>Welcome to the MenteeDashboard page</h2>
+                  <DashboardStats />
+                  <ActiveMentorTable />
             </div>
       );
 };
