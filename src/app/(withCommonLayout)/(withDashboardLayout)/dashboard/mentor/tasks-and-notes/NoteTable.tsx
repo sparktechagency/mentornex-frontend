@@ -2,7 +2,8 @@ import Modal from '@/components/ui/Modal';
 import { Button, Select } from 'antd';
 import { useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
-import AddTaskForm from './form/AddTaskForm';
+import TaskCard from '@/components/ui/TaskCard';
+import AddNoteForm from './form/AddNoteForm';
 
 const NoteTable = () => {
       const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,14 +27,19 @@ const NoteTable = () => {
                               />
                         </div>
                         <div>
-                              <Button onClick={() => setIsModalOpen(true)} icon={<BsPlus color="white" size={20} />} type="primary">
-                                    Add Task
+                              <Button onClick={() => setIsModalOpen(true)} icon={<BsPlus color="white" />} type="primary">
+                                    Add Note
                               </Button>
                         </div>
                   </div>
 
-                  <Modal title="Add Task" visible={isModalOpen} onCancel={() => setIsModalOpen(false)} width={600}>
-                        <AddTaskForm />
+                  <div className="grid grid-cols-3 gap-4 my-4">
+                        {Array.from({ length: 6 }).map((_, index) => (
+                              <TaskCard key={index} />
+                        ))}
+                  </div>
+                  <Modal title="Add Note" visible={isModalOpen} onCancel={() => setIsModalOpen(false)} width={600}>
+                        <AddNoteForm />
                   </Modal>
             </>
       );

@@ -82,7 +82,7 @@ const TaskTable = () => {
                               />
                         </div>
                         <div>
-                              <Button onClick={() => setIsModalOpen(true)} icon={<BsPlus color="white" size={20} />} type="primary">
+                              <Button onClick={() => setIsModalOpen(true)} icon={<BsPlus color="white" />} type="primary">
                                     Add Task
                               </Button>
                         </div>
