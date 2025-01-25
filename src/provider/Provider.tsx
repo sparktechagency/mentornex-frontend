@@ -45,6 +45,9 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                     DatePicker: {
                                           controlHeight: 42,
                                     },
+                                    Table: {
+                                          headerBg: '#FFEEE8',
+                                    },
                               },
                         }}
                   >
