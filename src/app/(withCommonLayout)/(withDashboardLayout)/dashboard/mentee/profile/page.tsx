@@ -1,7 +1,9 @@
+import ProfileInformation from '@/components/shared/ProfileInformation';
+
 const MenteeProfile = () => {
       return (
             <div>
-                  <h2>Welcome to the MenteeProfile page</h2>
+                  <ProfileInformation />
             </div>
       );
 };

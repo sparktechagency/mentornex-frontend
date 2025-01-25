@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 const DeleteAccount = () => {
       const handleDeleteAccount = () => {
             showConfirmModal({
-                  title: 'Close your account',
-                  content: 'Once you delete your account, there’s no going back. Please be certain!',
+                  title: 'Are You Sure You Want to Delete Your Account?',
+                  content: 'This action is permanent, and all your data will be erased. If you’re sure, please confirm your decision',
                   okText: 'Delete Account',
                   cancelText: 'Cancel',
                   onConfirm: () => {

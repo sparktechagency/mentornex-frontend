@@ -43,7 +43,7 @@ const ProfileDropdown = () => {
                               }}
                               key="profile"
                         >
-                              <div className="flex">
+                              <div className="flex gap-3">
                                     <Avatar size={40} src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`} />
                                     <div>
                                           <h3 className="font-semibold">Sazzad Chowdhury</h3>
