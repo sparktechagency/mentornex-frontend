@@ -4,27 +4,30 @@ import { Button, Carousel, Input } from 'antd';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 import { BsSearch } from 'react-icons/bs';
-
+import Img1 from '@/assets/images/industry/img1.jpg';
+import Img2 from '@/assets/images/industry/img2.jpg';
+import Img3 from '@/assets/images/industry/img3.jpg';
+import Img4 from '@/assets/images/industry/img4.jpg';
 const cardData = [
       {
             title: 'Programming',
             mentorsAvailable: 10,
-            image: 'https://cdn.pixabay.com/photo/2024/05/27/03/34/brain-8789959_640.jpg',
+            image: Img1,
       },
       {
             title: 'Artificial Intelligence',
             mentorsAvailable: 10,
-            image: 'https://cdn.pixabay.com/photo/2017/05/30/11/17/heart-2356621_640.png',
+            image: Img2,
       },
       {
             title: 'Design & Creative',
             mentorsAvailable: 10,
-            image: 'https://cdn.pixabay.com/photo/2024/06/20/03/24/ai-generated-8841092_640.jpg',
+            image: Img3,
       },
       {
             title: 'Data Science',
             mentorsAvailable: 10,
-            image: 'https://cdn.pixabay.com/photo/2019/12/20/06/24/transformation-4707719_1280.jpg',
+            image: Img4,
       },
 ];
 
@@ -87,7 +90,7 @@ function IndustrySection() {
                                           <div key={card.title} className="px-4">
                                                 <div
                                                       style={{
-                                                            backgroundImage: `url('${card.image}')`,
+                                                            backgroundImage: `url('${card.image.src}')`,
                                                             backgroundSize: 'cover',
                                                             backgroundPosition: 'center',
                                                             backgroundRepeat: 'no-repeat',
