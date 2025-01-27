@@ -39,11 +39,9 @@
       }
 }
 .bg-gradient-image {
-      background-image: url('../assets/images/about/about.jpg');
+      background-image: url('../assets/images/about/about-bg.svg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       height: fit-content;
-      background-color: #ff703cdc;
-      background-blend-mode: multiply;
 }

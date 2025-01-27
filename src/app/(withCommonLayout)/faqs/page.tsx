@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { Collapse } from 'antd';
+import NeedHelpSection from './NeedHelpSection';
 
 const { Panel } = Collapse;
 
@@ -50,29 +51,32 @@ const FAQPage = () => {
       ];
 
       return (
-            <div className="faq-section min-h-screen max-w-4xl mx-auto p-6 my-20">
-                  <h2 className="text-4xl lg:text-[150px] font-bold text-[#05264E] text-start mb-4">FAQs</h2>
-                  <p className="text-start text-gray-600 mb-8 mt-20">
-                        Get answers to your questions and learn how MentorNex can help you achieve your goals.
-                  </p>
+            <div>
+                  <div className="faq-section  max-w-4xl mx-auto p-6 my-20">
+                        <h2 className="text-4xl lg:text-[150px] font-bold text-[#05264E] text-start mb-4">FAQs</h2>
+                        <p className="text-start text-gray-600 mb-8 mt-20">
+                              Get answers to your questions and learn how MentorNex can help you achieve your goals.
+                        </p>
 
-                  <Collapse
-                        onChange={(key) => setActiveKey(key[0])}
-                        accordion
-                        expandIconPosition="end"
-                        bordered={false}
-                        activeKey={activeKey}
-                  >
-                        {faqs.map((faq, index) => (
-                              <Panel
-                                    header={<h2 className="text-title font-medium text-lg">{faq.question}</h2>}
-                                    key={index.toString()}
-                                    style={customPanelStyle(index.toString())}
-                              >
-                                    <p>{faq.answer}</p>
-                              </Panel>
-                        ))}
-                  </Collapse>
+                        <Collapse
+                              onChange={(key) => setActiveKey(key[0])}
+                              accordion
+                              expandIconPosition="end"
+                              bordered={false}
+                              activeKey={activeKey}
+                        >
+                              {faqs.map((faq, index) => (
+                                    <Panel
+                                          header={<h2 className="text-title font-medium text-lg">{faq.question}</h2>}
+                                          key={index.toString()}
+                                          style={customPanelStyle(index.toString())}
+                                    >
+                                          <p>{faq.answer}</p>
+                                    </Panel>
+                              ))}
+                        </Collapse>
+                  </div>
+                  <NeedHelpSection />
             </div>
       );
 };
