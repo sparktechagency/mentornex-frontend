@@ -6,21 +6,24 @@ import About3 from '@/assets/images/about/about3.png';
 // Data Array
 const sections = [
       {
-            title: 'Our Mission',
-            content: 'Our mission is to create a mentorship experience that is seamless, enriching, and meaningful. By fostering connections between mentors and mentees, we ensure that the process is impactful and transformative for both. MENTORNEX empowers people to grow, overcome obstacles, and thrive in their personal and professional lives.',
-            image: About1,
+            title: 'Our Story',
+            content: 'MENTORNEX was founded by Paulius Misiura, who was born in a small town in Lithuania. From an early age, Paulius was passionate about teaching and helping people grow. Despite his own aspirations, he often found it challenging to find guidance from someone who truly understood his unique struggles and experiences. This personal journey inspired him to create a platform that offers the support and understanding he once sought, ensuring that everyone can find the guidance they need to achieve their goals.',
+
+            image: About3,
             reverse: false,
       },
       {
-            title: 'Our Story',
-            content: 'MENTORNEX was founded by Paulus Misliura, who grew up in a small town in Lithuania. From an early age, Paulus was passionate about teaching and helping others grow. His own struggles in finding mentorship that understood his unique challenges inspired him to create this platform. MENTORNEX is the realization of his vision to provide others with the guidance and support he once sought, making mentorship accessible to everyone.',
+            title: 'Our Mission',
+            content: 'We are committed to fostering an inclusive community where everyone, regardless of background or experience, has access to guidance that propels them forward. At MENTORNEX, we aim to break down barriers, encourage collaboration, and build lasting connections that drive progress and personal development.',
+
             image: About2,
             reverse: true,
       },
+
       {
             title: 'Our Vision',
-            content: 'We aim to build a global network of knowledge-sharing where every interaction fosters growth, learning, and transformation. At MENTORNEX, we are committed to breaking barriers, encouraging collaboration, and forming lasting connections. By creating an inclusive community where people from all backgrounds can access mentorship, we strive to help everyone achieve their goals and fulfill their potential.',
-            image: About3,
+            content: 'Our vision is simple but powerful: to create a global network of knowledge-sharing where every interaction is an opportunity for growth, learning, and transformation. We are dedicated to making MENTORNEX a platform that empowers, educates, and elevates everyone, helping them achieve their goals with the support of those who’ve walked the path before.',
+            image: About1,
             reverse: false,
       },
 ];
