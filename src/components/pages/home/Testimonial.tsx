@@ -4,6 +4,7 @@ import { Button, Carousel } from 'antd';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { MdOutlineArrowOutward } from 'react-icons/md';
+import { IoMdStar } from 'react-icons/io';
 
 // Testimonial data
 const testimonials = [
@@ -57,40 +58,49 @@ function Testimonial() {
                                     ]}
                                     ref={carouselRef}
                                     dots={false}
-                                    slidesToShow={3}
+                                    slidesToShow={2}
                                     slidesToScroll={1}
                                     autoplay
                                     className="mx-12"
                               >
                                     {testimonials.map((testimonial) => (
-                                          <div key={testimonial.id} className="px-4">
-                                                <div className="bg-white rounded-lg p-6">
-                                                      <div className="flex gap-1 mb-4">
-                                                            {[1, 2, 3, 4, 5].map((star) => (
-                                                                  <svg
-                                                                        key={star}
-                                                                        className="w-5 h-5 text-yellow-400"
-                                                                        fill="currentColor"
-                                                                        viewBox="0 0 20 20"
-                                                                  >
-                                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                                  </svg>
-                                                            ))}
+                                          <div key={testimonial.id} className="p-4 bg-white ">
+                                                <div className="relative  rounded-xl  overflow-hidden p-6 bg-white shadow-lg">
+                                                      {/* Shape in the bottom-left corner */}
+                                                      <div className="absolute -z-10 -bottom-20 -left-20 size-[205px] bg-[#fff1ec]  rounded-full"></div>
+
+                                                      <div className="space-y-6">
+                                                            <p className="text-base font-normal leading-relaxed">
+                                                                  Lorem ipsum dolor sit amet consectetur. Quis vestibulum turpis egestas
+                                                                  porta curabitur. Porttitor leo duis fringilla sed id. Volutpat a potenti
+                                                                  amet eu. Et felis volutpat elementum diam volutpat cursus lacus. Ut
+                                                                  accumsan egestas at nunc gravida amet nunc. Sed habitasse vestibulum
+                                                                  ullamcorper pharetra.
+                                                            </p>
                                                       </div>
 
-                                                      <p className="text-gray-700 mb-6">{testimonial.content}</p>
-
-                                                      <div className="flex items-center">
+                                                      <div className="flex items-center mt-6">
                                                             <Image
                                                                   height={100}
                                                                   width={100}
-                                                                  src={testimonial.image}
-                                                                  alt={testimonial.name}
-                                                                  className="w-12 h-12 rounded-full object-cover mr-4"
+                                                                  className="size-[135px] rounded-full mr-4"
+                                                                  src="https://randomuser.me/api/portraits/men/22.jpg"
+                                                                  alt="Victoria Wotton"
                                                             />
-                                                            <div>
-                                                                  <h3 className="font-semibold text-gray-900">{testimonial.name}</h3>
-                                                                  <p className="text-gray-600 text-sm">{testimonial.role}</p>
+                                                            <div className="flex flex-col">
+                                                                  <h3 className="text-[20px] rounded-tl-xl text-[#000000] bg-[#E8E8E8]   p-2  rounded-tr-xl font-bold">
+                                                                        Victoria Wotton
+                                                                  </h3>
+                                                                  <p className="text-sm text-title bg-[#F2F2F2] p-2 rounded-bl-xl ">
+                                                                        Fementum Odio Co.
+                                                                  </p>
+                                                                  <div className="flex text-yellow-400 mt-1">
+                                                                        <IoMdStar size={20} />
+                                                                        <IoMdStar size={20} />
+                                                                        <IoMdStar size={20} />
+                                                                        <IoMdStar size={20} />
+                                                                        <IoMdStar size={20} />
+                                                                  </div>
                                                             </div>
                                                       </div>
                                                 </div>
