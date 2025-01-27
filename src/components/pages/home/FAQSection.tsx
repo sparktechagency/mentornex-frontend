@@ -51,7 +51,7 @@ const FAQSection = () => {
 
       return (
             <div className="faq-section max-w-4xl mx-auto p-6 my-20">
-                  <h2 className="text-4xl font-bold text-[#05264E] text-center mb-4">Frequently Asked Questions</h2>
+                  <h2 className="text-2xl md:text-4xl font-bold text-[#05264E] text-center mb-4">Frequently Asked Questions</h2>
                   <p className="text-center text-gray-600 mb-8">
                         Get answers to your questions and learn how MentorNex can help you achieve your goals.
                   </p>

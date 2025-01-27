@@ -13,7 +13,7 @@ import Image2 from '@/assets/images/industry/2.png';
 import Image3 from '@/assets/images/industry/3.png';
 import Image4 from '@/assets/images/industry/4.png';
 
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 
 export const mentorShipFeatures = [
@@ -44,13 +44,17 @@ export const mentorShipFeatures = [
 ];
 function MentorshipFeature() {
       return (
-            <div className="  bg-primary-100 py-40 flex flex-col items-center px-4">
+            <div className="  bg-primary-100 py-40 flex flex-col items-center md:px-4">
                   <div className="container  mx-auto">
-                        <h1 className="text-4xl font-bold text-center text-title mb-3">Top Mentors of the Month</h1>
-                        <p className="text-center text-paragraph mb-16">Meet the Top Mentors of the Month from Various Industries.</p>
+                        <h1 className=" text-2xl md:text-4xl font-bold text-center text-title mb-3">
+                              A Platform Designed for Real Results
+                        </h1>
+                        <p className="text-center text-paragraph mb-16">
+                              See how our expert mentorship is helping users achieve their goals across the globe.
+                        </p>
 
                         <div>
-                              <div className="mx-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center">
+                              <div className="md:mx-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center">
                                     {mentorShipFeatures.map((mentor) => (
                                           <div key={mentor.id}>
                                                 <div className="bg-white rounded-xl p-5 h-full  flex flex-col">
@@ -73,7 +77,7 @@ function MentorshipFeature() {
                               </div>
 
                               <div className="flex justify-center my-2">
-                                    <Space className="my-4">
+                                    <div className="my-4 flex flex-col md:flex-row items-center justify-center gap-3">
                                           <Button iconPosition="end" type="primary" icon={<MdOutlineArrowOutward size={20} />}>
                                                 Become a Mentor
                                           </Button>
@@ -89,7 +93,7 @@ function MentorshipFeature() {
                                           >
                                                 Become a Mentee
                                           </Button>
-                                    </Space>
+                                    </div>
                               </div>
                         </div>
                   </div>

@@ -40,7 +40,7 @@ function IndustrySection() {
       return (
             <div className="  bg-primary-100/30 py-40 flex flex-col items-center px-4">
                   <div className="container  mx-auto">
-                        <h1 className="text-4xl font-bold text-center text-title mb-3">What Is Your Industry?</h1>
+                        <h1 className="text-2xl md:text-4xl font-bold text-center text-title mb-3">What Is Your Industry?</h1>
                         <p className="text-center text-paragraph mb-16">
                               Forge connections with industry leaders and experts who can elevate your career and unlock your full
                               potential.
@@ -84,10 +84,10 @@ function IndustrySection() {
                                     slidesToShow={4}
                                     slidesToScroll={1}
                                     autoplay
-                                    className="mx-12"
+                                    className="md:mx-12"
                               >
                                     {cardData.map((card) => (
-                                          <div key={card.title} className="px-4">
+                                          <div key={card.title} className="md:px-4">
                                                 <div
                                                       style={{
                                                             backgroundImage: `url('${card.image.src}')`,

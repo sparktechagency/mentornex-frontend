@@ -16,7 +16,7 @@ const ContactSection = () => {
                         <Avatar src={Profile3.src} size={60} alt="User 3" className="ring-2 ring-white" />
                   </div>
 
-                  <h2 className="text-3xl font-bold text-title">Still Have Questions?</h2>
+                  <h2 className="text-2xl md:text-3xl font-bold text-title">Still Have Questions?</h2>
 
                   <p className="text-paragraph text-sm max-w-xl">
                         Can&apos;t find the answer you’re looking for? Not sure which Mentor is right for you? <br />

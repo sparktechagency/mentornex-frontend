@@ -16,9 +16,9 @@ function TopMentors() {
       const previous = () => carouselRef.current?.prev();
 
       return (
-            <div className="  bg-primary-100 py-40 flex flex-col items-center px-4">
+            <div className="  bg-primary-100 py-40 flex flex-col items-center md:px-4">
                   <div className="container  mx-auto">
-                        <h1 className="text-4xl font-bold text-center text-title mb-3">Top Mentors of the Month</h1>
+                        <h1 className="text-2xl md:text-4xl  font-bold text-center text-title mb-3">Top Mentors of the Month</h1>
                         <p className="text-center text-paragraph mb-16">Meet the Top Mentors of the Month from Various Industries.</p>
 
                         <div className="relative">
@@ -37,10 +37,10 @@ function TopMentors() {
                                     slidesToShow={4}
                                     slidesToScroll={1}
                                     autoplay
-                                    className="mx-12"
+                                    className="md:mx-12"
                               >
                                     {mentors.map((mentor) => (
-                                          <div key={mentor.id} className="px-2">
+                                          <div key={mentor.id} className="px-4">
                                                 <div className="bg-white rounded-xl p-2">
                                                       <div className="relative">
                                                             <Image

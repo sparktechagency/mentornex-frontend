@@ -38,9 +38,9 @@ function Testimonial() {
       const previous = () => carouselRef.current?.prev();
 
       return (
-            <div className="  bg-primary-100/30 py-40 flex flex-col items-center px-4">
+            <div className="  bg-primary-100/30 py-40 flex flex-col items-center md:px-4">
                   <div className="container  mx-auto">
-                        <h1 className="text-4xl font-bold text-center text-title mb-3">What Our Users Are Saying</h1>
+                        <h1 className="text-2xl md:text-4xl font-bold text-center text-title mb-3">What Our Users Are Saying</h1>
                         <p className="text-center text-paragraph mb-16">
                               Hear from mentees who have transformed their careers with the help of expert mentors.
                         </p>
@@ -61,7 +61,7 @@ function Testimonial() {
                                     slidesToShow={2}
                                     slidesToScroll={1}
                                     autoplay
-                                    className="mx-12"
+                                    className="md:mx-12"
                               >
                                     {testimonials.map((testimonial) => (
                                           <div key={testimonial.id} className="p-4 bg-white ">
@@ -70,7 +70,7 @@ function Testimonial() {
                                                       <div className="absolute -z-10 -bottom-20 -left-20 size-[205px] bg-[#fff1ec]  rounded-full"></div>
 
                                                       <div className="space-y-6">
-                                                            <p className="text-base font-normal leading-relaxed">
+                                                            <p className="text-base font-normal leading-relaxed line-clamp-5">
                                                                   Lorem ipsum dolor sit amet consectetur. Quis vestibulum turpis egestas
                                                                   porta curabitur. Porttitor leo duis fringilla sed id. Volutpat a potenti
                                                                   amet eu. Et felis volutpat elementum diam volutpat cursus lacus. Ut

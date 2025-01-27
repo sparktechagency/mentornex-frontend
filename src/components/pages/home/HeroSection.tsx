@@ -19,7 +19,7 @@ const HeroSection = () => {
       ];
 
       return (
-            <div className="bg-gradient-to-b from-primary-100 to-primary-200 min-h-[calc(100vh-96px)] flex flex-col justify-center items-center relative">
+            <div className="bg-gradient-to-b from-primary-100 to-primary-200 min-h-[calc(100vh-96px)] py-10 flex flex-col justify-center items-center relative">
                   {/* Main Content */}
                   <div className="container text-center h-full justify-center items-center">
                         <div className="text-[#202124] flex flex-col md:flex-row  gap-5 items-center text-center justify-center h-full">
