@@ -5,7 +5,7 @@ import { languages } from '@/const/constant';
 import Sider from 'antd/es/layout/Sider';
 import { LiaRedoAltSolid } from 'react-icons/lia';
 
-const MentorFilter = ({ collapsed }: { collapsed: boolean }) => {
+const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (collapsed: boolean) => void }) => {
       const [min, setMin] = useState(0);
       const [max, setMax] = useState(1000);
 
@@ -27,8 +27,10 @@ const MentorFilter = ({ collapsed }: { collapsed: boolean }) => {
                   width={300}
                   theme="light"
                   trigger={null}
-                  collapsible
+                  // collapsible
+                  collapsedWidth="0"
                   collapsed={collapsed}
+                  onCollapse={(isCollapsed) => setCollapsed(isCollapsed)}
             >
                   <div className="bg-white rounded-lg  mb-6 h">
                         <Collapse

@@ -36,7 +36,7 @@ const ProfileDropdown = () => {
                         ></div>
                         <Menu.Item
                               onClick={() => {
-                                    router.push('/dashboard/mentee/profile');
+                                    router.push('/dashboard/mentor/profile');
                               }}
                               style={{
                                     marginBottom: 10,

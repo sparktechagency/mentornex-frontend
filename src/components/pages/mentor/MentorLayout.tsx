@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Input, Layout, Pagination, Select, theme } from 'antd';
 import { BsSearch } from 'react-icons/bs';
 import MentorFilter from './MentorFilter';
 import { mentors } from '@/const/constant';
 import MentorCard from '@/components/ui/MentorCard';
+import { AiOutlineLeftSquare, AiOutlineRightSquare } from 'react-icons/ai';
 
 const { Header, Content } = Layout;
 
@@ -18,11 +18,11 @@ const MentorLayout: React.FC = () => {
 
       return (
             <div className="container">
-                  <div className="hidden">
+                  <div className="block md:hidden">
                         <Header style={{ padding: 0, background: colorBgContainer }}>
                               <Button
                                     type="text"
-                                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                                    icon={collapsed ? <AiOutlineRightSquare size={30} /> : <AiOutlineLeftSquare size={30} />}
                                     onClick={() => setCollapsed(!collapsed)}
                                     style={{
                                           fontSize: '16px',
@@ -33,7 +33,7 @@ const MentorLayout: React.FC = () => {
                         </Header>
                   </div>
 
-                  <div className="flex justify-between items-center my-6">
+                  <div className="flex flex-wrap gap-4 justify-between items-center my-6">
                         <div className="w-full max-w-[300px]">
                               <Input suffix={<BsSearch className="text-subtitle" size={20} />} placeholder="Search" />
                         </div>
@@ -51,13 +51,14 @@ const MentorLayout: React.FC = () => {
                   </div>
 
                   <Layout>
-                        <MentorFilter collapsed={collapsed} />
+                        <MentorFilter collapsed={collapsed} setCollapsed={setCollapsed} />
 
                         <Layout>
                               <Content
+                                    className="overflow-x-scroll custom-scrollbar hide-scrollbar"
                                     style={{
                                           margin: '0px 16px',
-                                          padding: 24,
+                                          // padding: 24,
                                           minHeight: 280,
                                           background: 'transparent',
                                           borderRadius: borderRadiusLG,
