@@ -50,7 +50,7 @@ const AboutZigZag = () => {
                                           />
                                     </div>
                                     <div className="w-full md:w-1/2 px-4">
-                                          <h2 className="text-2xl font-semibold text-[#000033] mb-4">{section.title}</h2>
+                                          <h2 className="text-2xl font-semibold text-[#000033] my-4">{section.title}</h2>
                                           <p className="text-sm text-[#333333] leading-6">{section.content}</p>
                                     </div>
                               </div>
