@@ -12,8 +12,8 @@ const NavItems = ({ items, onClose }: { items: any[]; onClose?: () => void }) =>
                         <Link
                               key={index}
                               onClick={onClose}
-                              className={`text-text-primary leading-4 ${
-                                    pathname === item.path ? ' p-2 text-primary rounded drop-shadow' : ''
+                              className={`text-text-primary  leading-4 ${
+                                    pathname === item.path ? ' p-2 text-primary rounded drop-shadow' : 'text-title'
                               }`}
                               href={item.path}
                         >
