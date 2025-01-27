@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 
-import Logo from '@/assets/images/logo.svg';
+import Logo from '@/assets/images/logo-footer.svg';
 import Link from 'next/link';
 import Image from 'next/image';
 
