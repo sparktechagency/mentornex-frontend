@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Space } from 'antd';
+import { Button } from 'antd';
 import { MdOutlineArrowOutward } from 'react-icons/md';
 
 import profile1 from '@/assets/images/hero-section/profile1.svg';
@@ -22,12 +22,12 @@ const HeroSection = () => {
             <div className="bg-gradient-to-b from-primary-100 to-primary-200 min-h-[calc(100vh-96px)] flex flex-col justify-center items-center relative">
                   {/* Main Content */}
                   <div className="container text-center h-full justify-center items-center">
-                        <div className="text-[#202124] flex gap-5 items-center text-center justify-center h-full">
-                              <h1 className="text-[72px] font-bold uppercase">Connect</h1>
+                        <div className="text-[#202124] flex flex-col md:flex-row  gap-5 items-center text-center justify-center h-full">
+                              <h1 className="text-3xl md:text-[72px] font-bold uppercase">Connect</h1>
+                              <p className=" text-[30px] font-bold">X</p>
+                              <h1 className="text-3xl md:text-[72px] font-bold uppercase">Share</h1>
                               <p className="text-[30px] font-bold">X</p>
-                              <h1 className="text-[72px] font-bold uppercase">Share</h1>
-                              <p className="text-[30px] font-bold">X</p>
-                              <h1 className="text-[72px] font-bold uppercase">Thrive</h1>
+                              <h1 className="text-3xl md:text-[72px] font-bold uppercase">Thrive</h1>
                         </div>
 
                         <div className="my-4">
@@ -36,7 +36,7 @@ const HeroSection = () => {
                                     can share knowledge, learn, and grow.
                               </p>
 
-                              <Space className="my-6">
+                              <div className="my-6 flex flex-col md:flex-row items-center gap-3 justify-center">
                                     <Button
                                           style={{
                                                 fontSize: 20,
@@ -61,7 +61,7 @@ const HeroSection = () => {
                                     >
                                           Become a Mentee
                                     </Button>
-                              </Space>
+                              </div>
                         </div>
 
                         <div>
