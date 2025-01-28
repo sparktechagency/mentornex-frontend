@@ -83,7 +83,7 @@ function Testimonial() {
                                                             <Image
                                                                   height={100}
                                                                   width={100}
-                                                                  className="size-[135px] rounded-full mr-4"
+                                                                  className="size-[100px] md:size-[135px] rounded-full mr-4"
                                                                   src="https://randomuser.me/api/portraits/men/22.jpg"
                                                                   alt="Victoria Wotton"
                                                             />

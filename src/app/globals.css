@@ -39,7 +39,7 @@
       }
 }
 .bg-gradient-image {
-      background-image: url('../assets/images/about/about-bg.svg');
+      background-image: url('/about-bg.svg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
