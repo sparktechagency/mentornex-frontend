@@ -38,21 +38,21 @@ const MentorProfileDetails = () => {
 
       return (
             <div>
-                  <div className="bg-primary-100 h-[250px]">
+                  <div className="bg-primary-100 h-[150px] md:h-[250px]">
                         <MentorSocialLinks />
                   </div>
 
                   <div className="">
                         <div className="container">
-                              <div className="flex gap-10">
-                                    <div className="w-full max-w-[300px] -mt-[120px]">
+                              <div className="flex flex-col md:flex-row items-center  md:gap-10">
+                                    <div className="w-full  md:max-w-[300px] md:-mt-[120px]">
                                           <MentorBookCard mentor={mentors[0]} />
                                     </div>
                                     <MentorOverviewAndReview />
                               </div>
 
                               <div className="my-10  grid-cols-12 grid gap-5">
-                                    <div className="col-span-7  space-y-8 ">
+                                    <div className="col-span-12 md:col-span-7  space-y-8 ">
                                           <div>
                                                 <h1 className="text-xl font-bold text-title mb-4">Expertise</h1>
                                                 <div className="bg-white drop-shadow-lg border  rounded-xl p-6 flex flex-wrap gap-4">
@@ -104,7 +104,7 @@ const MentorProfileDetails = () => {
                                                 </div>
                                           </div>
                                     </div>
-                                    <div className="col-span-5">
+                                    <div className="col-span-12 md:col-span-5">
                                           <MentorshipTabs />
                                     </div>
                               </div>

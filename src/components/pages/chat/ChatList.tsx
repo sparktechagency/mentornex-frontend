@@ -1,9 +1,10 @@
+'use client';
 import { Avatar, Badge, Flex, Input, Tabs } from 'antd';
 import { useRouter } from 'next/navigation';
 import { BsSearch } from 'react-icons/bs';
 const { TabPane } = Tabs;
 
-const ChatList = () => {
+const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => void }) => {
       const router = useRouter();
 
       const chatList = [
@@ -69,7 +70,10 @@ const ChatList = () => {
                                           {chatList.map((chat, index) => (
                                                 <div
                                                       key={index}
-                                                      onClick={() => router.push(`/chat/${chat.id}`)}
+                                                      onClick={() => {
+                                                            router.push(`/chat/${chat.id}`);
+                                                            setIsChatActive(true);
+                                                      }}
                                                       className={`flex items-center gap-4 p-4 cursor-pointer rounded-lg border-b`}
                                                 >
                                                       <Badge

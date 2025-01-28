@@ -58,9 +58,11 @@ const Navbar = () => {
                                     </Link>
 
                                     <div className="flex items-center gap-6 my-8">
-                                          <Badge dot color="#FF6F3C">
-                                                <BiMessage style={{ fontSize: '24px', color: '#333' }} />
-                                          </Badge>
+                                          <Link href="/chat">
+                                                <Badge dot color="#FF6F3C">
+                                                      <BiMessage style={{ fontSize: '24px', color: '#333' }} />
+                                                </Badge>
+                                          </Link>
 
                                           <Dropdown
                                                 className="cursor-pointer"

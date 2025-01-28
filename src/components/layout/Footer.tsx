@@ -27,10 +27,10 @@ const linkSections = [
       {
             title: 'Important Links',
             links: [
-                  { label: 'Faq', href: '/faqs' },
+                  { label: 'FAQs', href: '/faqs' },
                   { label: 'Terms & Conditions', href: '/terms-and-conditions' },
                   { label: 'Privacy Policy', href: '/privacy-policy' },
-                  { label: 'Blog', href: '/blogs' },
+                  // { label: 'Blog', href: '/blogs' },
             ],
       },
 ];

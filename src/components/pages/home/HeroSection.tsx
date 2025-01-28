@@ -22,7 +22,7 @@ const HeroSection = () => {
             <div className="bg-gradient-to-b from-primary-100 to-primary-200 min-h-[calc(100vh-96px)] py-10 flex flex-col justify-center items-center relative">
                   {/* Main Content */}
                   <div className="container text-center h-full justify-center items-center">
-                        <div className="text-[#202124] flex flex-col md:flex-row  gap-5 items-center text-center justify-center h-full">
+                        <div className="text-[#202124] relative z-[1] flex flex-col md:flex-row  gap-5 items-center text-center justify-center h-full">
                               <h1 className="text-3xl md:text-[72px] font-bold uppercase">Connect</h1>
                               <p className=" text-[30px] font-bold">X</p>
                               <h1 className="text-3xl md:text-[72px] font-bold uppercase">Share</h1>

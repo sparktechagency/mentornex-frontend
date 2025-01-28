@@ -9,7 +9,7 @@ const RegularSessionSlotSelection = () => {
                         {/* Title */}
                         <h3 className="text-lg font-semibold">Available Day</h3>
                   </div>
-                  <div className="flex space-x-4">
+                  <div className="md:flex grid grid-cols-3 gap-2 md:space-x-1">
                         {days.map((day, index) => (
                               <div
                                     key={index}
