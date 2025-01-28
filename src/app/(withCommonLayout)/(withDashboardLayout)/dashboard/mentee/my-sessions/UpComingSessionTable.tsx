@@ -1,7 +1,7 @@
 'use client';
-import { Button, Space, Table } from 'antd';
+import { Button, Space, Table, Tooltip } from 'antd';
 import Image from 'next/image';
-import { GrCalendar } from 'react-icons/gr';
+import { GrCalendar, GrVideo } from 'react-icons/gr';
 import { RxCross2 } from 'react-icons/rx';
 
 const data = [
@@ -113,8 +113,37 @@ const columns = [
             key: 'action',
             render: () => (
                   <Space>
-                        <Button icon={<RxCross2 />} type="primary" danger size="small"></Button>
-                        <Button icon={<GrCalendar />} type="primary" size="small"></Button>
+                        <Tooltip title="Cancel">
+                              <Button
+                                    icon={<RxCross2 />}
+                                    style={{
+                                          backgroundColor: '#FF0000',
+                                    }}
+                                    type="primary"
+                                    danger
+                                    size="small"
+                              ></Button>
+                        </Tooltip>
+                        <Tooltip title="Reschedule">
+                              <Button
+                                    icon={<GrCalendar />}
+                                    style={{
+                                          backgroundColor: '#FFC107',
+                                    }}
+                                    type="primary"
+                                    size="small"
+                              ></Button>
+                        </Tooltip>
+                        <Tooltip title="Join Session">
+                              <Button
+                                    icon={<GrVideo />}
+                                    style={{
+                                          backgroundColor: 'green',
+                                    }}
+                                    type="primary"
+                                    size="small"
+                              ></Button>
+                        </Tooltip>
                   </Space>
             ),
       },

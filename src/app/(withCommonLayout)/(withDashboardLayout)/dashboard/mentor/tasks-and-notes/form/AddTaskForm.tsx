@@ -29,6 +29,20 @@ const AddTaskForm = () => {
                         <Input placeholder="Enter task title" />
                   </Form.Item>
 
+                  <Form.Item label="Priority" name="priority" rules={[{ required: true, message: 'Please select the task priority' }]}>
+                        <Select
+                              placeholder="Select a priority"
+                              style={{ width: '100%' }}
+                              defaultActiveFirstOption={false}
+                              options={[
+                                    { value: 'low', label: 'Low' },
+                                    { value: 'medium', label: 'Medium' },
+                                    { value: 'high', label: 'High' },
+                                    { value: 'urgent', label: 'Urgent' },
+                              ]}
+                        />
+                  </Form.Item>
+
                   <Form.Item
                         label="Description"
                         name="description"

@@ -48,6 +48,10 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                     Table: {
                                           headerBg: '#FFEEE8',
                                     },
+                                    Rate: {
+                                          starColor: '#FF6F3C',
+                                          starSize: 40,
+                                    },
                               },
                         }}
                   >
