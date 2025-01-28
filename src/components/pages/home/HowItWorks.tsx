@@ -7,10 +7,10 @@ import Image from 'next/image';
 const HowItWorks = () => {
       return (
             <div className="bg-[#FFFDF8] py-16">
-                  <div className="container mx-auto flex flex-col items-center space-y-8">
+                  <div className="md:container overflow-x-hidden mx-auto flex flex-col items-center space-y-8">
                         {/* First Image Animation */}
                         <motion.div
-                              className="w-full flex justify-start"
+                              className="w-[120%] md:w-full flex justify-start"
                               initial={{ x: '-100px', opacity: 0 }}
                               whileInView={{ x: 0, opacity: 1 }}
                               transition={{ duration: 1 }}
