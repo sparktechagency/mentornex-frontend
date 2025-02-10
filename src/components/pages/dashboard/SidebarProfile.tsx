@@ -26,16 +26,16 @@ const ProfileSidebar = () => {
 
       const sidebarItemsMentees = [
             {
-                  key: 'profile',
-                  icon: <FaUserGear size={20} />,
-                  label: 'Profile',
-                  href: '/dashboard/mentee/profile',
-            },
-            {
                   key: 'dashboard',
                   icon: <MdDashboard size={20} />,
                   label: 'Dashboard',
                   href: '/dashboard/mentee/dashboard',
+            },
+            {
+                  key: 'profile',
+                  icon: <FaUserGear size={20} />,
+                  label: 'Profile',
+                  href: '/dashboard/mentee/profile',
             },
 
             {
@@ -74,18 +74,19 @@ const ProfileSidebar = () => {
 
       const sidebarItemsMentors = [
             {
+                  key: 'dashboard',
+                  icon: <MdDashboard size={20} />,
+                  label: 'Dashboard',
+                  href: '/dashboard/mentor/dashboard',
+            },
+            {
                   key: 'profile',
                   icon: <FaUserGear size={20} className="text-white" />,
                   label: 'Profile',
                   href: '/dashboard/mentor/profile',
                   selected: true,
             },
-            {
-                  key: 'dashboard',
-                  icon: <MdDashboard size={20} />,
-                  label: 'Dashboard',
-                  href: '/dashboard/mentor/dashboard',
-            },
+
             {
                   key: 'my-session',
                   icon: <FaHourglassEnd size={20} />,
@@ -167,7 +168,7 @@ const ProfileSidebar = () => {
                   </div>
 
                   {/* Menu Section */}
-                  <Menu mode="vertical" defaultSelectedKeys={['profile']} className="w-full">
+                  <Menu mode="vertical" defaultSelectedKeys={['dashboard']} className="w-full">
                         {generateSidebarByUserRole(userRole).map((item) => {
                               if (item.key === 'logout') {
                                     return (
