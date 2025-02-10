@@ -1,9 +1,10 @@
 import { mentors } from '@/const/constant';
-import MentorSocialLinks from './MentorSocialLinks';
 import MentorOverviewAndReview from './MentorOverviewAndReview';
 import { PiBriefcaseLight, PiGraduationCapLight } from 'react-icons/pi';
 import MentorshipTabs from './MentorShipTab';
 import MentorBookCard from '@/components/ui/MentorBookCard';
+
+import ProfileBanner from '@/components/shared/ProfileBanner';
 
 const MentorProfileDetails = () => {
       const experiences = [
@@ -38,9 +39,7 @@ const MentorProfileDetails = () => {
 
       return (
             <div>
-                  <div className="bg-primary-100 h-[150px] md:h-[250px]">
-                        <MentorSocialLinks />
-                  </div>
+                  <ProfileBanner />
 
                   <div className="">
                         <div className="container">

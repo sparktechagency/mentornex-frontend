@@ -1,3 +1,5 @@
+import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsYoutube } from 'react-icons/bs';
+
 export const timeZones = [
       { value: 'GMT-12:00', label: '(GMT -12:00) International Date Line West' },
       { value: 'GMT-11:00', label: '(GMT -11:00) Midway Island, Samoa' },
@@ -342,5 +344,37 @@ export const mentors = [
             startingPrice: '28$',
             topRated: false,
             image: 'https://images.unsplash.com/photo-1525130413817-d45c1d127c42?auto=format&fit=crop&q=80&w=300&h=300',
+      },
+];
+export const socials = [
+      {
+            id: 1,
+            name: 'Facebook',
+            icon: <BsFacebook />,
+            link: '',
+      },
+      {
+            id: 2,
+            name: 'Twitter',
+            icon: <BsTwitter />,
+            link: '',
+      },
+      {
+            id: 3,
+            name: 'Linkedin',
+            icon: <BsLinkedin />,
+            link: '',
+      },
+      {
+            id: 4,
+            name: 'Instagram',
+            icon: <BsInstagram />,
+            link: '',
+      },
+      {
+            id: 5,
+            name: 'Youtube',
+            icon: <BsYoutube />,
+            link: '',
       },
 ];

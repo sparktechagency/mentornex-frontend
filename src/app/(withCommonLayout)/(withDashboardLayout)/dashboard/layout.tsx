@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Layout, theme, ConfigProvider } from 'antd';
 import ProfileSidebar from '@/components/pages/dashboard/SidebarProfile';
 import { AiOutlineLeftSquare, AiOutlineRightSquare } from 'react-icons/ai';
+import ProfileBanner from '@/components/shared/ProfileBanner';
 
 const { Header, Content, Sider } = Layout;
 
@@ -15,7 +16,7 @@ const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
       return (
             <div>
-                  <div className="bg-primary-100 h-[250px]"></div>
+                  <ProfileBanner needUpload />
                   <Layout className="container my-20">
                         <ConfigProvider
                               theme={{
