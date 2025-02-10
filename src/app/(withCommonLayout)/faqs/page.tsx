@@ -1,12 +1,13 @@
 'use client';
 import React from 'react';
-import { Collapse } from 'antd';
+import { Collapse, Input } from 'antd';
 import NeedHelpSection from './NeedHelpSection';
+import { SearchIcon } from 'lucide-react';
 
 const { Panel } = Collapse;
 
 const FAQPage = () => {
-      const [activeKey, setActiveKey] = React.useState<string>();
+      const [activeKey, setActiveKey] = React.useState<string>('0');
 
       const customPanelStyle = (key: string) => {
             return {
@@ -58,10 +59,22 @@ const FAQPage = () => {
                               Get answers to your questions and learn how MentorNex can help you achieve your goals.
                         </p>
 
+                        <div className="mb-4">
+                              <Input
+                                    style={{
+                                          width: '100%',
+                                          height: '45px',
+                                    }}
+                                    placeholder="Search FAQs"
+                                    suffix={<SearchIcon className="text-[#8b8b8b]" />}
+                              />
+                        </div>
+
                         <Collapse
                               onChange={(key) => setActiveKey(key[0])}
                               accordion
                               expandIconPosition="end"
+                              defaultActiveKey={['0']}
                               bordered={false}
                               activeKey={activeKey}
                         >
