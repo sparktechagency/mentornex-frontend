@@ -34,7 +34,7 @@ const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => v
       ];
 
       return (
-            <div className="w-full  bg-white border rounded-lg min-h-[calc(100vh-5rem)]">
+            <div className="w-full h-[80vh] overflow-y-auto hide-scrollbar bg-white  rounded-lg ">
                   <div className="p-4 ">
                         <Flex gap={8}>
                               <Badge
@@ -66,7 +66,7 @@ const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => v
                   <div className="h-[62px] mb-2">
                         <Tabs defaultActiveKey="1" centered>
                               <TabPane tab="Messages" key="1">
-                                    <div className="p-2 h-[640.08px] overflow-y-auto custom-scrollbar">
+                                    <div className="p-2 h-[60vh] overflow-y-auto custom-scrollbar o custom-scrollbar">
                                           {chatList.map((chat, index) => (
                                                 <div
                                                       key={index}
@@ -106,7 +106,7 @@ const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => v
                                     </div>
                               </TabPane>
                               <TabPane tab="Message request  (0)" key="2">
-                                    <div className="p-2 h-[640.08px] overflow-y-auto custom-scrollbar text-center">No message request</div>
+                                    <div className="p-2 h-[60vh] overflow-y-auto custom-scrollbar text-center">No message request</div>
                               </TabPane>
                         </Tabs>
                   </div>

@@ -2,10 +2,11 @@ import { Button } from 'antd';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import { BsStarFill } from 'react-icons/bs';
-import { CiMedal } from 'react-icons/ci';
+// import { CiMedal } from 'react-icons/ci';
 import { FaCalendarDays } from 'react-icons/fa6';
 import { HiOutlineCurrencyDollar } from 'react-icons/hi';
-import { IoBriefcaseOutline } from 'react-icons/io5';
+// import { IoBriefcaseOutline } from 'react-icons/io5';
+import { PiChatsCircle } from 'react-icons/pi';
 type TMentor = {
       id: number;
       name: string;
@@ -46,19 +47,34 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                               </div>
 
                               {/* Content */}
-                              <div className="p-2">
+                              <div className="p-2 space-y-2">
                                     <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
-                                    <div className="flex items-center gap-2 mb-3">
+                                    <p className="text-gray-500">Helping you design seamless user experiences.</p>
+
+                                    <div className="flex flex-wrap gap-2">
+                                          {['Product Strategy', 'Ui/Ux Design', 'Web Design'].map((topic, index) => (
+                                                <div key={index} className="bg-primary-100 p-1 text-[#353535] rounded">
+                                                      <span className="text-gray-600">{topic}</span>
+                                                </div>
+                                          ))}
+                                    </div>
+
+                                    {/* <div className="flex items-center gap-2 mb-3">
                                           <IoBriefcaseOutline size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">{mentor.role}</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-3">
                                           <CiMedal size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">{mentor.experience}</span>
-                                    </div>
+                                    </div> */}
                                     <div className="flex items-center gap-2 mb-4">
                                           <HiOutlineCurrencyDollar size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">Starts from {mentor.startingPrice}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 mb-4">
+                                          <PiChatsCircle size={20} className=" text-gray-500" />
+                                          <span className="text-gray-600">Active now</span>
+                                          <span className="inline-block size-2 bg-green-500 rounded-full"></span>
                                     </div>
                               </div>
                               <div>

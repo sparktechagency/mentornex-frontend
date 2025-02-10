@@ -7,7 +7,7 @@ const ChatLayout = ({ children }: { children: React.ReactNode }) => {
       const [isChatActive, setIsChatActive] = useState(false);
 
       return (
-            <div className="container min-h-screen flex flex-col lg:flex-row my-20">
+            <div className="container my-10  flex flex-col lg:flex-row ">
                   <div className={`w-full lg:w-1/3 bg-white ${isChatActive ? 'hidden lg:block' : ''}`}>
                         <ChatList setIsChatActive={setIsChatActive} />
                   </div>

@@ -26,11 +26,13 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                     },
                                     Select: {
                                           controlHeight: 42,
+                                          fontSize: 14,
                                     },
                                     Input: {
                                           controlHeight: 42,
                                           fontSize: 16,
                                           paddingInline: 24,
+                                          inputFontSize: 14,
                                     },
                                     InputNumber: {
                                           controlHeight: 42,
@@ -39,7 +41,7 @@ const Provider = ({ children }: { children: ReactNode }) => {
                                     Form: {
                                           marginLG: 10,
                                           labelColor: '#636363',
-                                          labelFontSize: 18,
+                                          labelFontSize: 16,
                                           labelRequiredMarkColor: '#FF6F3C',
                                     },
                                     DatePicker: {
