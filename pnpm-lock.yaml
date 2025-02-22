@@ -14,6 +14,12 @@ importers:
       '@ant-design/nextjs-registry':
         specifier: ^1.0.2
         version: 1.0.2(@ant-design/cssinjs@1.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(antd@5.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/jsrsasign':
+        specifier: ^10.5.15
+        version: 10.5.15
+      '@zoom/videosdk':
+        specifier: ^2.1.5
+        version: 2.1.5
       antd:
         specifier: ^5.22.2
         version: 5.23.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -23,6 +29,9 @@ importers:
       framer-motion:
         specifier: ^12.0.5
         version: 12.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      jsrsasign:
+        specifier: ^11.1.0
+        version: 11.1.0
       lucide-react:
         specifier: ^0.462.0
         version: 0.462.0(react@18.3.1)
@@ -362,6 +371,9 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
+  '@types/jsrsasign@10.5.15':
+    resolution: {integrity: sha512-3stUTaSRtN09PPzVWR6aySD9gNnuymz+WviNHoTb85dKu+BjaV4uBbWWGykBBJkfwPtcNZVfTn2lbX00U+yhpQ==}
+
   '@types/node@20.17.14':
     resolution: {integrity: sha512-w6qdYetNL5KRBiSClK/KWai+2IMEJuAj+EujKCumalFOwXtvOXaEan9AuwcRID2IcOIAWSIfR495hBtgKlx2zg==}
 
@@ -425,6 +437,9 @@ packages:
 
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
+
+  '@zoom/videosdk@2.1.5':
+    resolution: {integrity: sha512-NwjAs7Miwvrvcl9Jl2VajeaRg0+a43tt/49j5CDq6xaCrqsAUBuMLJurkk5SlLMrFxt8QvNTV6lcg9O2x/656w==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -1236,6 +1251,9 @@ packages:
   json5@1.0.2:
     resolution: {integrity: sha512-g1MWMLBiz8FKi1e4w0UyVL3w+iJceWAFBAaBnnGKOpNa5f8TLktkbre1+s6oICydWAm+HRUGTmI+//xv2hvXYA==}
     hasBin: true
+
+  jsrsasign@11.1.0:
+    resolution: {integrity: sha512-Ov74K9GihaK9/9WncTe1mPmvrO7Py665TUfUKvraXBpu+xcTWitrtuOwcjf4KMU9maPaYn0OuaWy0HOzy/GBXg==}
 
   jsx-ast-utils@3.3.5:
     resolution: {integrity: sha512-ZZow9HBI5O6EPgSJLUb8n2NKgmVWTwCvHGwFuJlMjvLFqlGG6pjirPhtdsseaLZjSibD8eegzmYpUZwoIlj2cQ==}
@@ -2427,6 +2445,8 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
+  '@types/jsrsasign@10.5.15': {}
+
   '@types/node@20.17.14':
     dependencies:
       undici-types: 6.19.8
@@ -2520,6 +2540,8 @@ snapshots:
       eslint-visitor-keys: 4.2.0
 
   '@ungap/structured-clone@1.2.1': {}
+
+  '@zoom/videosdk@2.1.5': {}
 
   acorn-jsx@5.3.2(acorn@8.14.0):
     dependencies:
@@ -3563,6 +3585,8 @@ snapshots:
   json5@1.0.2:
     dependencies:
       minimist: 1.2.8
+
+  jsrsasign@11.1.0: {}
 
   jsx-ast-utils@3.3.5:
     dependencies:
