@@ -5,8 +5,7 @@ import ZoomVideo from '@zoom/videosdk';
 import { message } from 'antd';
 import { useState, useRef, useEffect } from 'react';
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash, FaDesktop, FaPhoneSlash } from 'react-icons/fa';
-
-let client: any = null;
+let client: ReturnType<typeof ZoomVideo.createClient> | null = null;
 
 const Meeting = () => {
       const sdkKey = 'hnZyzxPrkfUjMq6Je0u8iVAQ6mLAJ4RwP6eg';
@@ -17,6 +16,7 @@ const Meeting = () => {
       const [isVideoOn, setIsVideoOn] = useState(false);
       const [isAudioOn, setIsAudioOn] = useState(false);
       const [duration, setDuration] = useState(0);
+      const [isScreenShareOn, setIsScreenShareOn] = useState(false);
       const videoRef = useRef<HTMLVideoElement>(null);
       const timerRef = useRef<NodeJS.Timeout>();
 
@@ -39,36 +39,42 @@ const Meeting = () => {
             };
       }, [isJoined]);
 
+      useEffect(() => {
+            // Initialize client when component mounts
+            const init = async () => {
+                  try {
+                        client = ZoomVideo.createClient();
+
+                        await client.init('en-US', 'Global', {
+                              webEndpoint: 'zoom.us',
+                              patchJsMedia: false,
+                              enforceMultipleVideos: false,
+                              stayAwake: false,
+                        });
+
+                        console.log('✅ Video SDK client initialized');
+                        setIsInitialized(true);
+                  } catch (error) {
+                        console.error('❌ Error initializing client:', error);
+                  }
+            };
+
+            init();
+
+            // Cleanup when component unmounts
+            return () => {
+                  if (client) {
+                        client.leave();
+                        client = null;
+                  }
+            };
+      }, []); // Run once when component mounts
+
       const formatTime = (seconds: number) => {
             const hrs = Math.floor(seconds / 3600);
             const mins = Math.floor((seconds % 3600) / 60);
             const secs = seconds % 60;
             return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      };
-
-      const initializeClient = async () => {
-            try {
-                  client = ZoomVideo.createClient();
-
-                  await client.init('en-US', 'Global', {
-                        webEndpoint: 'zoom.us',
-                        patchJsMedia: false, // Disable advanced media patching
-                        enforceMultipleVideos: false,
-                        stayAwake: false,
-                        videoDegradationPreference: 'MAINTAIN_FRAMERATE',
-                        videoQuality: {
-                              width: 640,
-                              height: 360,
-                              frameRate: 30,
-                        },
-                        disableShareScreen: true,
-                  });
-
-                  console.log('✅ Video SDK client initialized');
-                  setIsInitialized(true);
-            } catch (error) {
-                  console.error('❌ Error initializing client:', error);
-            }
       };
 
       const toggleVideo = async () => {
@@ -167,8 +173,42 @@ const Meeting = () => {
             }
       };
 
+      const handleToggleScreenShare = async () => {
+            try {
+                  if (!client || !isInitialized) {
+                        console.log('⚠️ Client is not initialized');
+                        return;
+                  }
+
+                  // ✅ Get the element safely
+                  if (isScreenShareOn) {
+                        const stream = client.getMediaStream();
+                        await stream.stopShareScreen();
+                        setIsScreenShareOn(false);
+                  } else {
+                        const screenShareElement = document.getElementById('screen-share-preview') as
+                              | HTMLVideoElement
+                              | HTMLCanvasElement
+                              | null;
+                        console.log(screenShareElement);
+
+                        if (!screenShareElement) {
+                              console.error('❌ Screen share preview element not found!');
+                              return;
+                        }
+
+                        // ✅ Start screen sharing with the correct element
+                        client.getMediaStream().startShareScreen(screenShareElement, {});
+
+                        setIsScreenShareOn(true);
+                  }
+            } catch (error) {
+                  console.error('❌ Error sharing screen:', error);
+            }
+      };
+
       return (
-            <div className="container relative min-h-[60vh] bg-gray-100">
+            <div className="container relative min-h-[70vh] bg-gray-100 my-20">
                   <div className="absolute inset-0 flex flex-col">
                         <div className="flex-1 bg-gray-900 relative">
                               <video ref={videoRef} className="w-full h-full object-cover" playsInline muted />
@@ -186,21 +226,21 @@ const Meeting = () => {
                                           <video className="w-full h-full object-cover" playsInline muted />
                                     </div>
                               )}
+
+                              {/* Screen Share Preview */}
+
+                              <div className="absolute top-4 right-4 w-48 h-36 bg-gray-800 rounded-lg overflow-hidden">
+                                    <video id="screen-share-preview" className="w-full h-full object-cover" />
+                              </div>
                         </div>
 
                         {/* Controls Bar */}
                         <div className="h-20 bg-white shadow-lg flex items-center justify-center space-x-6">
-                              {!isInitialized ? (
-                                    <button
-                                          onClick={initializeClient}
-                                          className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700"
-                                    >
-                                          Initialize Meeting
-                                    </button>
-                              ) : !isJoined ? (
+                              {!isJoined ? (
                                     <button
                                           onClick={joinSession}
                                           className="px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-700"
+                                          disabled={!isInitialized}
                                     >
                                           Join Meeting
                                     </button>
@@ -218,8 +258,8 @@ const Meeting = () => {
                                           >
                                                 {isVideoOn ? <FaVideo size={20} /> : <FaVideoSlash size={20} />}
                                           </button>
-                                          <button className="p-4 rounded-full bg-gray-200">
-                                                <FaDesktop size={20} />
+                                          <button onClick={handleToggleScreenShare} className="p-4 rounded-full bg-gray-200">
+                                                {isScreenShareOn ? <FaDesktop color="red" size={20} /> : <FaDesktop size={20} />}
                                           </button>
                                           <button
                                                 onClick={leaveSession}

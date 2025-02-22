@@ -6,7 +6,7 @@ const Meeting = dynamic(() => import('./Meeting'), {
 });
 const MeetingsPage = () => {
       return (
-            <div>
+            <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
                   <Meeting />
             </div>
       );
