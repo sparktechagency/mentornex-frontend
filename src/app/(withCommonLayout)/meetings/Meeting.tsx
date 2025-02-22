@@ -1,74 +1,62 @@
 'use client';
-import { generateVideoToken } from '@/utils/generateVideoToken';
-// import './App.css';
-import ZoomVideo from '@zoom/videosdk';
-import { message } from 'antd';
-import { useState, useRef, useEffect } from 'react';
+import { message, Popconfirm, Tooltip } from 'antd';
+import { useEffect, useRef } from 'react';
 import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash, FaDesktop, FaPhoneSlash } from 'react-icons/fa';
-let client: ReturnType<typeof ZoomVideo.createClient> | null = null;
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import {
+      setInitialized,
+      setJoined,
+      setVideoOn,
+      setAudioOn,
+      setScreenShareOn,
+      incrementDuration,
+      resetDuration,
+} from '@/redux/features/meeting/meetingSlice';
+import { meetingService } from '@/services/meetingService';
 
 const Meeting = () => {
-      const sdkKey = 'hnZyzxPrkfUjMq6Je0u8iVAQ6mLAJ4RwP6eg';
-      const sdkSecret = 'AelZJtVlk4k3WgZJaJAtqPtAhYDW3H39RM8j';
-      const sessionName = 'test-session';
-      const [isInitialized, setIsInitialized] = useState(false);
-      const [isJoined, setIsJoined] = useState(false);
-      const [isVideoOn, setIsVideoOn] = useState(false);
-      const [isAudioOn, setIsAudioOn] = useState(false);
-      const [duration, setDuration] = useState(0);
-      const [isScreenShareOn, setIsScreenShareOn] = useState(false);
+      const dispatch = useAppDispatch();
+      const { isInitialized, isJoined, isVideoOn, isAudioOn, isScreenShareOn, duration, userName } = useAppSelector(
+            (state) => state.meeting
+      );
+
       const videoRef = useRef<HTMLVideoElement>(null);
+      const screenShareRef = useRef<HTMLVideoElement>(null);
       const timerRef = useRef<NodeJS.Timeout>();
 
-      const role = 0;
-      const userName = 'John Cena'; // Example name
+      // Initialize client
+      useEffect(() => {
+            const init = async () => {
+                  const success = await meetingService.initializeClient();
+                  if (success) {
+                        dispatch(setInitialized(success));
+                  } else {
+                        message.error('Failed to initialize meeting client');
+                  }
+            };
+            init();
+            return () => {
+                  meetingService.cleanup();
+                  message.info('Meeting session cleaned up');
+            };
+      }, [dispatch]);
 
+      // Handle duration timer
       useEffect(() => {
             if (isJoined) {
                   timerRef.current = setInterval(() => {
-                        setDuration((prev) => prev + 1);
+                        dispatch(incrementDuration());
                   }, 1000);
             } else {
                   if (timerRef.current) {
                         clearInterval(timerRef.current);
-                        setDuration(0);
+                        dispatch(resetDuration());
                   }
             }
             return () => {
                   if (timerRef.current) clearInterval(timerRef.current);
             };
-      }, [isJoined]);
-
-      useEffect(() => {
-            // Initialize client when component mounts
-            const init = async () => {
-                  try {
-                        client = ZoomVideo.createClient();
-
-                        await client.init('en-US', 'Global', {
-                              webEndpoint: 'zoom.us',
-                              patchJsMedia: false,
-                              enforceMultipleVideos: false,
-                              stayAwake: false,
-                        });
-
-                        console.log('✅ Video SDK client initialized');
-                        setIsInitialized(true);
-                  } catch (error) {
-                        console.error('❌ Error initializing client:', error);
-                  }
-            };
-
-            init();
-
-            // Cleanup when component unmounts
-            return () => {
-                  if (client) {
-                        client.leave();
-                        client = null;
-                  }
-            };
-      }, []); // Run once when component mounts
+      }, [isJoined, dispatch]);
 
       const formatTime = (seconds: number) => {
             const hrs = Math.floor(seconds / 3600);
@@ -77,140 +65,99 @@ const Meeting = () => {
             return `${String(hrs).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
       };
 
-      const toggleVideo = async () => {
+      const handleJoinSession = async () => {
             try {
-                  if (!client) return;
-                  const stream = client.getMediaStream();
+                  const success = await meetingService.joinSession(userName);
+                  if (success) {
+                        dispatch(setJoined(true));
+                        message.success('Successfully joined the meeting');
 
-                  // ✅ Check for camera availability
-                  const devices = await navigator.mediaDevices.enumerateDevices();
-                  const hasCamera = devices.some((device) => device.kind === 'videoinput');
-
-                  if (!hasCamera) {
-                        // ❌ No camera found - Display error message
-                        message.error('Camera not found. Please connect a camera and try again.');
-                        return;
-                  }
-
-                  if (isVideoOn) {
-                        await stream.stopVideo();
-                  } else {
-                        // Request camera permission again if needed
-                        await navigator.mediaDevices.getUserMedia({ video: true });
-                        await stream.startVideo();
-                        const videoElement = videoRef.current;
-                        if (videoElement) {
-                              stream.renderVideo(videoElement, client.getCurrentUserInfo().userId, 640, 360, 0, 0, 2);
+                        // Start video and audio
+                        const videoSuccess = await meetingService.toggleVideo(videoRef.current);
+                        dispatch(setVideoOn(videoSuccess));
+                        if (!videoSuccess) {
+                              message.warning('Failed to start video');
                         }
-                  }
-                  setIsVideoOn(!isVideoOn);
-            } catch (error) {
-                  console.error('❌ Error toggling video:', error);
-                  message.error('An error occurred while toggling video.');
-            }
-      };
 
-      const toggleAudio = async () => {
-            try {
-                  if (!client) return;
-                  const stream = client.getMediaStream();
-
-                  if (isAudioOn) {
-                        await stream.stopAudio();
+                        const audioSuccess = await meetingService.toggleAudio();
+                        dispatch(setAudioOn(audioSuccess));
+                        if (!audioSuccess) {
+                              message.warning('Failed to start audio');
+                        }
                   } else {
-                        // Request audio permission again if needed
-                        await navigator.mediaDevices.getUserMedia({ audio: true });
-                        await stream.startAudio();
+                        message.error('Failed to join the meeting');
                   }
-                  setIsAudioOn(!isAudioOn);
             } catch (error) {
-                  console.error('❌ Error toggling audio:', error);
+                  console.error('Failed to join session:', error);
+                  message.error('An error occurred while joining the meeting');
             }
       };
 
-      const joinSession = async () => {
+      const handleLeaveSession = async () => {
             try {
-                  if (!client || !isInitialized) {
-                        console.log('⚠️ Please initialize the client first');
-                        return;
-                  }
-
-                  const token = generateVideoToken(sdkKey, sdkSecret, sessionName, role);
-                  await client.join(sessionName, token, userName);
-                  setIsJoined(true);
-
-                  // Start media after successful join
-                  await toggleVideo().catch(console.error);
-                  await toggleAudio().catch(console.error);
-            } catch (error) {
-                  console.error('❌ Error joining session:', error);
-            }
-      };
-
-      const leaveSession = async () => {
-            try {
-                  if (!client || !isInitialized) {
-                        console.log('⚠️ Client is not initialized');
-                        return;
-                  }
-
                   if (isVideoOn) {
-                        const stream = client.getMediaStream();
-                        await stream.stopVideo();
-                        setIsVideoOn(false);
+                        await meetingService.toggleVideo(null);
+                        dispatch(setVideoOn(false));
                   }
-
                   if (isAudioOn) {
-                        const stream = client.getMediaStream();
-                        await stream.stopAudio();
-                        setIsAudioOn(false);
+                        await meetingService.toggleAudio();
+                        dispatch(setAudioOn(false));
+                  }
+                  if (isScreenShareOn) {
+                        await meetingService.toggleScreenShare(screenShareRef.current);
+                        dispatch(setScreenShareOn(false));
                   }
 
-                  await client.leave();
-                  setIsJoined(false);
+                  const success = await meetingService.leaveSession();
+                  if (success) {
+                        dispatch(setJoined(false));
+                        message.success('Successfully left the meeting');
+                  } else {
+                        message.error('Failed to leave the meeting properly');
+                  }
             } catch (error) {
-                  console.error('❌ Error leaving session:', error);
+                  console.error('Failed to leave session:', error);
+                  message.error('An error occurred while leaving the meeting');
+            }
+      };
+
+      const handleToggleVideo = async () => {
+            try {
+                  const success = await meetingService.toggleVideo(videoRef.current);
+                  dispatch(setVideoOn(success));
+                  message.info(`Video ${success ? 'started' : 'stopped'}`);
+            } catch (error) {
+                  console.error('Failed to toggle video:', error);
+                  message.error('An error occurred while toggling video');
+            }
+      };
+
+      const handleToggleAudio = async () => {
+            try {
+                  const success = await meetingService.toggleAudio();
+                  dispatch(setAudioOn(success));
+                  message.info(`Audio ${success ? 'unmuted' : 'muted'}`);
+            } catch (error) {
+                  console.error('Failed to toggle audio:', error);
+                  message.error('An error occurred while toggling audio');
             }
       };
 
       const handleToggleScreenShare = async () => {
             try {
-                  if (!client || !isInitialized) {
-                        console.log('⚠️ Client is not initialized');
-                        return;
-                  }
-
-                  // ✅ Get the element safely
-                  if (isScreenShareOn) {
-                        const stream = client.getMediaStream();
-                        await stream.stopShareScreen();
-                        setIsScreenShareOn(false);
-                  } else {
-                        const screenShareElement = document.getElementById('screen-share-preview') as
-                              | HTMLVideoElement
-                              | HTMLCanvasElement
-                              | null;
-                        console.log(screenShareElement);
-
-                        if (!screenShareElement) {
-                              console.error('❌ Screen share preview element not found!');
-                              return;
-                        }
-
-                        // ✅ Start screen sharing with the correct element
-                        client.getMediaStream().startShareScreen(screenShareElement, {});
-
-                        setIsScreenShareOn(true);
-                  }
+                  const success = await meetingService.toggleScreenShare(screenShareRef.current);
+                  dispatch(setScreenShareOn(success));
+                  message.info(`Screen sharing ${success ? 'started' : 'stopped'}`);
             } catch (error) {
-                  console.error('❌ Error sharing screen:', error);
+                  console.error('Failed to toggle screen share:', error);
+                  message.error('An error occurred while toggling screen share');
             }
       };
 
       return (
-            <div className="container relative min-h-[70vh] bg-gray-100 my-20">
-                  <div className="absolute inset-0 flex flex-col">
-                        <div className="flex-1 bg-gray-900 relative">
+            <div className="container relative min-h-[80vh]  my-10">
+                  <div className="">
+                        <div className="flex-1 bg-gray-900 relative rounded-lg">
                               <video ref={videoRef} className="w-full h-full object-cover" playsInline muted />
 
                               {/* Session Info Overlay */}
@@ -228,46 +175,58 @@ const Meeting = () => {
                               )}
 
                               {/* Screen Share Preview */}
-
-                              <div className="absolute top-4 right-4 w-48 h-36 bg-gray-800 rounded-lg overflow-hidden">
-                                    <video id="screen-share-preview" className="w-full h-full object-cover" />
-                              </div>
+                              <video
+                                    ref={screenShareRef}
+                                    className={`absolute inset-0 w-full h-full object-contain ${isScreenShareOn ? 'block' : 'hidden'}`}
+                                    playsInline
+                              />
                         </div>
 
                         {/* Controls Bar */}
-                        <div className="h-20 bg-white shadow-lg flex items-center justify-center space-x-6">
+                        <div className="h-20  rounded-b-lg flex items-center justify-center space-x-6">
                               {!isJoined ? (
                                     <button
-                                          onClick={joinSession}
-                                          className="px-6 py-2 bg-green-600 text-white rounded-full hover:bg-green-700"
+                                          onClick={handleJoinSession}
+                                          className="px-6 py-2 bg-primary text-white rounded-full  disabled:opacity-50 disabled:cursor-not-allowed"
                                           disabled={!isInitialized}
                                     >
-                                          Join Meeting
+                                          {isInitialized ? 'Join Meeting' : 'Initializing...'}
                                     </button>
                               ) : (
                                     <>
-                                          <button
-                                                onClick={toggleAudio}
-                                                className={`p-4 rounded-full ${isAudioOn ? 'bg-gray-200' : 'bg-red-500 text-white'}`}
-                                          >
-                                                {isAudioOn ? <FaMicrophone size={20} /> : <FaMicrophoneSlash size={20} />}
-                                          </button>
-                                          <button
-                                                onClick={toggleVideo}
-                                                className={`p-4 rounded-full ${isVideoOn ? 'bg-gray-200' : 'bg-red-500 text-white'}`}
-                                          >
-                                                {isVideoOn ? <FaVideo size={20} /> : <FaVideoSlash size={20} />}
-                                          </button>
-                                          <button onClick={handleToggleScreenShare} className="p-4 rounded-full bg-gray-200">
-                                                {isScreenShareOn ? <FaDesktop color="red" size={20} /> : <FaDesktop size={20} />}
-                                          </button>
-                                          <button
-                                                onClick={leaveSession}
-                                                className="px-6 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 flex items-center space-x-2"
-                                          >
-                                                <FaPhoneSlash size={16} />
-                                                <span>End Meeting</span>
-                                          </button>
+                                          <Tooltip title={isAudioOn ? 'Mute Audio' : 'Unmute Audio'}>
+                                                <button
+                                                      onClick={handleToggleAudio}
+                                                      className={`p-4 rounded-full ${isAudioOn ? 'bg-gray-200' : 'bg-red-500 text-white'}`}
+                                                      title={isAudioOn ? 'Mute Audio' : 'Unmute Audio'}
+                                                >
+                                                      {isAudioOn ? <FaMicrophone size={20} /> : <FaMicrophoneSlash size={20} />}
+                                                </button>
+                                          </Tooltip>
+                                          <Tooltip title={isVideoOn ? 'Stop Video' : 'Start Video'}>
+                                                <button
+                                                      onClick={handleToggleVideo}
+                                                      className={`p-4 rounded-full ${isVideoOn ? 'bg-gray-200' : 'bg-red-500 text-white'}`}
+                                                >
+                                                      {isVideoOn ? <FaVideo size={20} /> : <FaVideoSlash size={20} />}
+                                                </button>
+                                          </Tooltip>
+                                          <Tooltip title={isScreenShareOn ? 'Stop Sharing' : 'Share Screen'}>
+                                                <button
+                                                      onClick={handleToggleScreenShare}
+                                                      className={`p-4 rounded-full ${
+                                                            isScreenShareOn ? 'bg-red-500 text-white' : 'bg-gray-200'
+                                                      }`}
+                                                >
+                                                      <FaDesktop size={20} />
+                                                </button>
+                                          </Tooltip>
+                                          <Popconfirm title="Are you sure you want to end the meeting?" onConfirm={handleLeaveSession}>
+                                                <button className="px-6 py-2 bg-red-600 text-white rounded-full hover:bg-red-700 flex items-center space-x-2">
+                                                      <FaPhoneSlash size={16} />
+                                                      <span>End Meeting</span>
+                                                </button>
+                                          </Popconfirm>
                                     </>
                               )}
                         </div>

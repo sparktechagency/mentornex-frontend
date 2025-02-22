@@ -14,6 +14,15 @@
 .ant-layout {
       background: transparent !important;
 }
+.ant-tooltip {
+      background-color: #fff !important;
+      color: #000 !important;
+}
+.ant-tooltip-inner {
+      background-color: #fff !important;
+      color: #000 !important;
+}
+
 .custom-scrollbar {
       &::-webkit-scrollbar {
             width: 6px;
