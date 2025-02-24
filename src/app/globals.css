@@ -14,6 +14,10 @@
 .ant-layout {
       background: transparent !important;
 }
+
+.ant-collapse {
+      background-color: #fff !important;
+}
 .ant-tooltip {
       background-color: #fff !important;
       color: #000 !important;

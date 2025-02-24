@@ -21,7 +21,7 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
       return (
             <div>
                   <div key={mentor.id}>
-                        <div className="bg-white rounded-xl p-2">
+                        <div className="bg-white rounded-xl p-2 mx-1">
                               <div className="relative">
                                     <Image
                                           width={300}

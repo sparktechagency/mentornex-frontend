@@ -64,10 +64,10 @@ function Testimonial() {
                                     className="md:mx-12"
                               >
                                     {testimonials.map((testimonial) => (
-                                          <div key={testimonial.id} className="p-4 bg-white ">
-                                                <div className="relative  rounded-xl  overflow-hidden p-6 bg-white shadow-lg">
+                                          <div key={testimonial.id} className="p-4 bg-transparent ">
+                                                <div className="relative  rounded-xl  overflow-hidden p-6 bg-white drop-shadow">
                                                       {/* Shape in the bottom-left corner */}
-                                                      <div className="absolute -z-10 -bottom-20 -left-20 size-[205px] bg-[#fff1ec]  rounded-full"></div>
+                                                      {/* <div className="absolute -z-10 -bottom-20 -left-20 size-[205px] bg-[#fff1ec]  rounded-full"></div> */}
 
                                                       <div className="space-y-6">
                                                             <p className="text-base font-normal leading-relaxed line-clamp-5">
@@ -83,17 +83,13 @@ function Testimonial() {
                                                             <Image
                                                                   height={100}
                                                                   width={100}
-                                                                  className="size-[100px] md:size-[135px] rounded-full mr-4"
+                                                                  className="size-[80px] rounded-full mr-4"
                                                                   src="https://randomuser.me/api/portraits/men/22.jpg"
                                                                   alt="Victoria Wotton"
                                                             />
                                                             <div className="flex flex-col">
-                                                                  <h3 className="text-[20px] rounded-tl-xl text-[#000000] bg-[#E8E8E8]   p-2  rounded-tr-xl font-bold">
-                                                                        Victoria Wotton
-                                                                  </h3>
-                                                                  <p className="text-sm text-title bg-[#F2F2F2] p-2 rounded-bl-xl ">
-                                                                        Fementum Odio Co.
-                                                                  </p>
+                                                                  <h3 className="text-[20px]    p-2 font-bold">Victoria Wotton</h3>
+                                                                  <p className="text-sm text-title  p-2  ">Fementum Odio Co.</p>
                                                                   <div className="flex text-yellow-400 mt-1">
                                                                         <IoMdStar size={20} />
                                                                         <IoMdStar size={20} />

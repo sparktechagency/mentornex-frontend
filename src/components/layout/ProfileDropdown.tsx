@@ -22,24 +22,16 @@ const ProfileDropdown = () => {
       };
       return (
             <div className="">
-                  <Menu
-                        mode="inline"
-                        style={{
-                              padding: 15,
-                        }}
-                  >
+                  <Menu mode="inline">
                         <div
                               onClick={() => {
                                     router.push('/dashboard');
                               }}
-                              className="flex cursor-pointer items-center text-start gap-2 mb-4"
+                              className="flex cursor-pointer items-center text-start gap-2 "
                         ></div>
                         <Menu.Item
                               onClick={() => {
                                     router.push('/dashboard/mentor/dashboard');
-                              }}
-                              style={{
-                                    marginBottom: 10,
                               }}
                               key="profile"
                         >

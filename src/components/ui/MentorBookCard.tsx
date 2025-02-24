@@ -2,7 +2,6 @@ import { Button } from 'antd';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import { BsMessenger, BsStarFill } from 'react-icons/bs';
-import { FaRegCalendarDays } from 'react-icons/fa6';
 import { IoBriefcaseOutline } from 'react-icons/io5';
 import { PiChatsCircle, PiMapPinLight } from 'react-icons/pi';
 type TMentor = {
@@ -19,7 +18,7 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
       return (
             <div>
                   <div key={mentor.id}>
-                        <div className="bg-white rounded-xl p-2">
+                        <div className="bg-white relative z-10 rounded-xl border p-2">
                               <div className="relative">
                                     <Image
                                           width={300}
@@ -62,15 +61,6 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                                     </div>
                               </div>
                               <div>
-                                    <Button
-                                          href={`/mentors/${mentor.id}`}
-                                          style={{ width: '100%' }}
-                                          icon={<FaRegCalendarDays size={20} />}
-                                          type="primary"
-                                    >
-                                          Book Now
-                                    </Button>
-
                                     <Button
                                           href="/chat/3"
                                           // type="primary"
