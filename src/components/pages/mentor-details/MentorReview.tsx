@@ -57,8 +57,8 @@ const reviews = [
 
 const MentorReview = () => {
       return (
-            <div className="bg-gray-50 py-8 h-[500px] overflow-y-scroll custom-scrollbar">
-                  <div className="max-w-3xl mx-auto space-y-6">
+            <div className="">
+                  <div className=" mx-auto space-y-6">
                         <div className="border border-primary p-4 rounded-lg">
                               <div className="flex items-center">
                                     <div className="text-4xl font-bold mr-4">4.4</div>
@@ -76,7 +76,7 @@ const MentorReview = () => {
                               </div>
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-4 h-[400px] overflow-y-scroll custom-scrollbar">
                               {reviews.map((review, index) => (
                                     <div key={index} className="border space-y-4 border-gray-200 p-4 rounded-lg">
                                           <div className="flex justify-between items-center">

@@ -11,9 +11,10 @@ interface Tab {
 interface ReusableTabProps {
       tabs: Tab[];
       defaultActiveKey?: string;
+      border?: boolean;
 }
 
-const CustomTab: React.FC<ReusableTabProps> = ({ tabs, defaultActiveKey }) => {
+const CustomTab: React.FC<ReusableTabProps> = ({ tabs, defaultActiveKey, border }) => {
       const [activeTab, setActiveTab] = useState(defaultActiveKey || tabs[0]?.key);
 
       const handleTabChange = (key: string) => {
@@ -22,7 +23,7 @@ const CustomTab: React.FC<ReusableTabProps> = ({ tabs, defaultActiveKey }) => {
 
       return (
             <div className="">
-                  <div className="flex border-b border-gray-200 w-fit">
+                  <div className={` w-full ${border ? 'border-b border-gray-200' : ''}`}>
                         {tabs.map((tab) => (
                               <motion.button
                                     key={tab.key}
@@ -43,7 +44,7 @@ const CustomTab: React.FC<ReusableTabProps> = ({ tabs, defaultActiveKey }) => {
                   </div>
 
                   <motion.div
-                        className="p-4"
+                        className="my-6"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
@@ -53,7 +54,7 @@ const CustomTab: React.FC<ReusableTabProps> = ({ tabs, defaultActiveKey }) => {
                               activeTab === tab.key ? (
                                     <motion.div
                                           key={tab.key}
-                                          className="text-gray-700"
+                                          className="text-gray-700 w-full"
                                           initial={{ opacity: 0, scale: 0.95 }}
                                           animate={{ opacity: 1, scale: 1 }}
                                           transition={{ duration: 0.3 }}

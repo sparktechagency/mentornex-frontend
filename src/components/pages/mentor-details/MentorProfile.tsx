@@ -1,10 +1,10 @@
 import { mentors } from '@/const/constant';
-import MentorOverviewAndReview from './MentorOverviewAndReview';
 import { PiBriefcaseLight, PiGraduationCapLight } from 'react-icons/pi';
 import MentorshipTabs from './MentorShipTab';
 import MentorBookCard from '@/components/ui/MentorBookCard';
 
 import ProfileBanner from '@/components/shared/ProfileBanner';
+import MentorDetailsTab from './MentorDetailsTab';
 
 const MentorProfileDetails = () => {
       const experiences = [
@@ -42,19 +42,21 @@ const MentorProfileDetails = () => {
                   <ProfileBanner />
 
                   <div className="">
-                        <div className="container">
-                              <div className="flex flex-col md:flex-row items-center  md:gap-10">
-                                    <div className="w-full  md:max-w-[300px] md:-mt-[120px]">
+                        <div className="container relative">
+                              <div className="flex  flex-col md:flex-row items-start  md:gap-10">
+                                    <div className="w-full md:-mt-32   md:max-w-[300px] ">
                                           <MentorBookCard mentor={mentors[0]} />
                                     </div>
-                                    <MentorOverviewAndReview />
+                                    <div className="w-full">
+                                          <MentorDetailsTab />
+                                    </div>
                               </div>
 
                               <div className="my-10  grid-cols-12 grid gap-5">
                                     <div className="col-span-12 md:col-span-7  space-y-8 ">
                                           <div>
                                                 <h1 className="text-xl font-bold text-title mb-4">Expertise</h1>
-                                                <div className="bg-white drop-shadow-lg border  rounded-xl p-6 flex flex-wrap gap-4">
+                                                <div className="bg-white custom-shadow    rounded-lg p-6 flex flex-wrap gap-4">
                                                       {['Product Designer', 'Graphic Designer', 'UI Designer', 'Web Designer'].map(
                                                             (item, index) => (
                                                                   <div key={index} className="border p-3 rounded-full">
@@ -66,7 +68,7 @@ const MentorProfileDetails = () => {
                                           </div>
                                           <div>
                                                 <h1 className="text-xl font-bold text-title mb-4">Experiences</h1>
-                                                <div className="bg-white border drop-shadow-lg space-y-5 rounded-xl p-6 ">
+                                                <div className="bg-white  custom-shadow space-y-5 rounded-lg p-6 ">
                                                       {experiences.map((item, index) => (
                                                             <div className="flex items-center gap-5 pb-5" key={index}>
                                                                   <div className="size-[65px] bg-primary-100 rounded flex items-center justify-center">
@@ -85,7 +87,7 @@ const MentorProfileDetails = () => {
                                           </div>
                                           <div>
                                                 <h1 className="text-xl font-bold text-title mb-4">Education</h1>
-                                                <div className="bg-white border drop-shadow-lg space-y-5 rounded-xl p-6 ">
+                                                <div className="bg-white  custom-shadow space-y-5 rounded-lg p-6 ">
                                                       {educations.map((item, index) => (
                                                             <div className="flex items-center gap-5 pb-5" key={index}>
                                                                   <div className="size-[65px] bg-primary-100 rounded flex items-center justify-center">

@@ -20,7 +20,7 @@ const MentorshipTabs = () => {
       ];
 
       return (
-            <div className="bg-white rounded-lg shadow-lg p-6   max-w-md mx-auto">
+            <div className="bg-white rounded-lg custom-shadow  p-6   max-w-md mx-auto">
                   <Tabs defaultActiveKey="1" centered>
                         {/* Mentorship Plans Tab */}
                         <TabPane tab={<span className="font-semibold">Mentorship Plans</span>} key="1">
