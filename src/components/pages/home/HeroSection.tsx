@@ -84,7 +84,7 @@ const HeroSection = () => {
                                                 alt="Mentor"
                                                 width={400}
                                                 height={500}
-                                                className="w-[278.64px] h-[417.97px] rounded-lg shadow-lg"
+                                                className="w-[278.64px] h-[300px] md:h-[417.97px] rounded-lg shadow-lg"
                                           />
                                           <div className="flex justify-end mt-5">
                                                 <div className=" flex justify-start  w-fit items-center gap-2 top-[10%] -right-[40%] bg-white p-2 rounded-md">
@@ -102,7 +102,7 @@ const HeroSection = () => {
                                                 alt="Mentor"
                                                 width={300}
                                                 height={400}
-                                                className="h-[425.35px] mt-40 w-[278.64px] rounded-lg shadow-lg"
+                                                className="h-[300px] md:h-[425.35px] mt-40 w-[278.64px] rounded-lg shadow-lg"
                                           />
                                     </div>
                               </div>
