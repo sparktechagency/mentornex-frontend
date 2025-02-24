@@ -12,9 +12,9 @@ const HomePage = () => {
             <div>
                   <HeroSection />
                   <HowItWorks />
-                  <Testimonial />
-                  <TopMentors />
                   <IndustrySection />
+                  <TopMentors />
+                  <Testimonial />
                   <MentorshipFeature />
                   <FAQSection />
                   <ContactSection />
