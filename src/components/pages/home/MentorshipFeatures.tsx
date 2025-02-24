@@ -8,10 +8,10 @@ import Image from 'next/image';
 // import Image3 from '@/assets/images/mentorship-feature/3.png';
 // import Image4 from '@/assets/images/mentorship-feature/4.jpg';
 
-import Image1 from '@/assets/images/industry/1.png';
-import Image2 from '@/assets/images/industry/2.png';
-import Image3 from '@/assets/images/industry/3.png';
-import Image4 from '@/assets/images/industry/4.png';
+import Image1 from '@/assets/images/mentorship-feature/11.png';
+import Image2 from '@/assets/images/mentorship-feature/22.png';
+import Image3 from '@/assets/images/mentorship-feature/33.png';
+import Image4 from '@/assets/images/mentorship-feature/44.png';
 
 import { Button } from 'antd';
 import { MdOutlineArrowOutward } from 'react-icons/md';
@@ -22,24 +22,28 @@ export const mentorShipFeatures = [
             name: 'Built-in Video Calls',
             description: 'Seamless, in-platform video calls for mentorship sessions—no external tools needed.',
             image: Image1,
+            bgColor: '#F3F9FF',
       },
       {
             id: 2,
             name: 'Flexible Mentorship Options',
             description: 'Offer and access mentorship through subscriptions, one-time sessions, or free consultations.',
             image: Image2,
+            bgColor: '#FEF7F3',
       },
       {
             id: 3,
             name: 'Community Hub',
             description: 'Engage with a vibrant community for discussions, insights, and opportunities to connect.',
             image: Image3,
+            bgColor: '#F1FBF5',
       },
       {
             id: 4,
             name: 'Personalized Growth Paths',
             description: 'Track progress, set goals, and access tailored content to enhance your mentorship journey.',
             image: Image4,
+            bgColor: '#FFFAEC',
       },
 ];
 function MentorshipFeature() {
@@ -57,14 +61,17 @@ function MentorshipFeature() {
                               <div className="md:mx-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center">
                                     {mentorShipFeatures.map((mentor) => (
                                           <div key={mentor.id}>
-                                                <div className="bg-white rounded-xl p-5 h-full  flex flex-col">
+                                                <div
+                                                      style={{ backgroundColor: mentor.bgColor }}
+                                                      className=" rounded-xl p-5 h-full  flex flex-col"
+                                                >
                                                       <div className="relative ">
                                                             <Image
                                                                   width={300}
                                                                   height={300}
                                                                   src={mentor.image}
                                                                   alt={mentor.name}
-                                                                  className="w-full h-[120px] object-contain rounded-xl"
+                                                                  className="size-[60px] m-auto object-contain rounded-xl"
                                                             />
                                                       </div>
                                                       <div className="p-4 space-y-3">
