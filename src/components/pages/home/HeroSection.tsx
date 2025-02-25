@@ -103,16 +103,6 @@ const HeroSection: React.FC = () => {
                               },
                               '-=0.6'
                         );
-
-                  // Add floating animation to stats cards
-                  gsap.to(['#expert-mentor', '#different-category'], {
-                        y: '-=10',
-                        x: '-=5',
-                        duration: 1.5,
-                        ease: 'power1.inOut',
-                        yoyo: true,
-                        repeat: -1,
-                  });
             },
             { scope: containerRef }
       );
