@@ -40,14 +40,14 @@ const HowItWorks = () => {
                         y: 0,
                         scale: 1,
                         rotateY: 0,
-                        duration: 1,
-                        ease: 'expo.inOut',
-                        stagger: 0.3,
+                        duration: 1.5, // Increased duration for smoother animation
+                        ease: 'power3.out', // Changed easing for smoother effect
+                        stagger: 0.2, // Slightly reduced stagger for a more fluid sequence
                         scrollTrigger: {
                               trigger: section,
                               start: 'top 80%',
                               end: 'bottom 20%',
-                              scrub: 0.5,
+                              scrub: 0.5, // Added scrub for smoother scroll interaction
                               once: true,
                         },
                   });
