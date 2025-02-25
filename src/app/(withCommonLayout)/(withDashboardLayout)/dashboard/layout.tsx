@@ -34,7 +34,7 @@ const ProfileLayout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                                     // breakpoint="lg"
                                     collapsedWidth="0"
                                     // collapsible
-                                    className="-mt-52 rounded-lg drop-shadow"
+                                    className="-mt-52  rounded-lg drop-shadow"
                                     collapsed={collapsed}
                                     onCollapse={(isCollapsed) => setCollapsed(isCollapsed)}
                               >

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Edit2 } from 'lucide-react';
 import { UploadChangeParam } from 'antd/es/upload';
 import Link from 'next/link';
-import { FaClipboardList, FaGear, FaHourglassEnd, FaUserGear } from 'react-icons/fa6';
+import { FaCalendarCheck, FaClipboardList, FaClock, FaGear, FaHourglassEnd, FaUserGear } from 'react-icons/fa6';
 import { MdCurrencyExchange, MdDashboard } from 'react-icons/md';
 import { IoHeart, IoLogOut } from 'react-icons/io5';
 import { FaUserFriends } from 'react-icons/fa';
@@ -14,7 +14,7 @@ import { showConfirmModal } from '@/components/ui/LogoutModal';
 
 const ProfileSidebar = () => {
       const [previewImage, setPreviewImage] = useState<undefined | string>('https://i.ibb.co.com/yN2vT01/me.jpg');
-      const [userRole] = useState<string>('mentee');
+      const [userRole] = useState<string>('mentor');
 
       const handleFileChange = ({ file }: UploadChangeParam<any>) => {
             const reader = new FileReader();
@@ -85,6 +85,19 @@ const ProfileSidebar = () => {
                   label: 'Profile',
                   href: '/dashboard/mentor/profile',
                   selected: true,
+            },
+            {
+                  key: 'sessions&subscriptions',
+                  icon: <FaCalendarCheck size={20} />,
+                  label: 'Sessions & Subscriptions',
+                  href: '/dashboard/mentor/sessions-and-subscriptions',
+            },
+
+            {
+                  key: 'slot-management',
+                  icon: <FaClock size={20} />,
+                  label: 'Slot Management',
+                  href: '/dashboard/mentor/slot-management',
             },
 
             {
