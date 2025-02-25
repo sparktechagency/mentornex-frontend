@@ -1,8 +1,13 @@
 'use client';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Image1 from '@/assets/images/how-it-works/1.png';
 import Image2 from '@/assets/images/how-it-works/2.png';
 import Image3 from '@/assets/images/how-it-works/3.png';
 import Image from 'next/image';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const stepData = [
       {
@@ -21,11 +26,38 @@ const stepData = [
             image: Image3,
       },
 ];
+
 const HowItWorks = () => {
+      const sectionRef = useRef<HTMLDivElement>(null);
+
+      useEffect(() => {
+            const section = sectionRef.current;
+            if (section) {
+                  const elements = section.querySelectorAll('.step');
+                  gsap.set(elements, { y: 50, scale: 0.9, rotateY: 15 });
+
+                  gsap.to(elements, {
+                        y: 0,
+                        scale: 1,
+                        rotateY: 0,
+                        duration: 1,
+                        ease: 'expo.inOut',
+                        stagger: 0.3,
+                        scrollTrigger: {
+                              trigger: section,
+                              start: 'top 80%',
+                              end: 'bottom 20%',
+                              scrub: 0.5,
+                              once: true,
+                        },
+                  });
+            }
+      }, []);
+
       return (
-            <div className="bg-[#FFFDF8] py-16">
-                  <div className="md:container overflow-x-hidden mx-auto flex flex-col items-center space-y-8">
-                        <h1 className="text-2xl md:text-4xl  font-bold text-center text-title mb-3">How it works ?</h1>
+            <div ref={sectionRef} className="bg-[#FFFDF8] py-16 overflow-hidden">
+                  <div className="md:container overflow-hidden mx-auto flex flex-col items-center space-y-8">
+                        <h1 className="text-2xl md:text-4xl font-bold text-center text-title mb-3">How it works ?</h1>
                         <p className="text-center text-paragraph mb-16">
                               Looking for guidance from expert mentors? Check out how it works!
                         </p>
@@ -34,7 +66,7 @@ const HowItWorks = () => {
                               {stepData.map((step, index) => (
                                     <div
                                           key={index}
-                                          className="flex text-center border p-3 rounded-lg flex-col w-[387px] h-[387px]  items-center space-x-8 space-y-8 md:space-y-0"
+                                          className="step flex text-center border p-3 rounded-lg flex-col w-[387px] h-[387px] items-center space-x-8 space-y-8 md:space-y-0 shadow-lg bg-white"
                                     >
                                           <Image
                                                 className="w-[324px] object-contain h-[216px] m-auto"
