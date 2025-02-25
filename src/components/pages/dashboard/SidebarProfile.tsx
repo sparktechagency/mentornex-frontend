@@ -14,7 +14,7 @@ import { showConfirmModal } from '@/components/ui/LogoutModal';
 
 const ProfileSidebar = () => {
       const [previewImage, setPreviewImage] = useState<undefined | string>('https://i.ibb.co.com/yN2vT01/me.jpg');
-      const [userRole] = useState<string>('mentor');
+      const [userRole] = useState<string>('mentee');
 
       const handleFileChange = ({ file }: UploadChangeParam<any>) => {
             const reader = new FileReader();
@@ -43,6 +43,12 @@ const ProfileSidebar = () => {
                   icon: <FaHourglassEnd size={20} />,
                   label: 'My Session',
                   href: '/dashboard/mentee/my-sessions',
+            },
+            {
+                  key: 'Tasks & Notes',
+                  icon: <FaClipboardList size={20} />,
+                  label: 'Tasks & Notes',
+                  href: '/dashboard/mentee/tasks-and-notes',
             },
 
             {
