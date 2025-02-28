@@ -2,6 +2,7 @@
 import { useLoginUserMutation } from '@/redux/features/auth/authApi';
 import { setUser } from '@/redux/features/auth/authSlice';
 import { useAppDispatch } from '@/redux/hooks';
+import { setAccessToken } from '@/utils/accessToken';
 import { decodedUser } from '@/utils/decodeUser';
 
 import { LoadingOutlined } from '@ant-design/icons';
@@ -21,6 +22,7 @@ const SignInPage = () => {
                   if (res?.success) {
                         const user = decodedUser(res?.data);
                         dispatch(setUser({ user, token: res?.data }));
+                        setAccessToken(res.data);
 
                         toast.success(res?.message);
                         router.push('/');

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Menu, Avatar } from 'antd';
-// import { EditOutlined, HeartOutlined, CalendarOutlined, SettingOutlined } from '@ant-design/icons';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { showConfirmModal } from '../ui/LogoutModal';
-import { useAppDispatch } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { removeUser } from '@/redux/features/auth/authSlice';
+import { removeAccessToken } from '@/utils/accessToken';
 
 const ProfileDropdown = () => {
       const router = useRouter();
       const dispatch = useAppDispatch();
+      const { user } = useAppSelector((state) => state.auth);
 
       const handleLogout = () => {
             showConfirmModal({
@@ -20,6 +21,7 @@ const ProfileDropdown = () => {
                   cancelText: 'Cancel',
                   onConfirm: () => {
                         dispatch(removeUser());
+                        removeAccessToken();
                         toast.success('Logout successful!');
                         router.push('/signin');
                   },
@@ -28,15 +30,9 @@ const ProfileDropdown = () => {
       return (
             <div className="">
                   <Menu mode="inline">
-                        <div
-                              onClick={() => {
-                                    router.push('/dashboard');
-                              }}
-                              className="flex cursor-pointer items-center text-start gap-2 "
-                        ></div>
                         <Menu.Item
                               onClick={() => {
-                                    router.push('/dashboard/mentor/dashboard');
+                                    router.push(`/dashboard/${user?.role.toLowerCase()}/dashboard`);
                               }}
                               key="profile"
                         >
