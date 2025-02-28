@@ -21,6 +21,7 @@ const SignUpPage = () => {
                   const res = await registerUser(values).unwrap();
                   if (res?.success) {
                         toast.success(res?.message);
+                        localStorage.setItem('loginPassword', values.password);
                         router.push(`/verify-otp?reason=signup&email=${values.email}`);
                   }
             } catch (error: any) {

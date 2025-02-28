@@ -15,10 +15,9 @@ const SignInPage = () => {
       const router = useRouter();
       const dispatch = useAppDispatch();
       const onFinish = async (values: any) => {
-            console.log('Success:', values);
             try {
                   const res = await signIn(values).unwrap();
-                  console.log(res);
+
                   if (res?.success) {
                         const user = decodedUser(res?.data);
                         dispatch(setUser({ user, token: res?.data }));

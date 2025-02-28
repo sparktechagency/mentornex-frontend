@@ -1,5 +1,8 @@
 'use client';
-import { useForgetPasswordMutation, useVerifyEmailMutation } from '@/redux/features/auth/authApi';
+import { useForgetPasswordMutation, useLoginUserMutation, useVerifyEmailMutation } from '@/redux/features/auth/authApi';
+import { setUser } from '@/redux/features/auth/authSlice';
+import { useAppDispatch } from '@/redux/hooks';
+import { decodedUser } from '@/utils/decodeUser';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,7 +11,9 @@ import { toast } from 'react-toastify';
 const VerifyOtpPage = () => {
       const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
       const [resendOtp, { isLoading: resendLoading }] = useForgetPasswordMutation();
+      const [signIn] = useLoginUserMutation();
       const searchParams = useSearchParams();
+      const dispatch = useAppDispatch();
       const reason = searchParams.get('reason');
       const email = searchParams.get('email');
       const router = useRouter();
@@ -19,7 +24,14 @@ const VerifyOtpPage = () => {
                   if (res?.success) {
                         toast.success(res?.message);
                         if (reason === 'signup') {
-                              router.push('/signin');
+                              const res = await signIn({ email, password: localStorage.getItem('loginPassword') }).unwrap();
+                              if (res?.success) {
+                                    toast.success(res?.message);
+                                    localStorage.removeItem('loginPassword');
+                                    const user = decodedUser(res?.data);
+                                    dispatch(setUser({ user, token: res?.data }));
+                                    router.push('/');
+                              }
                         } else if (reason === 'forget-password') {
                               localStorage.setItem('oneTimeToken', res?.data);
                               router.push('/set-new-password');
