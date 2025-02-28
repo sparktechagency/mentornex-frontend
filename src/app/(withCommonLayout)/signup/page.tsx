@@ -1,22 +1,39 @@
 'use client';
 import { timeZones } from '@/const/constant';
+import { useRegisterUserMutation } from '@/redux/features/user/userApi';
+import { LoadingOutlined } from '@ant-design/icons';
+
 import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const SignUpPage = () => {
-      const [role, setRole] = useState('mentee');
+      const [registerUser, { isLoading }] = useRegisterUserMutation();
+
+      const [role, setRole] = useState('MENTEE');
       const router = useRouter();
       const [form] = Form.useForm();
 
       const onFinish = async (values: any) => {
+            try {
+                  const res = await registerUser(values).unwrap();
+                  if (res?.success) {
+                        localStorage.setItem('verificationEmail', values.email);
+                        toast.success(res?.message);
+                        router.push('/verify-otp');
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong');
+            }
+      };
+
+      useEffect(() => {
             form.setFieldsValue({
                   role: role,
             });
-            console.log('Success:', values);
-            router.push('/');
-      };
+      }, [role, form]);
       return (
             <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
                   <div className="container w-full max-w-[500px] mx-auto shadow-xl  rounded-lg p-8 my-20">
@@ -29,11 +46,11 @@ const SignUpPage = () => {
                               <Form form={form} onFinish={onFinish} layout="vertical" requiredMark={false}>
                                     <Form.Item className="flex items-center justify-center" name="role">
                                           <Button
-                                                onClick={() => setRole('mentee')}
-                                                value="mentee"
+                                                onClick={() => setRole('MENTEE')}
+                                                value="MENTEE"
                                                 style={{
-                                                      backgroundColor: role === 'mentee' ? '#FF6F3C' : '#fff',
-                                                      color: role === 'mentee' ? '#fff' : '#000',
+                                                      backgroundColor: role === 'MENTEE' ? '#FF6F3C' : '#fff',
+                                                      color: role === 'MENTEE' ? '#fff' : '#000',
                                                       borderRadius: '5px',
                                                       marginRight: '10px',
                                                       height: '40px',
@@ -44,11 +61,11 @@ const SignUpPage = () => {
                                                 Mentee
                                           </Button>
                                           <Button
-                                                onClick={() => setRole('mentor')}
-                                                value="mentor"
+                                                onClick={() => setRole('MENTOR')}
+                                                value="MENTOR"
                                                 style={{
-                                                      backgroundColor: role === 'mentor' ? '#FF6F3C' : '#fff',
-                                                      color: role === 'mentor' ? '#fff' : '#000',
+                                                      backgroundColor: role === 'MENTOR' ? '#FF6F3C' : '#fff',
+                                                      color: role === 'MENTOR' ? '#fff' : '#000',
                                                       border: '1px solid #FF6F3C',
                                                       borderRadius: '5px',
                                                       height: '40px',
@@ -61,7 +78,7 @@ const SignUpPage = () => {
                                     </Form.Item>
                                     <Form.Item
                                           label="Full Name"
-                                          name="fullName"
+                                          name="name"
                                           rules={[{ required: true, message: 'Please input your full name!' }]}
                                     >
                                           <Input placeholder="Enter your full name" />
@@ -100,7 +117,10 @@ const SignUpPage = () => {
                                     <Form.Item
                                           label="Password"
                                           name="password"
-                                          rules={[{ required: true, message: 'Please input your password!' }]}
+                                          rules={[
+                                                { required: true, message: 'Please input your password!' },
+                                                { min: 8, message: 'Password must be at least 8 characters' },
+                                          ]}
                                     >
                                           <Input.Password placeholder="********" />
                                     </Form.Item>
@@ -115,7 +135,11 @@ const SignUpPage = () => {
                                                             if (!value || getFieldValue('password') === value) {
                                                                   return Promise.resolve();
                                                             }
-                                                            return Promise.reject(new Error('Passwords do not match!'));
+                                                            return Promise.reject(
+                                                                  new Error(
+                                                                        'Passwords do not match! Please enter the same password as above.'
+                                                                  )
+                                                            );
                                                       },
                                                 }),
                                           ]}
@@ -129,7 +153,17 @@ const SignUpPage = () => {
                                           }}
                                           name="terms"
                                           valuePropName="checked"
-                                          rules={[{ required: true, message: 'You must agree to the terms and conditions!' }]}
+                                          rules={[
+                                                {
+                                                      validator(_rule, value, callback) {
+                                                            if (value) {
+                                                                  callback();
+                                                            } else {
+                                                                  callback('You must agree to our terms and conditions');
+                                                            }
+                                                      },
+                                                },
+                                          ]}
                                     >
                                           <Checkbox>
                                                 I agree to{' '}
@@ -145,7 +179,7 @@ const SignUpPage = () => {
 
                                     <Form.Item>
                                           <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-                                                Sign Up
+                                                {isLoading ? <LoadingOutlined /> : 'Sign Up'}
                                           </Button>
                                     </Form.Item>
                               </Form>

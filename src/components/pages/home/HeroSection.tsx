@@ -117,9 +117,9 @@ const HeroSection: React.FC = () => {
                               {/* Left Content */}
                               <div className="space-y-6">
                                     <h1 ref={headingRef} className="text-4xl md:text-6xl font-bold">
-                                          <span className="text-black inline-block will-change-transform">Modern And</span>
+                                          <span className="text-black inline-block will-change-transform">Mentorship</span>
                                           <br />
-                                          <span className="text-[#FF6F3C] inline-block will-change-transform">Innovative Learning</span>
+                                          <span className="text-[#FF6F3C] inline-block will-change-transform">Reimagined</span>
                                     </h1>
 
                                     <p ref={descriptionRef} className="text-gray-600 text-lg max-w-[600px] will-change-transform">

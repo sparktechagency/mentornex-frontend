@@ -5,7 +5,8 @@ import NextTopLoader from 'nextjs-toploader';
 import React, { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Provider as ReduxProvider } from 'react-redux';
-import { store } from '@/redux/store';
+import { persistor, store } from '@/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const Provider = ({ children }: { children: ReactNode }) => {
       return (
@@ -61,12 +62,14 @@ const Provider = ({ children }: { children: ReactNode }) => {
                         }}
                   >
                         <ReduxProvider store={store}>
-                              <AntdRegistry>
-                                    <NextTopLoader color="#FF6F3C" />
-                                    <ToastContainer />
+                              <PersistGate persistor={persistor}>
+                                    <AntdRegistry>
+                                          <NextTopLoader color="#FF6F3C" />
+                                          <ToastContainer />
 
-                                    {children}
-                              </AntdRegistry>
+                                          {children}
+                                    </AntdRegistry>
+                              </PersistGate>
                         </ReduxProvider>
                   </ConfigProvider>
             </div>

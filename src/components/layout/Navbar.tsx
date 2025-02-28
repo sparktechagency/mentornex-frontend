@@ -11,9 +11,11 @@ import { BiMessage } from 'react-icons/bi';
 import { Bell } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
+import { useAppSelector } from '@/redux/hooks';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
+      const { user } = useAppSelector((state) => state.auth);
 
       const items = [
             { label: 'Home', path: '/' },
@@ -51,46 +53,49 @@ const Navbar = () => {
                                                 Sign In
                                           </Button>
                                     </Link> */}
-                                    <Link href="/signup">
-                                          <Button iconPosition="end" type="primary">
-                                                Sign Up
-                                          </Button>
-                                    </Link>
 
-                                    <div className="flex items-center gap-6 my-8">
-                                          <Link href="/chat">
-                                                <Badge dot color="#FF6F3C">
-                                                      <BiMessage style={{ fontSize: '24px', color: '#333' }} />
-                                                </Badge>
+                                    {user ? (
+                                          <div className="flex items-center gap-6 my-8">
+                                                <Link href="/chat">
+                                                      <Badge dot color="#FF6F3C">
+                                                            <BiMessage style={{ fontSize: '24px', color: '#333' }} />
+                                                      </Badge>
+                                                </Link>
+
+                                                <Dropdown
+                                                      className="cursor-pointer"
+                                                      trigger={['click']}
+                                                      dropdownRender={() => <NotificationDropdown />}
+                                                >
+                                                      <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
+                                                            <Bell style={{ fontSize: '24px', color: '#333' }} />
+                                                      </Badge>
+                                                </Dropdown>
+                                                <Dropdown
+                                                      placement="bottomLeft"
+                                                      className="cursor-pointer"
+                                                      trigger={['click']}
+                                                      dropdownRender={() => <ProfileDropdown />}
+                                                >
+                                                      <div className="flex items-center gap-2">
+                                                            <Avatar
+                                                                  size={40}
+                                                                  src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
+                                                                  style={{ border: '2px solid #FF6F3C' }}
+                                                            />
+                                                            <Typography.Text strong style={{ fontSize: '16px' }}>
+                                                                  Sazzad
+                                                            </Typography.Text>
+                                                      </div>
+                                                </Dropdown>
+                                          </div>
+                                    ) : (
+                                          <Link href="/signin">
+                                                <Button iconPosition="end" type="primary">
+                                                      Sign In
+                                                </Button>
                                           </Link>
-
-                                          <Dropdown
-                                                className="cursor-pointer"
-                                                trigger={['click', 'hover']}
-                                                dropdownRender={() => <NotificationDropdown />}
-                                          >
-                                                <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
-                                                      <Bell style={{ fontSize: '24px', color: '#333' }} />
-                                                </Badge>
-                                          </Dropdown>
-                                          <Dropdown
-                                                placement="bottomLeft"
-                                                className="cursor-pointer"
-                                                trigger={['click', 'hover']}
-                                                dropdownRender={() => <ProfileDropdown />}
-                                          >
-                                                <div className="flex items-center gap-2">
-                                                      <Avatar
-                                                            size={40}
-                                                            src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
-                                                            style={{ border: '2px solid #FF6F3C' }}
-                                                      />
-                                                      <Typography.Text strong style={{ fontSize: '16px' }}>
-                                                            Sazzad
-                                                      </Typography.Text>
-                                                </div>
-                                          </Dropdown>
-                                    </div>
+                                    )}
                               </div>
                               <div className="md:hidden">
                                     <AiOutlineMenu

@@ -5,9 +5,12 @@ import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { showConfirmModal } from '../ui/LogoutModal';
+import { useAppDispatch } from '@/redux/hooks';
+import { removeUser } from '@/redux/features/auth/authSlice';
 
 const ProfileDropdown = () => {
       const router = useRouter();
+      const dispatch = useAppDispatch();
 
       const handleLogout = () => {
             showConfirmModal({
@@ -16,7 +19,9 @@ const ProfileDropdown = () => {
                   okText: 'Logout',
                   cancelText: 'Cancel',
                   onConfirm: () => {
+                        dispatch(removeUser());
                         toast.success('Logout successful!');
+                        router.push('/signin');
                   },
             });
       };

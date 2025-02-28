@@ -1,13 +1,34 @@
 'use client';
+import { useLoginUserMutation } from '@/redux/features/auth/authApi';
+import { setUser } from '@/redux/features/auth/authSlice';
+import { useAppDispatch } from '@/redux/hooks';
+import { decodedUser } from '@/utils/decodeUser';
+
+import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const SignInPage = () => {
+      const [signIn, { isLoading }] = useLoginUserMutation();
       const router = useRouter();
+      const dispatch = useAppDispatch();
       const onFinish = async (values: any) => {
             console.log('Success:', values);
-            router.push('/');
+            try {
+                  const res = await signIn(values).unwrap();
+                  console.log(res);
+                  if (res?.success) {
+                        const user = decodedUser(res?.data);
+                        dispatch(setUser({ user, token: res?.data }));
+
+                        toast.success(res?.message);
+                        router.push('/');
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong');
+            }
       };
       return (
             <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
@@ -45,7 +66,7 @@ const SignInPage = () => {
 
                                     <Form.Item>
                                           <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-                                                Sign In
+                                                {isLoading ? <LoadingOutlined /> : 'Sign In'}
                                           </Button>
                                     </Form.Item>
                               </Form>

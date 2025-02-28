@@ -1,12 +1,30 @@
 'use client';
+import { useVerifyEmailMutation } from '@/redux/features/auth/authApi';
+import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 const VerifyOtpPage = () => {
+      const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
+      const [email, setEmail] = useState('');
       const router = useRouter();
+      useEffect(() => {
+            const storedEmail = localStorage.getItem('verificationEmail') || '';
+            setEmail(storedEmail);
+      }, []);
       const onFinish = async (values: any) => {
-            console.log('Success:', values);
-            router.push('/set-new-password');
+            try {
+                  const res = await verifyEmail({ email, oneTimeCode: Number(values.otp) }).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                        localStorage.removeItem('verificationEmail');
+                        router.push('/signin');
+                  }
+            } catch (error: any) {
+                  toast.error(error.message || 'Filed to verify OTP');
+            }
       };
       return (
             <div className="min-h-[calc(100vh-96px)] flex items-center justify-center">
@@ -14,17 +32,26 @@ const VerifyOtpPage = () => {
                         <div>
                               <div className="text-center">
                                     <Typography.Title level={2}>Verify OTP</Typography.Title>
-                                    <Typography.Paragraph>Enter the OTP sent to your email</Typography.Paragraph>
+                                    <Typography.Paragraph>Please Enter the OTP sent to your email {email}</Typography.Paragraph>
                               </div>
 
                               <Form onFinish={onFinish} layout="vertical" requiredMark={false}>
-                                    <Form.Item label="OTP" name="otp" rules={[{ required: true, message: 'Please input the OTP!' }]}>
-                                          <Input.OTP length={6} />
+                                    <Form.Item
+                                          style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                          }}
+                                          label="OTP"
+                                          name="otp"
+                                          rules={[{ required: true, message: 'Please input the OTP!' }]}
+                                    >
+                                          <Input.OTP length={4} />
                                     </Form.Item>
 
                                     <Form.Item>
                                           <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-                                                Verify OTP
+                                                {isLoading ? <LoadingOutlined /> : 'Verify OTP'}
                                           </Button>
                                     </Form.Item>
                               </Form>
