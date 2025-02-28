@@ -1,15 +1,26 @@
 'use client';
 
+import { useResetPasswordMutation } from '@/redux/features/auth/authApi';
+import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const SetNewPasswordPage = () => {
       const router = useRouter();
+      const [resetPassword, { isLoading }] = useResetPasswordMutation();
       const onFinish = async (values: any) => {
-            console.log('Success:', values);
-
-            router.push('/signin');
+            try {
+                  const res = await resetPassword(values).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                        localStorage.removeItem('oneTimeToken');
+                        router.push('/signin');
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong in the server');
+            }
       };
 
       return (
@@ -50,7 +61,7 @@ const SetNewPasswordPage = () => {
 
                                     <Form.Item>
                                           <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-                                                Set Password
+                                                {isLoading ? <LoadingOutlined /> : 'Set Password'}
                                           </Button>
                                     </Form.Item>
                               </Form>

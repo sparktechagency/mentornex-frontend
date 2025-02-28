@@ -20,9 +20,8 @@ const SignUpPage = () => {
             try {
                   const res = await registerUser(values).unwrap();
                   if (res?.success) {
-                        localStorage.setItem('verificationEmail', values.email);
                         toast.success(res?.message);
-                        router.push('/verify-otp');
+                        router.push(`/verify-otp?reason=signup&email=${values.email}`);
                   }
             } catch (error: any) {
                   toast.error(error?.data?.message || 'Something went wrong');

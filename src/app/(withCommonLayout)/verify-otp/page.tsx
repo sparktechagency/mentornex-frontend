@@ -1,29 +1,44 @@
 'use client';
-import { useVerifyEmailMutation } from '@/redux/features/auth/authApi';
+import { useForgetPasswordMutation, useVerifyEmailMutation } from '@/redux/features/auth/authApi';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Typography } from 'antd';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 const VerifyOtpPage = () => {
       const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
-      const [email, setEmail] = useState('');
+      const [resendOtp, { isLoading: resendLoading }] = useForgetPasswordMutation();
+      const searchParams = useSearchParams();
+      const reason = searchParams.get('reason');
+      const email = searchParams.get('email');
       const router = useRouter();
-      useEffect(() => {
-            const storedEmail = localStorage.getItem('verificationEmail') || '';
-            setEmail(storedEmail);
-      }, []);
+
       const onFinish = async (values: any) => {
             try {
                   const res = await verifyEmail({ email, oneTimeCode: Number(values.otp) }).unwrap();
                   if (res?.success) {
                         toast.success(res?.message);
-                        localStorage.removeItem('verificationEmail');
-                        router.push('/signin');
+                        if (reason === 'signup') {
+                              router.push('/signin');
+                        } else if (reason === 'forget-password') {
+                              localStorage.setItem('oneTimeToken', res?.data);
+                              router.push('/set-new-password');
+                        }
                   }
             } catch (error: any) {
-                  toast.error(error.message || 'Filed to verify OTP');
+                  console.log(error);
+                  toast.error(error.data.message || 'Filed to verify OTP');
+            }
+      };
+
+      const handleResend = async () => {
+            try {
+                  const res = await resendOtp({ email }).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error.message || 'Filed to resend OTP');
             }
       };
       return (
@@ -59,12 +74,13 @@ const VerifyOtpPage = () => {
                               <div className="flex items-center justify-center ">
                                     <span className="text-sm">Didn’t receive an OTP?</span>
                                     <Button
+                                          onClick={handleResend}
                                           style={{
                                                 color: '#FF6F3C',
                                           }}
                                           type="link"
                                     >
-                                          Resend OTP
+                                          {resendLoading ? <LoadingOutlined /> : 'Resend OTP'}
                                     </Button>
                               </div>
                         </div>
