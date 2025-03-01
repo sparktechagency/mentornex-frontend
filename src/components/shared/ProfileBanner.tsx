@@ -1,5 +1,4 @@
 'use client';
-import { socials } from '@/const/constant';
 import MentorSocialLinks from '../pages/mentor-details/MentorSocialLinks';
 
 import BannerImage from '@/assets/images/banner.svg';
@@ -54,7 +53,7 @@ const ProfileBanner = ({ needUpload = false }: { needUpload?: boolean }) => {
                                     </Upload>
                               </div>
                         )}
-                        <MentorSocialLinks socials={socials} />
+                        <MentorSocialLinks profile={profile!} />
                   </div>
             </div>
       );

@@ -1,4 +1,4 @@
-import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsYoutube } from 'react-icons/bs';
+import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter } from 'react-icons/bs';
 
 export const timeZones = [
       { value: 'GMT-12:00', label: '(GMT -12:00) International Date Line West' },
@@ -371,10 +371,10 @@ export const socials = [
             icon: <BsInstagram />,
             link: '',
       },
-      {
-            id: 5,
-            name: 'Youtube',
-            icon: <BsYoutube />,
-            link: '',
-      },
+      // {
+      //       id: 5,
+      //       name: 'Youtube',
+      //       icon: <BsYoutube />,
+      //       link: '',
+      // },
 ];

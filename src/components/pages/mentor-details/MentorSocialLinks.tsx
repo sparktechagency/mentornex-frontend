@@ -1,6 +1,35 @@
+import { TUser } from '@/redux/features/user/userApi';
 import Link from 'next/link';
+import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter } from 'react-icons/bs';
 
-const MentorSocialLinks = ({ socials }: { socials: any[] }) => {
+const MentorSocialLinks = ({ profile }: { profile: TUser }) => {
+      const socials = [
+            {
+                  id: 1,
+                  name: 'Facebook',
+                  icon: <BsFacebook />,
+                  link: profile?.facebook_url || '',
+            },
+            {
+                  id: 2,
+                  name: 'Twitter',
+                  icon: <BsTwitter />,
+                  link: profile?.twitter_url || '',
+            },
+            {
+                  id: 3,
+                  name: 'Linkedin',
+                  icon: <BsLinkedin />,
+                  link: profile?.linkedin_url || '',
+            },
+            {
+                  id: 4,
+                  name: 'Instagram',
+                  icon: <BsInstagram />,
+                  link: profile?.instagram_url || '',
+            },
+      ].filter((social) => social.link);
+
       return (
             <div className="container flex justify-end items-end h-full gap-4">
                   {socials.map((social) => (
