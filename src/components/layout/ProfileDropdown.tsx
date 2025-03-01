@@ -7,8 +7,10 @@ import { showConfirmModal } from '../ui/LogoutModal';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { removeUser } from '@/redux/features/auth/authSlice';
 import { removeAccessToken } from '@/utils/accessToken';
+import { TUser } from '@/redux/features/user/userApi';
+import { getImageUrl } from '@/utils/getImageUrl';
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ profile }: { profile: TUser }) => {
       const router = useRouter();
       const dispatch = useAppDispatch();
       const { user } = useAppSelector((state) => state.auth);
@@ -37,9 +39,9 @@ const ProfileDropdown = () => {
                               key="profile"
                         >
                               <div className="flex gap-3">
-                                    <Avatar size={40} src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`} />
+                                    <Avatar size={40} src={getImageUrl(profile?.image as string)} />
                                     <div>
-                                          <h3 className="font-semibold">Sazzad Chowdhury</h3>
+                                          <h3 className="font-semibold">{profile?.name}</h3>
                                           <p className="text-orange-500 cursor-pointer text-sm">View Profile</p>
                                     </div>
                               </div>

@@ -12,10 +12,15 @@ import { Bell } from 'lucide-react';
 import NotificationDropdown from './NotificationDropdown';
 import ProfileDropdown from './ProfileDropdown';
 import { useAppSelector } from '@/redux/hooks';
+import { useGetUserProfileQuery } from '@/redux/features/user/userApi';
+import { getImageUrl } from '@/utils/getImageUrl';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
       const { user } = useAppSelector((state) => state.auth);
+      const { data: profile } = useGetUserProfileQuery(undefined, {
+            skip: !user,
+      });
 
       const items = [
             { label: 'Home', path: '/' },
@@ -75,16 +80,16 @@ const Navbar = () => {
                                                       placement="bottomLeft"
                                                       className="cursor-pointer"
                                                       trigger={['click']}
-                                                      dropdownRender={() => <ProfileDropdown />}
+                                                      dropdownRender={() => <ProfileDropdown profile={profile!} />}
                                                 >
                                                       <div className="flex items-center gap-2">
                                                             <Avatar
                                                                   size={40}
-                                                                  src={`https://picsum.photos/seed/${Math.floor(Math.random() * 1000)}/40`}
+                                                                  src={getImageUrl(profile?.image as string)}
                                                                   style={{ border: '2px solid #FF6F3C' }}
                                                             />
                                                             <Typography.Text strong style={{ fontSize: '16px' }}>
-                                                                  Sazzad
+                                                                  {profile?.name}
                                                             </Typography.Text>
                                                       </div>
                                                 </Dropdown>
