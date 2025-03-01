@@ -14,12 +14,16 @@ import { showConfirmModal } from '@/components/ui/LogoutModal';
 import { useAppSelector } from '@/redux/hooks';
 import { useGetUserProfileQuery, useUpdateUserProfileMutation } from '@/redux/features/user/userApi';
 import { getImageUrl } from '@/utils/getImageUrl';
+import { usePathname } from 'next/navigation';
 
 const ProfileSidebar = () => {
+      const pathname = usePathname();
+      const activeKey = pathname?.split('/').pop();
       const { user } = useAppSelector((state) => state.auth);
       const { data: profile } = useGetUserProfileQuery(undefined, {
             skip: !user,
       });
+
       const [updateProfileImage] = useUpdateUserProfileMutation();
       const [previewImage, setPreviewImage] = useState<undefined | string>('');
 
@@ -205,7 +209,7 @@ const ProfileSidebar = () => {
                   </div>
 
                   {/* Menu Section */}
-                  <Menu mode="vertical" defaultSelectedKeys={['dashboard']} className="w-full">
+                  <Menu mode="vertical" defaultSelectedKeys={[activeKey as string]} className="w-full">
                         {generateSidebarByUserRole(user?.role as string).map((item) => {
                               if (item.key === 'logout') {
                                     return (

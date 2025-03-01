@@ -129,6 +129,7 @@ const HeroSection: React.FC = () => {
 
                                     <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4">
                                           <Button
+                                                href={`/signup`}
                                                 type="primary"
                                                 className="bg-[#FF6F3C] hover:bg-[#ff855c] border-none will-change-transform"
                                                 icon={<MdOutlineArrowOutward size={20} />}
@@ -136,6 +137,7 @@ const HeroSection: React.FC = () => {
                                                 Become a Mentor
                                           </Button>
                                           <Button
+                                                href={`/signup`}
                                                 style={{
                                                       border: '2px solid #FF6F3C',
                                                       color: '#FF6F3C',
