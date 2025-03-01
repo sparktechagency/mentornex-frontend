@@ -12,5 +12,5 @@ export type TApiResponse<T> = {
 
 export type TQueryParams = {
       name: string;
-      value: string | number;
+      value: string;
 };

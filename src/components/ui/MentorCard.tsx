@@ -1,3 +1,5 @@
+import { TMentor } from '@/redux/features/mentor/mentorApi';
+import { getImageUrl } from '@/utils/getImageUrl';
 import { Button } from 'antd';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
@@ -7,26 +9,17 @@ import { FaCalendarDays } from 'react-icons/fa6';
 import { HiOutlineCurrencyDollar } from 'react-icons/hi';
 // import { IoBriefcaseOutline } from 'react-icons/io5';
 import { PiChatsCircle } from 'react-icons/pi';
-type TMentor = {
-      id: number;
-      name: string;
-      image: string;
-      role: string;
-      experience: string;
-      startingPrice: string;
-      rating: number;
-      topRated: boolean;
-};
+
 const MentorCard = ({ mentor }: { mentor: TMentor }) => {
       return (
             <div>
-                  <div key={mentor.id}>
+                  <div key={mentor._id}>
                         <div className="bg-white rounded-xl p-2 mx-1">
                               <div className="relative">
                                     <Image
                                           width={300}
                                           height={300}
-                                          src={mentor.image}
+                                          src={getImageUrl(mentor?.image as string)}
                                           alt={mentor.name}
                                           className="w-full h-64 object-cover rounded-xl"
                                     />
@@ -35,13 +28,13 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     </button>
                                     <div className="absolute bottom-4 left-4 bg-black/70 px-2 py-1 rounded-md">
                                           <div className="flex items-center gap-1">
-                                                <span className="text-white font-semibold">{mentor.rating}</span>
+                                                {/* <span className="text-white font-semibold">{mentor.rating}</span> */}
                                                 <BsStarFill className="w-4 h-4 text-yellow-500" />
                                           </div>
                                     </div>
                                     <div className="absolute top-4 left-4 bg-white px-2 py-1 rounded">
                                           <div className="flex items-center gap-1">
-                                                <p className="font-semibold text-title">{mentor.topRated ? 'Top Rated' : ''}</p>
+                                                {/* <p className="font-semibold text-title">{mentor.topRated ? 'Top Rated' : ''}</p> */}
                                           </div>
                                     </div>
                               </div>
@@ -52,7 +45,7 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     <p className="text-gray-500">Helping you design seamless user experiences.</p>
 
                                     <div className="flex flex-wrap gap-2">
-                                          {['Product Strategy', 'Ui/Ux Design', 'Web Design'].map((topic, index) => (
+                                          {mentor?.expertise?.map((topic, index) => (
                                                 <div key={index} className="bg-primary-100 p-1 text-[#353535] rounded">
                                                       <span className="text-gray-600">{topic}</span>
                                                 </div>
@@ -69,17 +62,23 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     </div> */}
                                     <div className="flex items-center gap-2 mb-4">
                                           <HiOutlineCurrencyDollar size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">Starts from {mentor.startingPrice}</span>
+                                          {/* <span className="text-gray-600">Starts from {mentor.startingPrice}</span> */}
                                     </div>
                                     <div className="flex items-center gap-2 mb-4">
                                           <PiChatsCircle size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">Active now</span>
-                                          <span className="inline-block size-2 bg-green-500 rounded-full"></span>
+                                          <span className="text-gray-600">{mentor?.status ? 'Active now' : 'Inactive'}</span>
+                                          <span
+                                                className={
+                                                      mentor?.status
+                                                            ? 'inline-block size-2 bg-green-500 rounded-full'
+                                                            : 'inline-block size-2 bg-red-500 rounded-full'
+                                                }
+                                          ></span>
                                     </div>
                               </div>
                               <div>
                                     <Button
-                                          href={`/mentors/${mentor.id}`}
+                                          href={`/mentors/${mentor?._id}`}
                                           style={{ width: '100%' }}
                                           icon={<FaCalendarDays size={20} />}
                                           type="primary"
