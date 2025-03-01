@@ -12,7 +12,7 @@ import { FaUserFriends } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { showConfirmModal } from '@/components/ui/LogoutModal';
 import { useAppSelector } from '@/redux/hooks';
-import { useGetUserProfileQuery } from '@/redux/features/user/userApi';
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from '@/redux/features/user/userApi';
 import { getImageUrl } from '@/utils/getImageUrl';
 
 const ProfileSidebar = () => {
@@ -20,14 +20,20 @@ const ProfileSidebar = () => {
       const { data: profile } = useGetUserProfileQuery(undefined, {
             skip: !user,
       });
+      const [updateProfileImage] = useUpdateUserProfileMutation();
       const [previewImage, setPreviewImage] = useState<undefined | string>('');
 
-      const handleFileChange = ({ file }: UploadChangeParam<any>) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file.originFileObj);
-            reader.onload = () => {
-                  setPreviewImage(reader.result as string);
-            };
+      const handleFileChange = async ({ file }: UploadChangeParam<any>) => {
+            try {
+                  const formData = new FormData();
+                  formData.append('image', file.originFileObj);
+                  const res = await updateProfileImage(formData).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong');
+            }
       };
 
       useEffect(() => {
@@ -185,7 +191,7 @@ const ProfileSidebar = () => {
                               <Image
                                     width={500}
                                     height={500}
-                                    src={previewImage || 'https://i.ibb.co.com/yN2vT01/me.jpg'}
+                                    src={previewImage as string}
                                     alt="Profile"
                                     className="w-full h-full object-cover rounded-lg"
                               />

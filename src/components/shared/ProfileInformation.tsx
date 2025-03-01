@@ -1,46 +1,64 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Select, Button, AutoComplete } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+
 import { countries, languages, timeZones } from '@/const/constant';
 import { AiFillFacebook, AiFillInstagram, AiFillLinkedin, AiFillTwitterCircle } from 'react-icons/ai';
 import { BiWorld } from 'react-icons/bi';
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from '@/redux/features/user/userApi';
+import { LoadingOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 
 const { TextArea } = Input;
 
 const ProfileInformation = () => {
+      const { data: profile } = useGetUserProfileQuery(undefined);
+      const [updateProfile, { isLoading }] = useUpdateUserProfileMutation();
       const [form] = Form.useForm();
 
-      const initialValues = {
-            fullName: 'Sazzad Chowdhury',
-            email: 'sazzad.uiuxdesign@gmail.com',
-            phone: '011123478910',
-            about: '',
-            expertise: ['Design', 'UI/UX', 'Graphic Design'],
-            focusArea: '',
-            language: ['English', 'Spanish'],
-            country: 'USA',
-            timeZone: 'GMT -6',
-            facebook: 'facebook.com',
-            instagram: 'instagram.com',
-            twitter: 'twitter.com',
-            linkedIn: 'linkedin.com',
-            website: 'www.demo.com',
-            experienceFields: [{ jobTitle: 'UI/UX Designer', companyName: 'Spark Tech Agency' }],
-            educationFields: [{ degree: 'Bachelor of Science', school: 'University of California, Berkeley', duration: '2012 - 2016' }],
-      };
+      useEffect(() => {
+            if (profile) {
+                  form.setFieldsValue({
+                        name: profile.name,
+                        email: profile.email,
+                        phone: profile.phone,
+                        about: profile.about,
+                        expertise: profile.expertise,
+                        focus_area: profile.focus_area,
+                        language: profile.language,
+                        country: profile.country,
+                        timeZone: profile.timeZone,
+                        job_title: profile.job_title,
+                        company_name: profile.company_name,
+                        instagram_url: profile.instagram_url,
+                        facebook_url: profile.facebook_url,
+                        linkedin_url: profile.linkedin_url,
+                        twitter_url: profile.twitter_url,
+                        website_url: profile.website_url,
+                        education: profile.education,
+                        institution_name: profile.institution_name,
+                  });
+            }
+      }, [profile, form]);
 
-      const handleFinish = (values: any) => {
-            console.log('Form Submitted:', values);
+      const handleFinish = async (values: any) => {
+            try {
+                  const res = await updateProfile(values).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong');
+            }
       };
 
       return (
             <div>
                   <h2 className="text-title text-2xl font-semibold mb-4">Edit Profile Information</h2>
 
-                  <Form form={form} layout="vertical" initialValues={initialValues} onFinish={handleFinish}>
+                  <Form form={form} layout="vertical" onFinish={handleFinish}>
                         {/* Personal Information */}
-                        <Form.Item label="Full Name" name="fullName" rules={[{ required: true }]}>
+                        <Form.Item label="Full Name" name="name" rules={[{ required: true }]}>
                               <Input />
                         </Form.Item>
 
@@ -60,7 +78,7 @@ const ProfileInformation = () => {
                               <TextArea rows={3} />
                         </Form.Item>
 
-                        <Form.Item label="Expertise" name="expertise" rules={[{ required: true }]}>
+                        <Form.Item label="Expertise" name="expertise">
                               <Select
                                     suffixIcon={<p className="text-primary">Max 3*</p>}
                                     mode="tags"
@@ -70,7 +88,7 @@ const ProfileInformation = () => {
                               />
                         </Form.Item>
 
-                        <Form.Item label="Focus Area" name="focusArea" rules={[{ required: true }]}>
+                        <Form.Item label="Focus Area" name="focus_area">
                               <AutoComplete
                                     options={[
                                           { value: 'Web Development' },
@@ -84,7 +102,7 @@ const ProfileInformation = () => {
                               />
                         </Form.Item>
 
-                        <Form.Item label="Language" name="language" rules={[{ required: true }]}>
+                        <Form.Item label="Language" name="language">
                               <Select mode="tags" tokenSeparators={[',']} placeholder="Add languages">
                                     {languages.map((language, i) => (
                                           <Select.Option key={i} value={language.value}>
@@ -95,7 +113,7 @@ const ProfileInformation = () => {
                         </Form.Item>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <Form.Item label="Country" name="country" rules={[{ required: true }]}>
+                              <Form.Item label="Country" name="country">
                                     <Select>
                                           {countries.map((country, i) => (
                                                 <Select.Option key={i} value={country.value}>
@@ -104,7 +122,7 @@ const ProfileInformation = () => {
                                           ))}
                                     </Select>
                               </Form.Item>
-                              <Form.Item label="Time Zone" name="timeZone" rules={[{ required: true }]}>
+                              <Form.Item label="Time Zone" name="timeZone">
                                     <Select>
                                           {timeZones.map((zone, i) => (
                                                 <Select.Option key={i} value={zone.value}>
@@ -118,52 +136,23 @@ const ProfileInformation = () => {
                         <div>
                               <h1 className="text-xl text-title my-2 font-bold">Education & Experience</h1>
 
-                              <Form.List name="experienceFields">
-                                    {(experienceFields, { add, remove }) => (
-                                          <>
-                                                {experienceFields.map(({ key, name, ...restField }, index) => (
-                                                      <div key={key} className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-                                                            <Form.Item
-                                                                  {...restField}
-                                                                  label={`Job Title ${index + 1}`}
-                                                                  name={[name, 'jobTitle']}
-                                                                  rules={[{ required: true, message: 'Please enter a job title' }]}
-                                                            >
-                                                                  <Input />
-                                                            </Form.Item>
-
-                                                            <Form.Item
-                                                                  {...restField}
-                                                                  label={`Company Name ${index + 1}`}
-                                                                  name={[name, 'companyName']}
-                                                                  rules={[{ required: true, message: 'Please enter a company name' }]}
-                                                            >
-                                                                  <Input />
-                                                            </Form.Item>
-
-                                                            {experienceFields.length > 1 && (
-                                                                  <div className="col-span-2 text-right">
-                                                                        <MinusCircleOutlined
-                                                                              onClick={() => remove(name)}
-                                                                              className="text-red-500 cursor-pointer"
-                                                                        />
-                                                                  </div>
-                                                            )}
-                                                      </div>
-                                                ))}
-                                                <Button
-                                                      style={{ width: '100%', margin: '10px 0' }}
-                                                      type="dashed"
-                                                      className=""
-                                                      onClick={() => add()}
-                                                      icon={<PlusOutlined />}
-                                                >
-                                                      Add Another Job & Company
-                                                </Button>
-                                          </>
-                                    )}
-                              </Form.List>
-                              <Form.List name="educationFields">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <Form.Item label="Job Title" name="job_title">
+                                          <Input placeholder="Job Title" />
+                                    </Form.Item>
+                                    <Form.Item label="Company Name" name="company_name">
+                                          <Input placeholder="Company Name" />
+                                    </Form.Item>
+                              </div>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <Form.Item label="Education" name="education">
+                                          <Input placeholder="Education" />
+                                    </Form.Item>
+                                    <Form.Item label="Institution Name" name="institution_name">
+                                          <Input placeholder="Institution Name" />
+                                    </Form.Item>
+                              </div>
+                              {/* <Form.List name="educationFields">
                                     {(educationFields, { add, remove }) => (
                                           <>
                                                 {educationFields.map(({ key, name, ...restField }, index) => (
@@ -207,29 +196,29 @@ const ProfileInformation = () => {
                                                 </Button>
                                           </>
                                     )}
-                              </Form.List>
+                              </Form.List> */}
                         </div>
 
                         <div>
                               <h1 className="text-xl text-title my-2 font-bold">Social Profiles</h1>
                               <div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                          <Form.Item label="Facebook" name="facebook">
+                                          <Form.Item label="Facebook" name="facebook_url">
                                                 <Input prefix={<AiFillFacebook size={24} className="text-primary" />} />
                                           </Form.Item>
-                                          <Form.Item label="Instagram" name="instagram">
+                                          <Form.Item label="Instagram" name="instagram_url">
                                                 <Input prefix={<AiFillInstagram size={24} className="text-primary" />} />
                                           </Form.Item>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                          <Form.Item label="Twitter" name="twitter">
+                                          <Form.Item label="Twitter" name="twitter_url">
                                                 <Input prefix={<AiFillTwitterCircle size={24} className="text-primary" />} />
                                           </Form.Item>
-                                          <Form.Item label="LinkedIn" name="linkedIn">
+                                          <Form.Item label="LinkedIn" name="linkedin_url">
                                                 <Input prefix={<AiFillLinkedin size={24} className="text-primary" />} />
                                           </Form.Item>
                                     </div>
-                                    <Form.Item label="Website" name="website">
+                                    <Form.Item label="Website" name="website_url">
                                           <Input prefix={<BiWorld size={24} className="text-primary" />} />
                                     </Form.Item>
                               </div>
@@ -237,7 +226,7 @@ const ProfileInformation = () => {
 
                         <Form.Item>
                               <Button type="primary" htmlType="submit" block>
-                                    Update Info
+                                    {isLoading ? <LoadingOutlined /> : 'Update Info'}
                               </Button>
                         </Form.Item>
                   </Form>

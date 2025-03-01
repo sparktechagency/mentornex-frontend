@@ -5,18 +5,33 @@ import MentorSocialLinks from '../pages/mentor-details/MentorSocialLinks';
 import BannerImage from '@/assets/images/banner.svg';
 import { Edit } from 'lucide-react';
 import { Upload } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from '@/redux/features/user/userApi';
+import { toast } from 'react-toastify';
+import { getImageUrl } from '@/utils/getImageUrl';
 const ProfileBanner = ({ needUpload = false }: { needUpload?: boolean }) => {
+      const { data: profile } = useGetUserProfileQuery(undefined);
+      const [updateBanner] = useUpdateUserProfileMutation();
+
       const [previewImage, setPreviewImage] = useState<undefined | string>(BannerImage.src);
-      const handlePreview = (file: File) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                  setPreviewImage(reader.result as string);
-            };
-            if (file) {
-                  reader.readAsDataURL(file);
+      const handlePreview = async (file: any) => {
+            try {
+                  const formData = new FormData();
+                  formData.append('banner', file);
+                  const res = await updateBanner(formData).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong');
             }
+            console.log(file);
       };
+      useEffect(() => {
+            if (profile?.banner) {
+                  setPreviewImage(getImageUrl(profile?.banner));
+            }
+      }, [profile]);
       return (
             <div>
                   <div
