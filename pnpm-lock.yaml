@@ -23,6 +23,9 @@ importers:
       '@types/jsrsasign':
         specifier: ^10.5.15
         version: 10.5.15
+      '@zegocloud/zego-uikit-prebuilt':
+        specifier: ^2.14.1
+        version: 2.14.1
       '@zoom/videosdk':
         specifier: ^2.1.5
         version: 2.1.5
@@ -475,6 +478,9 @@ packages:
 
   '@ungap/structured-clone@1.2.1':
     resolution: {integrity: sha512-fEzPV3hSkSMltkw152tJKNARhOupqbH96MZWyRjNaYZOMIzbrTeQDG+MTc6Mr2pgzFQzFxAfmhGDNP5QK++2ZA==}
+
+  '@zegocloud/zego-uikit-prebuilt@2.14.1':
+    resolution: {integrity: sha512-gNdG/xUxVua+4NoelrHKXS+H+s8XwgMtx0gySzxvGE5gV643Z6R4k0kS5kQkbU7QbAZIyByO7QEyhvAjyUNcrA==}
 
   '@zoom/videosdk@2.1.5':
     resolution: {integrity: sha512-NwjAs7Miwvrvcl9Jl2VajeaRg0+a43tt/49j5CDq6xaCrqsAUBuMLJurkk5SlLMrFxt8QvNTV6lcg9O2x/656w==}
@@ -2642,6 +2648,8 @@ snapshots:
       eslint-visitor-keys: 4.2.0
 
   '@ungap/structured-clone@1.2.1': {}
+
+  '@zegocloud/zego-uikit-prebuilt@2.14.1': {}
 
   '@zoom/videosdk@2.1.5': {}
 

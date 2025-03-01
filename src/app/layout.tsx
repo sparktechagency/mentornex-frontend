@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Provider from '@/provider/Provider';
+import dynamic from 'next/dynamic';
+
+const Provider = dynamic(() => import('@/provider/Provider'), {
+      ssr: false,
+});
 
 export const metadata: Metadata = {
       title: 'Mentornex',

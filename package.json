@@ -3,7 +3,7 @@
       "version": "0.1.0",
       "private": true,
       "scripts": {
-            "dev": "next dev --turbo -H 10.0.70.122 -p 3002",
+            "dev": "next dev -H 10.0.70.122 --port 3000",
             "build": "next build",
             "start": "next start",
             "lint": "next lint"
@@ -14,6 +14,7 @@
             "@gsap/react": "^2.1.2",
             "@reduxjs/toolkit": "^2.5.1",
             "@types/jsrsasign": "^10.5.15",
+            "@zegocloud/zego-uikit-prebuilt": "^2.14.1",
             "@zoom/videosdk": "^2.1.5",
             "antd": "^5.22.2",
             "dayjs": "^1.11.13",
