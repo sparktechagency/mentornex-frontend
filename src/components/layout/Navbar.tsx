@@ -60,7 +60,7 @@ const Navbar = () => {
                                     </Link> */}
 
                                     {user ? (
-                                          <div className="flex items-center gap-6 my-8">
+                                          <div className="flex items-center gap-6">
                                                 <Link href="/chat">
                                                       <Badge dot color="#FF6F3C">
                                                             <BiMessage style={{ fontSize: '24px', color: '#333' }} />
@@ -113,7 +113,7 @@ const Navbar = () => {
                   </nav>
 
                   {/* Mobile Drawer */}
-                  <MobileDrawer open={showDrawer} setOpen={setShowDrawer} items={items} />
+                  <MobileDrawer profile={profile!} open={showDrawer} setOpen={setShowDrawer} items={items} />
             </header>
       );
 };
