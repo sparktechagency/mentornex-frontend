@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Menu, Upload } from 'antd';
 import Image from 'next/image';
 import { Edit2 } from 'lucide-react';
@@ -11,10 +11,16 @@ import { IoHeart, IoLogOut } from 'react-icons/io5';
 import { FaUserFriends } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { showConfirmModal } from '@/components/ui/LogoutModal';
+import { useAppSelector } from '@/redux/hooks';
+import { useGetUserProfileQuery } from '@/redux/features/user/userApi';
+import { getImageUrl } from '@/utils/getImageUrl';
 
 const ProfileSidebar = () => {
-      const [previewImage, setPreviewImage] = useState<undefined | string>('https://i.ibb.co.com/yN2vT01/me.jpg');
-      const [userRole] = useState<string>('mentee');
+      const { user } = useAppSelector((state) => state.auth);
+      const { data: profile } = useGetUserProfileQuery(undefined, {
+            skip: !user,
+      });
+      const [previewImage, setPreviewImage] = useState<undefined | string>('');
 
       const handleFileChange = ({ file }: UploadChangeParam<any>) => {
             const reader = new FileReader();
@@ -23,6 +29,12 @@ const ProfileSidebar = () => {
                   setPreviewImage(reader.result as string);
             };
       };
+
+      useEffect(() => {
+            if (profile && profile.image) {
+                  setPreviewImage(getImageUrl(profile.image));
+            }
+      }, [profile]);
 
       const sidebarItemsMentees = [
             {
@@ -157,9 +169,9 @@ const ProfileSidebar = () => {
       };
       const generateSidebarByUserRole = (userRole: string) => {
             switch (userRole) {
-                  case 'mentee':
+                  case 'MENTEE':
                         return sidebarItemsMentees;
-                  case 'mentor':
+                  case 'MENTOR':
                         return sidebarItemsMentors;
                   default:
                         return [];
@@ -188,7 +200,7 @@ const ProfileSidebar = () => {
 
                   {/* Menu Section */}
                   <Menu mode="vertical" defaultSelectedKeys={['dashboard']} className="w-full">
-                        {generateSidebarByUserRole(userRole).map((item) => {
+                        {generateSidebarByUserRole(user?.role as string).map((item) => {
                               if (item.key === 'logout') {
                                     return (
                                           <Menu.Item
