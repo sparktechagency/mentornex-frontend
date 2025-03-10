@@ -8,13 +8,16 @@ export type TUser = {
       _id: string;
       name: string;
       role: 'MENTOR' | 'MENTEE';
-
+      startingPrice: number;
+      rating: number;
+      topRated: boolean;
       email: string;
       industry: string;
       timeZone: string;
       password: string;
       phone: string;
       about: string;
+      bio: string;
       instagram_url: string;
       facebook_url: string;
       linkedin_url: string;

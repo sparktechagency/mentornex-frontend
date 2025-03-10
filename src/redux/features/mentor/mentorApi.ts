@@ -1,5 +1,5 @@
 import { baseApi } from '@/redux/base/baseApi';
-import { TApiResponse, TQueryParams } from '@/types';
+import { TQueryParams } from '@/types';
 import { TUser } from '../user/userApi';
 
 export type TMentor = TUser & {
@@ -22,7 +22,7 @@ const mentorApi = baseApi.injectEndpoints({
                               params,
                         };
                   },
-                  transformResponse: (response: TApiResponse<TMentor[]>) => {
+                  transformResponse: (response: any) => {
                         return response.data;
                   },
                   providesTags: ['Mentors'],

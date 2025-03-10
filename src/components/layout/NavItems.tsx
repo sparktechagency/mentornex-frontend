@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 const NavItems = ({ items, onClose }: { items: any[]; onClose?: () => void }) => {
       const pathname = usePathname();
 
-      console.log(pathname);
+      // console.log(pathname);
 
       return (
             <>

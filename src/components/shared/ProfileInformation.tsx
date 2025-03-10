@@ -22,6 +22,7 @@ const ProfileInformation = () => {
                         name: profile.name,
                         email: profile.email,
                         phone: profile.phone,
+                        bio: profile.bio,
                         about: profile.about,
                         expertise: profile.expertise,
                         focus_area: profile.focus_area,
@@ -74,6 +75,9 @@ const ProfileInformation = () => {
                                     <Input />
                               </Form.Item>
                         </div>
+                        <Form.Item label="Bio (Max 100 words)" name="bio" rules={[{ max: 100, message: 'Bio must be at most 100 words' }]}>
+                              <TextArea maxLength={100} rows={3} />
+                        </Form.Item>
                         <Form.Item label="About" name="about">
                               <TextArea rows={3} />
                         </Form.Item>

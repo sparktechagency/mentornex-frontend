@@ -3,14 +3,15 @@ import React, { useState } from 'react';
 import { Button, Input, Layout, Pagination, Select, theme } from 'antd';
 import { BsSearch } from 'react-icons/bs';
 import MentorFilter from './MentorFilter';
-import MentorCard from '@/components/ui/MentorCard';
 import { AiOutlineLeftSquare, AiOutlineRightSquare } from 'react-icons/ai';
-import { useGetAllMentorsQuery } from '@/redux/features/mentor/mentorApi';
+import { TMentor, useGetAllMentorsQuery } from '@/redux/features/mentor/mentorApi';
+import MentorCard from '@/components/ui/MentorCard';
 
 const { Header, Content } = Layout;
 
 const MentorLayout: React.FC = () => {
-      const { data: mentors } = useGetAllMentorsQuery([]);
+      const { data: mentorData } = useGetAllMentorsQuery([]);
+      // console.log(mentorData?.mentors);
 
       const [collapsed, setCollapsed] = useState(false);
 
@@ -67,7 +68,7 @@ const MentorLayout: React.FC = () => {
                                     }}
                               >
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                          {mentors?.map((mentor) => (
+                                          {mentorData?.mentors?.map((mentor: TMentor) => (
                                                 <MentorCard key={mentor._id} mentor={mentor!} />
                                           ))}
                                     </div>
