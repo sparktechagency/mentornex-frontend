@@ -1,16 +1,45 @@
+'use client';
 import { TMentor } from '@/redux/features/mentor/mentorApi';
+import { useAddWishlistMutation, useGetWishlistQuery } from '@/redux/features/wishlist/wishlistApi';
+import { useAppSelector } from '@/redux/hooks';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { Button } from 'antd';
-import { Heart } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { BsStarFill } from 'react-icons/bs';
-// import { CiMedal } from 'react-icons/ci';
 import { FaCalendarDays } from 'react-icons/fa6';
+import { GoHeart, GoHeartFill } from 'react-icons/go';
 import { HiOutlineCurrencyDollar } from 'react-icons/hi2';
-// import { IoBriefcaseOutline } from 'react-icons/io5';
 import { PiChatsCircle } from 'react-icons/pi';
+import { toast } from 'react-toastify';
 
 const MentorCard = ({ mentor }: { mentor: TMentor }) => {
+      const [isWishList, setIsWishList] = useState(false);
+      const { user } = useAppSelector((state) => state.auth);
+      const [addWishList] = useAddWishlistMutation();
+      const { data: myWishlist } = useGetWishlistQuery(undefined, {
+            skip: !user,
+      });
+
+      useEffect(() => {
+            const isWishListed = myWishlist?.some((wishListItem: { _id: string }) => wishListItem._id === mentor._id);
+            setIsWishList(isWishListed);
+      }, [myWishlist, mentor._id]);
+
+      const handleWishList = async (id: string) => {
+            if (!user) {
+                  toast.error('Please login to add mentor to wishlist');
+                  return;
+            }
+            try {
+                  const res = await addWishList({ mentor_ids: [id] }).unwrap();
+                  if (res.success) {
+                        toast.success(res?.message || 'Mentor added to wishlist');
+                  }
+            } catch (error: any) {
+                  toast.error(error?.message || 'Failed to add mentor to wishlist');
+            }
+      };
       return (
             <div>
                   <div className="bg-white rounded-xl p-2 mx-1 flex-grow h-full flex flex-col">
@@ -22,8 +51,11 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     alt={mentor.name}
                                     className="w-full h-64 object-cover rounded-xl"
                               />
-                              <button className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                                    <Heart size={20} className="text-gray-600" />
+                              <button
+                                    onClick={() => handleWishList(mentor._id)}
+                                    className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+                              >
+                                    {isWishList ? <GoHeart size={24} className="text-yellow-400" /> : <GoHeartFill size={24} color="red" />}
                               </button>
                               {mentor.topRated && (
                                     <button className="absolute top-4 left-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"></button>
@@ -41,9 +73,9 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                               <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
                               <p className="text-gray-500">{mentor?.bio || 'No bio available'}</p>
 
-                              <div className="flex flex-wrap gap-2">
+                              <div className="flex flex-wrap gap-2 min-h-[60px]">
                                     {mentor?.expertise?.map((topic, index) => (
-                                          <div key={index} className="bg-primary-100 p-1 text-[#353535] rounded">
+                                          <div key={index} className="bg-primary-100 h-fit p-1 text-[#353535] rounded">
                                                 <span className="text-gray-600">{topic}</span>
                                           </div>
                                     ))}
