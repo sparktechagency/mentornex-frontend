@@ -50,7 +50,7 @@ const VerifyOtpPage = () => {
                         toast.success(res?.message);
                   }
             } catch (error: any) {
-                  toast.error(error.message || 'Filed to resend OTP');
+                  toast.error(error.data.message || 'Filed to resend OTP');
             }
       };
       return (

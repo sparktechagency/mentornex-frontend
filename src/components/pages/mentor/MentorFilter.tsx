@@ -4,22 +4,45 @@ import { Button, Checkbox, Collapse, InputNumber, Slider, Space } from 'antd';
 import { languages } from '@/const/constant';
 import Sider from 'antd/es/layout/Sider';
 import { LiaRedoAltSolid } from 'react-icons/lia';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { reset, setFocusArea, setLanguage, setPrice, setTools } from '@/redux/features/mentor-filter/mentorFilterSlice';
 
 const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (collapsed: boolean) => void }) => {
+      const dispatch = useAppDispatch();
+      const { tools, focusArea, language } = useAppSelector((state) => state.mentorFilter);
       const [min, setMin] = useState(0);
       const [max, setMax] = useState(1000);
 
       const handleSliderChange = (value: number[]) => {
             setMin(value[0]);
             setMax(value[1]);
+            dispatch(setPrice({ min: value[0], max: value[1] }));
       };
 
       const handleMinChange = (value: number | null) => {
             setMin(value || 0);
+            dispatch(setPrice({ min: value || 0, max: max }));
       };
 
       const handleMaxChange = (value: number | null) => {
             setMax(value || 1000);
+            dispatch(setPrice({ min: min, max: value || 1000 }));
+      };
+
+      const handleToolsChange = (value: string[]) => {
+            dispatch(setTools(value));
+      };
+
+      const handleFocusAreaChange = (value: string[]) => {
+            dispatch(setFocusArea(value));
+      };
+
+      const handleLanguageChange = (value: string[]) => {
+            dispatch(setLanguage(value));
+      };
+
+      const handleReset = () => {
+            dispatch(reset());
       };
       return (
             <Sider
@@ -48,7 +71,7 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
                                     key="1"
                               >
                                     <div className="h-[300px] overflow-y-scroll custom-scrollbar">
-                                          <Checkbox.Group className="flex flex-col gap-3">
+                                          <Checkbox.Group value={tools} onChange={handleToolsChange} className="flex flex-col gap-3">
                                                 <Checkbox value="ai">Artificial Intelligence</Checkbox>
                                                 <Checkbox value="blockchain">Blockchain</Checkbox>
                                                 <Checkbox value="design">Design</Checkbox>
@@ -99,21 +122,21 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
                         </Collapse>
                   </div>
 
-                  <div className="bg-white rounded-lg mb-6">
+                  {/* <div className="bg-white rounded-lg mb-6">
                         <Collapse expandIconPosition="end" defaultActiveKey={['1']} style={{ border: 'none', padding: 0 }}>
                               <Collapse.Panel
                                     style={{ border: 'none', padding: 0 }}
                                     header={<h1 className="font-semibold uppercase">AVAILABILITY</h1>}
                                     key="1"
                               >
-                                    <Checkbox.Group className="flex flex-col gap-2">
+                                    <Checkbox.Group value={availability} onChange={handleAvailabilityChange} className="flex flex-col gap-2">
                                           <Checkbox value="daily">Daily</Checkbox>
                                           <Checkbox value="weekdays">Weekdays Only</Checkbox>
                                           <Checkbox value="weekends">Weekends Only</Checkbox>
                                     </Checkbox.Group>
                               </Collapse.Panel>
                         </Collapse>
-                  </div>
+                  </div> */}
 
                   <div className="bg-white rounded-lg mb-6">
                         <Collapse expandIconPosition="end" defaultActiveKey={['1']} style={{ border: 'none', padding: 0 }}>
@@ -122,7 +145,7 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
                                     header={<h1 className="font-semibold uppercase">FOCUS AREA</h1>}
                                     key="1"
                               >
-                                    <Checkbox.Group className="flex flex-col gap-2">
+                                    <Checkbox.Group value={focusArea} onChange={handleFocusAreaChange} className="flex flex-col gap-2">
                                           <Checkbox value="interviews">Interviews</Checkbox>
                                           <Checkbox value="careerGrowth">Career Growth</Checkbox>
                                           <Checkbox value="goalSetting">Goal Setting</Checkbox>
@@ -139,7 +162,11 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
                                     header={<h1 className="font-semibold uppercase">LANGUAGE</h1>}
                                     key="1"
                               >
-                                    <Checkbox.Group className="flex flex-col gap-2 custom-scrollbar ">
+                                    <Checkbox.Group
+                                          value={language}
+                                          onChange={handleLanguageChange}
+                                          className="flex flex-col gap-2 custom-scrollbar "
+                                    >
                                           {languages.map((language) => (
                                                 <Checkbox key={language.value} value={language.value}>
                                                       {language.label}
@@ -149,7 +176,7 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
                               </Collapse.Panel>
                         </Collapse>
                   </div>
-                  <Button icon={<LiaRedoAltSolid size={20} />} type="primary" className="w-full">
+                  <Button onClick={handleReset} icon={<LiaRedoAltSolid size={20} />} type="primary" className="w-full">
                         Reset Filter
                   </Button>
             </Sider>

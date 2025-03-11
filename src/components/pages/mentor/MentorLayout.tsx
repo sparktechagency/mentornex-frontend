@@ -6,18 +6,43 @@ import MentorFilter from './MentorFilter';
 import { AiOutlineLeftSquare, AiOutlineRightSquare } from 'react-icons/ai';
 import { TMentor, useGetAllMentorsQuery } from '@/redux/features/mentor/mentorApi';
 import MentorCard from '@/components/ui/MentorCard';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { setSort } from '@/redux/features/mentor-filter/mentorFilterSlice';
+import { setSearchText } from '@/redux/features/mentor-filter/mentorFilterSlice';
 
 const { Header, Content } = Layout;
 
 const MentorLayout: React.FC = () => {
-      const { data: mentorData } = useGetAllMentorsQuery([]);
-      // console.log(mentorData?.mentors);
+      const dispatch = useAppDispatch();
+      const { language, focusArea, maxPrice, minPrice, searchText, sort, tools } = useAppSelector((state) => state.mentorFilter);
+      const [page, setPage] = useState(1);
+
+      const queryParameters = [
+            { name: 'page', value: page },
+            { name: 'limit', value: 9 },
+            { name: 'searchTerm', value: searchText },
+            { name: 'sort', value: sort },
+            { name: 'minPrice', value: minPrice },
+            { name: 'maxPrice', value: maxPrice },
+            ...(language.length > 0 ? language.map((lang) => ({ name: 'language', value: lang })) : []),
+            ...(focusArea.length > 0 ? focusArea.map((focus) => ({ name: 'focusArea', value: focus })) : []),
+            ...(tools.length > 0 ? tools.map((tool) => ({ name: 'tools', value: tool })) : []),
+      ];
+      const { data: mentorData } = useGetAllMentorsQuery(queryParameters);
 
       const [collapsed, setCollapsed] = useState(false);
 
       const {
             token: { colorBgContainer, borderRadiusLG },
       } = theme.useToken();
+
+      const handleSearch = (value: string) => {
+            dispatch(setSearchText(value));
+      };
+
+      const handleSort = (value: string) => {
+            dispatch(setSort(value));
+      };
 
       return (
             <div className="container">
@@ -38,16 +63,20 @@ const MentorLayout: React.FC = () => {
 
                   <div className="flex flex-wrap gap-4 justify-between items-center my-6">
                         <div className="w-full max-w-[300px]">
-                              <Input suffix={<BsSearch className="text-subtitle" size={20} />} placeholder="Search" />
+                              <Input
+                                    allowClear
+                                    onChange={(e) => handleSearch(e.target.value)}
+                                    suffix={<BsSearch className="text-subtitle" size={20} />}
+                                    placeholder="Search"
+                              />
                         </div>
                         <div className=" w-fit  flex items-center gap-3">
                               <h2 className="text-lg font-semibold"> Sort by</h2>
                               <div>
-                                    <Select style={{ width: 140 }} defaultValue="default">
-                                          <Select.Option value="default">Default</Select.Option>
+                                    <Select onChange={handleSort} style={{ width: 140 }} defaultValue="newest">
+                                          <Select.Option value="newest">Newest</Select.Option>
                                           <Select.Option value="alphabetically">Alphabetically</Select.Option>
                                           <Select.Option value="price">Price</Select.Option>
-                                          <Select.Option value="newest">Newest</Select.Option>
                                     </Select>
                               </div>
                         </div>
@@ -73,7 +102,12 @@ const MentorLayout: React.FC = () => {
                                           ))}
                                     </div>
                                     <div className="flex justify-center my-10">
-                                          <Pagination defaultCurrent={1} total={50} />
+                                          <Pagination
+                                                current={page}
+                                                onChange={setPage}
+                                                total={mentorData?.pagination?.total}
+                                                pageSize={mentorData?.pagination?.limit}
+                                          />
                                     </div>
                               </Content>
                         </Layout>

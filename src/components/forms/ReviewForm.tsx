@@ -32,6 +32,12 @@ const ReviewForm = () => {
                   <Form.Item name="review" rules={[{ required: true, message: 'Please provide a review!' }]}>
                         <Input.TextArea placeholder="Write your review here" rows={4} style={{ resize: 'none' }} />
                   </Form.Item>
+                  <Form.Item
+                        name="Goal Achievement Percentage (0-100%)"
+                        rules={[{ required: true, message: 'Please provide a goal achievement percentage!' }]}
+                  >
+                        <Input type="number" min={0} max={100} />
+                  </Form.Item>
 
                   <Form.Item>
                         <Button type="primary" htmlType="submit" block>
