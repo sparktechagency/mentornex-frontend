@@ -1,24 +1,25 @@
+import { TMentor } from '@/redux/features/mentor/mentorApi';
 import { TargetIcon } from 'lucide-react';
 import { HiBookmark } from 'react-icons/hi';
 import { HiUserGroup } from 'react-icons/hi2';
 
-const MentorStats = () => {
+const MentorStats = ({ mentor }: { mentor: TMentor }) => {
       const mentorsStats = [
             {
                   name: 'Total Mentees Helped',
-                  value: 150,
+                  value: mentor?.totalSessionCount || 0,
                   icon: <HiUserGroup color="#066CCB" size={40} />,
                   bgColor: '#F3F9FF',
             },
             {
                   name: 'Repeat Bookings',
-                  value: 44,
+                  value: mentor?.repeatedUserCount || 0,
                   icon: <HiBookmark color="#FF6F3C" size={40} />,
                   bgColor: '#FEF7F3',
             },
             {
                   name: 'Goal Achievement Rate',
-                  value: 70,
+                  value: mentor?.goalAchievingRate || 0,
                   icon: <TargetIcon color="#066CCB" size={40} />,
                   bgColor: '#F3F9FF',
             },

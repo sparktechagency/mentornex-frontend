@@ -1,22 +1,14 @@
+import { TMentor } from '@/redux/features/mentor/mentorApi';
 import MentorStats from './MentorStats';
 
-const OverView = () => {
+const OverView = ({ mentor }: { mentor: TMentor }) => {
       return (
             <div>
-                  <MentorStats />
+                  <MentorStats mentor={mentor} />
                   <div className="grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-4 my-10 min-h-[400px]">
                         <div className="text-subtitle space-y-4">
-                              <p>
-                                    I’m a product designer with over 8 years of experience crafting intuitive and user-focused digital
-                                    experiences. Currently a part of the Toptal network, I specialize in creating designs that blend
-                                    functionality and aesthetics, ensuring products resonate with users while meeting business goals.
-                              </p>
-
-                              <p>
-                                    My expertise includes UI/UX design, interaction design, and prototyping for web and mobile platforms.
-                                    I’ve collaborated with startups and established brands to transform complex ideas into seamless,
-                                    engaging user experiences.
-                              </p>
+                              <h1 className="text-title font-bold">About Description</h1>
+                              <p>{mentor?.about || 'No description available  '}</p>
                         </div>
                         <div>
                               <video

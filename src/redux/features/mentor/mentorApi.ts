@@ -4,6 +4,12 @@ import { TUser } from '../user/userApi';
 
 export type TMentor = TUser & {
       status: 'active' | 'inactive';
+      topRated: boolean;
+      rating: number;
+      video: string;
+      totalSessionCount: number;
+      repeatedUserCount: number;
+      goalAchievingRate: number;
 };
 
 const mentorApi = baseApi.injectEndpoints({
@@ -29,7 +35,18 @@ const mentorApi = baseApi.injectEndpoints({
                   },
                   providesTags: ['Mentors'],
             }),
+
+            getSingleMentor: build.query({
+                  query: (id: string) => ({
+                        url: `/list/mentors/${id}`,
+                        method: 'GET',
+                  }),
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+                  providesTags: ['Mentors'],
+            }),
       }),
 });
 
-export const { useGetAllMentorsQuery } = mentorApi;
+export const { useGetAllMentorsQuery, useGetSingleMentorQuery } = mentorApi;

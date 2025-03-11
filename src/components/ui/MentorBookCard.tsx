@@ -1,62 +1,97 @@
+import { TMentor } from '@/redux/features/mentor/mentorApi';
+import { useAddWishlistMutation, useGetWishlistQuery } from '@/redux/features/wishlist/wishlistApi';
+import { useAppSelector } from '@/redux/hooks';
+import { getImageUrl } from '@/utils/getImageUrl';
 import { Button } from 'antd';
-import { Heart } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { BsMessenger, BsStarFill } from 'react-icons/bs';
+import { GoHeart, GoHeartFill } from 'react-icons/go';
 import { IoBriefcaseOutline } from 'react-icons/io5';
 import { PiChatsCircle, PiMapPinLight } from 'react-icons/pi';
-type TMentor = {
-      id: number;
-      name: string;
-      image: string;
-      role: string;
-      experience: string;
-      startingPrice: string;
-      rating: number;
-      topRated: boolean;
-};
+import { toast } from 'react-toastify';
+
 const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
+      const [isWishList, setIsWishList] = useState(false);
+      const { user } = useAppSelector((state) => state.auth);
+      const [addWishList] = useAddWishlistMutation();
+      const { data: myWishlist } = useGetWishlistQuery(undefined, {
+            skip: !user,
+      });
+
+      useEffect(() => {
+            const isWishListed = myWishlist?.some((wishListItem: { _id: string }) => wishListItem._id === mentor?._id);
+            setIsWishList(isWishListed);
+      }, [myWishlist, mentor?._id]);
+
+      const handleAddWishList = async (id: string) => {
+            if (!user) {
+                  toast.error('Please login to add mentor to wishlist');
+                  return;
+            }
+            try {
+                  const res = await addWishList({ mentor_ids: [id] }).unwrap();
+                  if (res.success) {
+                        toast.success(res?.message || 'Mentor added to wishlist');
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data.message || 'Failed to add mentor to wishlist');
+            }
+      };
+
       return (
             <div>
-                  <div key={mentor.id}>
+                  <div key={mentor?._id}>
                         <div className="bg-white relative z-10 rounded-xl border p-2">
                               <div className="relative">
                                     <Image
                                           width={300}
                                           height={300}
-                                          src={mentor.image}
-                                          alt={mentor.name}
+                                          src={getImageUrl((mentor?.image as string) || '')}
+                                          alt={'mentor'}
                                           className="w-full h-64 object-cover rounded-xl"
                                     />
-                                    <button className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
-                                          <Heart size={20} className=" text-gray-600" />
+                                    <button
+                                          onClick={() => handleAddWishList(mentor?._id)}
+                                          className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
+                                    >
+                                          {isWishList ? (
+                                                <GoHeart size={24} className="text-yellow-400" />
+                                          ) : (
+                                                <GoHeartFill size={24} color="red" />
+                                          )}
                                     </button>
                                     <div className="absolute bottom-4 left-4 bg-black/70 px-2 py-1 rounded-md">
                                           <div className="flex items-center gap-1">
-                                                <span className="text-white font-semibold">{mentor.rating}</span>
+                                                <span className="text-white font-semibold">{mentor?.rating}</span>
                                                 <BsStarFill className="w-4 h-4 text-yellow-500" />
                                           </div>
                                     </div>
                                     <div className="absolute top-4 left-4 bg-white px-2 py-1 rounded">
                                           <div className="flex items-center gap-1">
-                                                <p className="font-semibold text-title">{mentor.topRated ? 'Top Rated' : ''}</p>
+                                                <p className="font-semibold text-title">{mentor?.topRated ? 'Top Rated' : ''}</p>
                                           </div>
                                     </div>
                               </div>
 
                               {/* Content */}
                               <div className="p-2">
-                                    <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
+                                    <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor?.name}</h3>
                                     <div className="flex items-center gap-2 mb-3">
                                           <IoBriefcaseOutline size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">Product Designer at Toptaal</span>
+                                          <span className="text-gray-600">
+                                                {mentor?.job_title} at {mentor?.company_name}
+                                          </span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-3">
                                           <PiMapPinLight size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">{'USA'}</span>
+                                          <span className="text-gray-600 capitalize">{mentor?.country}</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-4">
                                           <PiChatsCircle size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600">Active now</span>
+                                          <span className="text-gray-600">
+                                                {mentor?.status === 'active' ? 'Active now' : 'Inactive now'}
+                                          </span>
                                           <span className="inline-block size-2 bg-green-500 rounded-full"></span>
                                     </div>
                               </div>

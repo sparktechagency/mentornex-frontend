@@ -1,9 +1,9 @@
 import MentorProfileDetails from '@/components/pages/mentor-details/MentorProfile';
 
-const MentorDetailsPage = () => {
+const MentorDetailsPage = ({ params }: { params: { mentorId: string } }) => {
       return (
             <div>
-                  <MentorProfileDetails />
+                  <MentorProfileDetails mentorId={params.mentorId} />
             </div>
       );
 };

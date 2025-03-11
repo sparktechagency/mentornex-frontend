@@ -1,12 +1,14 @@
-import { mentors } from '@/const/constant';
+'use client';
 import { PiBriefcaseLight, PiGraduationCapLight } from 'react-icons/pi';
 import MentorshipTabs from './MentorShipTab';
 import MentorBookCard from '@/components/ui/MentorBookCard';
-
-import ProfileBanner from '@/components/shared/ProfileBanner';
 import MentorDetailsTab from './MentorDetailsTab';
+import { useGetSingleMentorQuery } from '@/redux/features/mentor/mentorApi';
+import MentorDetailsBanner from '@/components/shared/MentorDetailsBanner';
 
-const MentorProfileDetails = () => {
+const MentorProfileDetails = ({ mentorId }: { mentorId: string }) => {
+      const { data: mentor } = useGetSingleMentorQuery(mentorId);
+
       const experiences = [
             {
                   id: 1,
@@ -36,19 +38,20 @@ const MentorProfileDetails = () => {
                   duration: '2012 - 2016',
             },
       ];
+      console.log(mentor);
 
       return (
             <div>
-                  <ProfileBanner />
+                  <MentorDetailsBanner profile={mentor} />
 
                   <div className="">
                         <div className="container relative">
                               <div className="flex  flex-col md:flex-row items-start  md:gap-10">
                                     <div className="w-full md:-mt-32   md:max-w-[300px] ">
-                                          <MentorBookCard mentor={mentors[0]} />
+                                          <MentorBookCard mentor={mentor} />
                                     </div>
                                     <div className="w-full">
-                                          <MentorDetailsTab />
+                                          <MentorDetailsTab mentor={mentor} />
                                     </div>
                               </div>
 
