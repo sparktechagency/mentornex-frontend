@@ -6,7 +6,10 @@ import MentorCard from '@/components/ui/MentorCard';
 import { TMentor, useGetAllMentorsQuery } from '@/redux/features/mentor/mentorApi';
 
 function TopMentors() {
-      const { data: mentorsData } = useGetAllMentorsQuery([]);
+      const { data: mentorsData } = useGetAllMentorsQuery({
+            name: 'topRated',
+            value: true,
+      });
       const carouselRef = React.useRef<any>();
 
       const next = () => carouselRef.current?.next();

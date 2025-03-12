@@ -6,7 +6,12 @@ import { TFaq, useGetFaqsQuery } from '@/redux/features/faq/faqApi';
 const { Panel } = Collapse;
 
 const FAQSection = () => {
-      const { data: faqsData } = useGetFaqsQuery([]);
+      const { data: faqsData } = useGetFaqsQuery([
+            {
+                  name: 'searchTerm',
+                  value: '',
+            },
+      ]);
       const [activeKey, setActiveKey] = React.useState<string>();
 
       const customPanelStyle = (key: string) => {

@@ -23,7 +23,7 @@ const ContactSection = () => {
                         Please communicate to our friendly team.
                   </p>
 
-                  <Button iconPosition="end" icon={<MdOutlineArrowOutward />} type="primary" size="large" href="/contact">
+                  <Button iconPosition="end" icon={<MdOutlineArrowOutward />} type="primary" size="large" href="/contact-us">
                         Contact Us
                   </Button>
             </div>

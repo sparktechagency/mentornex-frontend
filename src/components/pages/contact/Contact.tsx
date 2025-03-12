@@ -1,10 +1,24 @@
 'use client';
 import { Input, Button, Form, Typography, Select, Divider } from 'antd';
-import { PhoneOutlined, MailOutlined, EnvironmentOutlined } from '@ant-design/icons';
+import { PhoneOutlined, MailOutlined, EnvironmentOutlined, LoadingOutlined } from '@ant-design/icons';
 import { countries } from '@/const/constant';
 import { MdOutlineArrowOutward } from 'react-icons/md';
+import { useSendContactMutation } from '@/redux/features/contact/contactApi';
+import { toast } from 'react-toastify';
 
 const Contact = () => {
+      const [sendContact, { isLoading }] = useSendContactMutation();
+      const handleSubmit = async (values: any) => {
+            try {
+                  const res = await sendContact(values).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Something went wrong');
+            }
+      };
+
       return (
             <div className="min-h-screen flex flex-col items-center justify-center  py-10">
                   <Typography.Title
@@ -77,7 +91,7 @@ const Contact = () => {
                               </Typography.Title>
                               <Divider />
 
-                              <Form requiredMark={false} layout="vertical">
+                              <Form onFinish={handleSubmit} requiredMark={false} layout="vertical">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                           <Form.Item
                                                 label="Name"
@@ -135,7 +149,7 @@ const Contact = () => {
                                                 size="large"
                                                 htmlType="submit"
                                           >
-                                                Send Message
+                                                {isLoading ? <LoadingOutlined /> : 'Send Message'}
                                           </Button>
                                     </Form.Item>
                               </Form>
