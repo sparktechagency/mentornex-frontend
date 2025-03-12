@@ -1,10 +1,12 @@
 'use client';
 import React from 'react';
 import { Collapse } from 'antd';
+import { TFaq, useGetFaqsQuery } from '@/redux/features/faq/faqApi';
 
 const { Panel } = Collapse;
 
 const FAQSection = () => {
+      const { data: faqsData } = useGetFaqsQuery([]);
       const [activeKey, setActiveKey] = React.useState<string>();
 
       const customPanelStyle = (key: string) => {
@@ -17,37 +19,6 @@ const FAQSection = () => {
                   marginBottom: '16px',
             };
       };
-
-      const faqs = [
-            {
-                  question: 'How are mentors matched to mentees?',
-                  answer: 'Mentors are recommended based on your interests, skills, and learning goals. You can also filter mentors by category and expertise.',
-            },
-            {
-                  question: 'How do I book a session with a mentor?',
-                  answer: 'You can book a session through the platform by browsing available mentors and selecting a time slot that fits your schedule.',
-            },
-            {
-                  question: 'Is there a cost for mentorship?',
-                  answer: "Mentorship may involve costs depending on the mentor's rate. Some mentors may offer free consultations or sessions.",
-            },
-            {
-                  question: 'Can I become a mentor?',
-                  answer: "Yes, you can apply to become a mentor by completing the mentor application form and meeting the platform's criteria.",
-            },
-            {
-                  question: 'What happens if I miss a scheduled session?',
-                  answer: "If you miss a session, you can reschedule based on the mentor's availability. Review our cancellation and rescheduling policies.",
-            },
-            {
-                  question: 'Can I cancel or reschedule a session?',
-                  answer: 'Yes, you can cancel or reschedule a session within the platform. Be sure to notify the mentor in advance.',
-            },
-            {
-                  question: 'Can I change my mentor if I’m not satisfied?',
-                  answer: 'Yes, you can change your mentor by browsing and selecting another available mentor from the platform.',
-            },
-      ];
 
       return (
             <div className="faq-section max-w-4xl mx-auto p-6 my-20">
@@ -63,7 +34,7 @@ const FAQSection = () => {
                         bordered={false}
                         activeKey={activeKey}
                   >
-                        {faqs.map((faq, index) => (
+                        {faqsData?.faqs?.map((faq: TFaq, index: string) => (
                               <Panel
                                     header={<h2 className="text-title font-medium text-lg">{faq.question}</h2>}
                                     key={index.toString()}
