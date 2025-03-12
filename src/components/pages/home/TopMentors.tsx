@@ -33,7 +33,7 @@ function TopMentors() {
                                     dots={false}
                                     slidesToShow={4}
                                     slidesToScroll={1}
-                                    autoplay
+                                    autoplay={false}
                                     className="md:mx-12"
                               >
                                     {mentorsData?.mentors?.map((mentor: TMentor) => (

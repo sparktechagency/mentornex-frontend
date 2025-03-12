@@ -131,7 +131,12 @@ const IndustrySection: React.FC = () => {
 
                         {/* CTA Button */}
                         <div className="flex justify-center items-center mt-12">
-                              <Button type="primary" icon={<MdOutlineArrowOutward size={20} />} className="bg-[#FF6F3C] hover:bg-[#ff855c]">
+                              <Button
+                                    href="/mentors"
+                                    type="primary"
+                                    icon={<MdOutlineArrowOutward size={20} />}
+                                    className="bg-[#FF6F3C] hover:bg-[#ff855c]"
+                              >
                                     Explore All
                               </Button>
                         </div>

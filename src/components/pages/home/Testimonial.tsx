@@ -10,24 +10,38 @@ import { IoMdStar } from 'react-icons/io';
 const testimonials = [
       {
             id: 1,
-            name: 'Brittany Garcia',
-            role: 'Digital Marketer',
-            image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100',
-            content: 'Lorem ipsum dolor sit amet consectetur. Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer at. Nunc nunc eu arcu amet faucibus.',
+            name: 'Samin Al Zaman',
+            role: 'Student',
+            image: 'https://randomuser.me/api/portraits/men/32.jpg',
+            content: 'I was really struggling with my math homework until I started working with Sihan. He is very patient and was able to break down the problems into smaller steps that I could understand. He is also very knowledgeable and was able to provide a lot of useful information. I would definitely recommend him to anyone who needs help with a math class.',
       },
       {
             id: 2,
-            name: 'Mack Stark',
-            role: 'UI/UX Designer',
-            image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=100&h=100',
-            content: 'Lorem ipsum dolor sit amet consectetur. Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer at. Nunc nunc eu arcu amet faucibus.',
+            name: 'Rakibul Islam',
+            role: 'Freelancer',
+            image: 'https://randomuser.me/api/portraits/men/45.jpg',
+            content: 'I was struggling to find a job in the tech industry until I started working with Rakibul. He is very knowledgeable and was able to provide a lot of useful information. He helped me improve my resume and cover letter, and also helped me practice for interviews. I would definitely recommend him to anyone who is looking for a job in the tech industry.',
       },
       {
             id: 3,
-            name: 'Kavin Ryan',
-            role: 'Web Developer',
-            image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100',
-            content: 'Lorem ipsum dolor sit amet consectetur. Nunc tristique neque tempor nisl feugiat lectus in. Placerat pharetra eleifend integer at. Nunc nunc eu arcu amet faucibus.',
+            name: 'Tawsif',
+            role: 'Software Engineer',
+            image: 'https://randomuser.me/api/portraits/men/56.jpg',
+            content: 'I was really struggling with my software engineering skills until I started working with Tawsif. He is very patient and was able to break down the problems into smaller steps that I could understand. He is also very knowledgeable and was able to provide a lot of useful information. I would definitely recommend him to anyone who needs help with software engineering.',
+      },
+      {
+            id: 4,
+            name: 'Anika Rahman',
+            role: 'Designer',
+            image: 'https://randomuser.me/api/portraits/women/11.jpg',
+            content: 'Working with Anika has been amazing! Her design skills are top-notch, and she really helped me refine my branding. She took the time to understand my vision and delivered exactly what I wanted. I highly recommend her for any design project.',
+      },
+      {
+            id: 5,
+            name: 'Abdul Kadir',
+            role: 'Project Manager',
+            image: 'https://randomuser.me/api/portraits/men/32.jpg',
+            content: 'Abdul is a great project manager. He helped organize my team and kept us on track throughout a challenging project. His communication and leadership skills are outstanding, and he always knows how to motivate the team to achieve their best results.',
       },
 ];
 
@@ -71,11 +85,7 @@ function Testimonial() {
 
                                                       <div className="space-y-6">
                                                             <p className="text-base font-normal leading-relaxed line-clamp-5">
-                                                                  Lorem ipsum dolor sit amet consectetur. Quis vestibulum turpis egestas
-                                                                  porta curabitur. Porttitor leo duis fringilla sed id. Volutpat a potenti
-                                                                  amet eu. Et felis volutpat elementum diam volutpat cursus lacus. Ut
-                                                                  accumsan egestas at nunc gravida amet nunc. Sed habitasse vestibulum
-                                                                  ullamcorper pharetra.
+                                                                  {testimonial.content}
                                                             </p>
                                                       </div>
 
@@ -84,12 +94,12 @@ function Testimonial() {
                                                                   height={100}
                                                                   width={100}
                                                                   className="size-[80px] rounded-full mr-4"
-                                                                  src="https://randomuser.me/api/portraits/men/22.jpg"
-                                                                  alt="Victoria Wotton"
+                                                                  src={testimonial.image}
+                                                                  alt={testimonial.name}
                                                             />
                                                             <div className="flex flex-col">
-                                                                  <h3 className="text-[20px]    p-2 font-bold">Victoria Wotton</h3>
-                                                                  <p className="text-sm text-title  p-2  ">Fementum Odio Co.</p>
+                                                                  <h3 className="text-[20px]    p-2 font-bold">{testimonial.name}</h3>
+                                                                  <p className="text-sm text-title  p-2  ">{testimonial.role}</p>
                                                                   <div className="flex text-yellow-400 mt-1">
                                                                         <IoMdStar size={20} />
                                                                         <IoMdStar size={20} />
@@ -121,7 +131,7 @@ function Testimonial() {
 
                         {/* CTA Button */}
                         <div className=" flex justify-center items-center mt-12">
-                              <Button iconPosition="end" type="primary" icon={<MdOutlineArrowOutward size={20} />}>
+                              <Button href="/mentors" iconPosition="end" type="primary" icon={<MdOutlineArrowOutward size={20} />}>
                                     Find Your Mentor Now
                               </Button>
                         </div>

@@ -151,11 +151,11 @@ const HeroSection: React.FC = () => {
                                     </div>
                                     <div ref={statsRef} className="flex items-center gap-2 will-change-transform">
                                           <Avatar.Group size={40}>
-                                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=female" />
-                                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=male" />
-                                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=female" />
-                                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=male" />
-                                                <Avatar src="https://xsgames.co/randomusers/avatar.php?g=female" />
+                                                <Avatar src="https://randomuser.me/api/portraits/women/1.jpg" />
+                                                <Avatar src="https://randomuser.me/api/portraits/men/1.jpg" />
+                                                <Avatar src="https://randomuser.me/api/portraits/women/2.jpg" />
+                                                <Avatar src="https://randomuser.me/api/portraits/men/2.jpg" />
+                                                <Avatar src="https://randomuser.me/api/portraits/women/3.jpg" />
                                           </Avatar.Group>
                                           <div>
                                                 <div className="flex items-center">

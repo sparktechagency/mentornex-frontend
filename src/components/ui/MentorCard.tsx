@@ -75,7 +75,7 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                               <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
                               <p className="text-gray-500">{mentor?.bio || 'No bio available'}</p>
 
-                              <div className="flex flex-wrap gap-2 min-h-[60px]">
+                              <div className="flex flex-wrap gap-2 min-h-[70px]">
                                     {mentor?.expertise?.map((topic, index) => (
                                           <div key={index} className="bg-primary-100 h-fit p-1 text-[#353535] rounded">
                                                 <span className="text-gray-600">{topic}</span>
