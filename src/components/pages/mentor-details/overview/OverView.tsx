@@ -1,10 +1,10 @@
-import { TMentor } from '@/redux/features/mentor/mentorApi';
 import MentorStats from './MentorStats';
+import { TUser } from '@/redux/features/user/userApi';
 
-const OverView = ({ mentor }: { mentor: TMentor }) => {
+const OverView = ({ mentor }: { mentor: Partial<TUser> }) => {
       return (
             <div>
-                  <MentorStats mentor={mentor} />
+                  <MentorStats mentor={mentor!} />
                   <div className="grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-4 my-10 min-h-[400px]">
                         <div className="text-subtitle space-y-4">
                               <h1 className="text-title font-bold">About Description</h1>

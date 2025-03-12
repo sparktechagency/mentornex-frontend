@@ -1,9 +1,8 @@
-import { TMentor } from '@/redux/features/mentor/mentorApi';
 import { TargetIcon } from 'lucide-react';
 import { HiBookmark } from 'react-icons/hi';
 import { HiUserGroup } from 'react-icons/hi2';
 
-const MentorStats = ({ mentor }: { mentor: TMentor }) => {
+const MentorStats = (mentor: any) => {
       const mentorsStats = [
             {
                   name: 'Total Mentees Helped',
