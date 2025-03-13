@@ -56,9 +56,9 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                                           className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
                                     >
                                           {isWishList ? (
-                                                <GoHeart size={24} className="text-yellow-400" />
-                                          ) : (
                                                 <GoHeartFill size={24} color="red" />
+                                          ) : (
+                                                <GoHeart size={24} className="text-yellow-400" />
                                           )}
                                     </button>
                                     <div className="absolute bottom-4 left-4 bg-black/70 px-2 py-1 rounded-md">

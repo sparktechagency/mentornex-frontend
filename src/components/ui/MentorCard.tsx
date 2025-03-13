@@ -26,6 +26,7 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
             setIsWishList(isWishListed);
       }, [myWishlist, mentor._id]);
 
+      console.log(isWishList);
       const handleWishList = async (id: string) => {
             if (!user) {
                   toast.error('Please login to add mentor to wishlist');
@@ -55,7 +56,7 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                                     onClick={() => handleWishList(mentor._id)}
                                     className="absolute top-4 right-4 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors"
                               >
-                                    {isWishList ? <GoHeart size={24} className="text-yellow-400" /> : <GoHeartFill size={24} color="red" />}
+                                    {isWishList ? <GoHeartFill size={24} color="red" /> : <GoHeart size={24} className="text-yellow-400" />}
                               </button>
                               {mentor.topRated && (
                                     <button className="absolute top-4 left-4 w-fit bg-white px-2 py-1  rounded-lg font-medium  flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors">
@@ -65,14 +66,14 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
                               <div className="absolute bottom-4 left-4 bg-black/70 px-2 py-1 rounded-md">
                                     <div className="flex items-center gap-1">
                                           <BsStarFill className="w-4 h-4 text-yellow-500" />
-                                          <span className="text-white">{mentor?.rating}</span>
+                                          <span className="text-white">{mentor?.rating || 0}</span>
                                     </div>
                               </div>
                         </div>
 
                         {/* Content */}
                         <div className="flex flex-col p-2 flex-grow space-y-2">
-                              <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor.name}</h3>
+                              <h3 className="font-semibold text-lg text-gray-900 mb-1">{mentor?.name}</h3>
                               <p className="text-gray-500">{mentor?.bio || 'No bio available'}</p>
 
                               <div className="flex flex-wrap gap-2 min-h-[70px]">
