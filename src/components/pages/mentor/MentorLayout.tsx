@@ -14,7 +14,7 @@ const { Header, Content } = Layout;
 
 const MentorLayout: React.FC = () => {
       const dispatch = useAppDispatch();
-      const { language, focusArea, maxPrice, minPrice, searchText, sort, tools } = useAppSelector((state) => state.mentorFilter);
+      const { language, maxPrice, minPrice, searchText, sort, tools } = useAppSelector((state) => state.mentorFilter);
       const [page, setPage] = useState(1);
 
       const queryParameters = [
@@ -25,7 +25,7 @@ const MentorLayout: React.FC = () => {
             { name: 'minPrice', value: minPrice },
             { name: 'maxPrice', value: maxPrice },
             ...(language.length > 0 ? language.map((lang) => ({ name: 'language', value: lang })) : []),
-            ...(focusArea.length > 0 ? focusArea.map((focus) => ({ name: 'focusArea', value: focus })) : []),
+
             ...(tools.length > 0 ? tools.map((tool) => ({ name: 'tools', value: tool })) : []),
       ];
       const { data: mentorData } = useGetAllMentorsQuery(queryParameters);

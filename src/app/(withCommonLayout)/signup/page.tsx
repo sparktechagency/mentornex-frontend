@@ -1,6 +1,8 @@
 'use client';
 import { timeZones } from '@/const/constant';
+import { useGetIndustriesQuery } from '@/redux/features/industry/industryApi';
 import { useRegisterUserMutation } from '@/redux/features/user/userApi';
+import generateAntdSelectFormat from '@/utils/generateAntdSelectFormat';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import { Button, Checkbox, Form, Input, Select, Typography } from 'antd';
@@ -11,6 +13,8 @@ import { toast } from 'react-toastify';
 
 const SignUpPage = () => {
       const [registerUser, { isLoading }] = useRegisterUserMutation();
+      const { data: industries } = useGetIndustriesQuery([]);
+      const industriesOptions = generateAntdSelectFormat(industries);
 
       const [role, setRole] = useState('MENTEE');
       const router = useRouter();
@@ -93,12 +97,7 @@ const SignUpPage = () => {
                                           name="industry"
                                           rules={[{ required: true, message: 'Please select your industry!' }]}
                                     >
-                                          <Select placeholder="Select">
-                                                <Select.Option value="tech">Tech</Select.Option>
-                                                <Select.Option value="healthcare">Healthcare</Select.Option>
-                                                <Select.Option value="finance">Finance</Select.Option>
-                                                <Select.Option value="education">Education</Select.Option>
-                                          </Select>
+                                          <Select placeholder="Select" options={industriesOptions} />
                                     </Form.Item>
 
                                     <Form.Item

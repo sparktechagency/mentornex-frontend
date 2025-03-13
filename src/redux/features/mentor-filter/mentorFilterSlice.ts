@@ -7,7 +7,6 @@ const mentorFilterSlice = createSlice({
             sort: 'newest',
             tools: [],
 
-            focusArea: [],
             language: [],
             minPrice: 0,
             maxPrice: 1000,
@@ -25,10 +24,6 @@ const mentorFilterSlice = createSlice({
                   state.tools = action.payload;
             },
 
-            setFocusArea: (state, action) => {
-                  state.focusArea = action.payload;
-            },
-
             setLanguage: (state, action) => {
                   state.language = action.payload;
             },
@@ -41,7 +36,7 @@ const mentorFilterSlice = createSlice({
                   state.searchText = '';
                   state.sort = 'default';
                   state.tools = [];
-                  state.focusArea = [];
+
                   state.language = [];
                   state.minPrice = 0;
                   state.maxPrice = 1000;
@@ -49,5 +44,5 @@ const mentorFilterSlice = createSlice({
       },
 });
 
-export const { setSearchText, setSort, setTools, setFocusArea, setLanguage, setPrice, reset } = mentorFilterSlice.actions;
+export const { setSearchText, setSort, setTools, setLanguage, setPrice, reset } = mentorFilterSlice.actions;
 export default mentorFilterSlice.reducer;

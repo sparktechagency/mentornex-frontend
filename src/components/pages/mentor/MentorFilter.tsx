@@ -5,11 +5,11 @@ import { languages } from '@/const/constant';
 import Sider from 'antd/es/layout/Sider';
 import { LiaRedoAltSolid } from 'react-icons/lia';
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
-import { reset, setFocusArea, setLanguage, setPrice, setTools } from '@/redux/features/mentor-filter/mentorFilterSlice';
+import { reset, setLanguage, setPrice, setTools } from '@/redux/features/mentor-filter/mentorFilterSlice';
 
 const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (collapsed: boolean) => void }) => {
       const dispatch = useAppDispatch();
-      const { tools, focusArea, language } = useAppSelector((state) => state.mentorFilter);
+      const { tools, language } = useAppSelector((state) => state.mentorFilter);
       const [min, setMin] = useState(0);
       const [max, setMax] = useState(1000);
 
@@ -31,10 +31,6 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
 
       const handleToolsChange = (value: string[]) => {
             dispatch(setTools(value));
-      };
-
-      const handleFocusAreaChange = (value: string[]) => {
-            dispatch(setFocusArea(value));
       };
 
       const handleLanguageChange = (value: string[]) => {
@@ -137,23 +133,6 @@ const MentorFilter = ({ collapsed, setCollapsed }: { collapsed: boolean; setColl
                               </Collapse.Panel>
                         </Collapse>
                   </div> */}
-
-                  <div className="bg-white rounded-lg mb-6">
-                        <Collapse expandIconPosition="end" defaultActiveKey={['1']} style={{ border: 'none', padding: 0 }}>
-                              <Collapse.Panel
-                                    style={{ border: 'none', padding: 0 }}
-                                    header={<h1 className="font-semibold uppercase">FOCUS AREA</h1>}
-                                    key="1"
-                              >
-                                    <Checkbox.Group value={focusArea} onChange={handleFocusAreaChange} className="flex flex-col gap-2">
-                                          <Checkbox value="interviews">Interviews</Checkbox>
-                                          <Checkbox value="careerGrowth">Career Growth</Checkbox>
-                                          <Checkbox value="goalSetting">Goal Setting</Checkbox>
-                                          <Checkbox value="networking">Networking</Checkbox>
-                                    </Checkbox.Group>
-                              </Collapse.Panel>
-                        </Collapse>
-                  </div>
 
                   <div className="bg-white rounded-lg mb-6">
                         <Collapse expandIconPosition="end" defaultActiveKey={['1']} style={{ border: 'none', padding: 0 }}>
