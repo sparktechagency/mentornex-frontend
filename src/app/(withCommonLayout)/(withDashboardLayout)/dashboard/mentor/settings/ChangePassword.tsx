@@ -1,10 +1,21 @@
+import { useChangePasswordMutation } from '@/redux/features/auth/authApi';
 import { Form, Input, Button } from 'antd';
+import { toast } from 'react-toastify';
 
 const ChangePassword = () => {
       const [form] = Form.useForm();
+      const [changePassword] = useChangePasswordMutation();
 
-      const onFinish = (values: any) => {
-            console.log('Received values of form: ', values);
+      const onFinish = async (values: any) => {
+            try {
+                  const res = await changePassword(values).unwrap();
+                  if (res.success) {
+                        toast.success(res?.message || 'Password changed successfully');
+                        form.resetFields();
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data.message || 'Failed to change password');
+            }
       };
 
       return (
@@ -19,7 +30,7 @@ const ChangePassword = () => {
             >
                   <Form.Item
                         label="Old Password"
-                        name="oldpassword"
+                        name="currentPassword"
                         rules={[{ required: true, message: 'Please input your old password!' }]}
                   >
                         <Input.Password />
@@ -27,7 +38,7 @@ const ChangePassword = () => {
 
                   <Form.Item
                         label="New Password"
-                        name="newpassword"
+                        name="newPassword"
                         rules={[{ required: true, message: 'Please input your new password!' }]}
                   >
                         <Input.Password />
@@ -35,12 +46,12 @@ const ChangePassword = () => {
 
                   <Form.Item
                         label="Confirm Password"
-                        name="confirmpassword"
+                        name="confirmPassword"
                         rules={[
                               { required: true, message: 'Please confirm your password!' },
                               ({ getFieldValue }) => ({
                                     validator(_, value) {
-                                          if (!value || getFieldValue('newpassword') === value) {
+                                          if (!value || getFieldValue('newPassword') === value) {
                                                 return Promise.resolve();
                                           }
                                           return Promise.reject(new Error('Passwords do not match!'));
