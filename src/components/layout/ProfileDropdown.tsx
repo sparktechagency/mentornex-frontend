@@ -24,6 +24,7 @@ const ProfileDropdown = ({ profile }: { profile: TUser }) => {
                   onConfirm: () => {
                         dispatch(removeUser());
                         removeAccessToken();
+                        window.location.reload();
                         toast.success('Logout successful!');
                         router.push('/signin');
                   },

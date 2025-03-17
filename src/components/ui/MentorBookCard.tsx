@@ -63,7 +63,7 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                                     </button>
                                     <div className="absolute bottom-4 left-4 bg-black/70 px-2 py-1 rounded-md">
                                           <div className="flex items-center gap-1">
-                                                <span className="text-white font-semibold">{mentor?.rating}</span>
+                                                <span className="text-white font-semibold">{mentor?.rating || 0}</span>
                                                 <BsStarFill className="w-4 h-4 text-yellow-500" />
                                           </div>
                                     </div>
