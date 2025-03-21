@@ -1,28 +1,42 @@
 'use client';
-import React, { useState } from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
-import { CreditCardOutlined } from '@ant-design/icons';
+import { useConnectStripeAccountMutation } from '@/redux/features/payment/payementApi';
+import { Button } from 'antd';
+// import React, { useState } from 'react';
+// import { Form, Input, Button, Checkbox } from 'antd';
+import { toast } from 'react-toastify';
+// import { CreditCardOutlined } from '@ant-design/icons';
 
 const BillingInformation = () => {
-      const [isFormVisible, setIsFormVisible] = useState(false);
+      const [connectStripeAccount] = useConnectStripeAccountMutation();
+      // const [isFormVisible, setIsFormVisible] = useState(false);
 
-      const handleOpen = () => setIsFormVisible(true);
-      const handleClose = () => setIsFormVisible(false);
+      // const handleOpen = () => setIsFormVisible(true);
+      // const handleClose = () => setIsFormVisible(false);
 
-      const handleSave = (values: any) => {
-            console.log('Form Submitted:', values);
-            setIsFormVisible(false);
+      // const handleSave = (values: any) => {
+      //       console.log('Form Submitted:', values);
+      //       setIsFormVisible(false);
+      // };
+
+      const handleConnectAccount = async () => {
+            try {
+                  const res = await connectStripeAccount({}).unwrap();
+                  if (res?.success) {
+                        toast.success(res?.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message);
+            }
       };
-
       return (
             <div>
                   <div className="mb-4">
-                        <Button type="primary" onClick={handleOpen}>
+                        <Button type="primary" onClick={handleConnectAccount}>
                               Add Billing
                         </Button>
                   </div>
 
-                  {isFormVisible && (
+                  {/* {isFormVisible && (
                         <Form
                               className="max-w-2xl border rounded-lg"
                               style={{
@@ -82,7 +96,7 @@ const BillingInformation = () => {
                                     </Button>
                               </div>
                         </Form>
-                  )}
+                  )} */}
             </div>
       );
 };
