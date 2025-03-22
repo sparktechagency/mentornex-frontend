@@ -23,6 +23,7 @@ export type TUser = {
       linkedin_url: string;
       twitter_url: string;
       website_url: string;
+      isConnected: boolean;
 
       expertise: string[];
       focus_area: string;
