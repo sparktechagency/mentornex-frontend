@@ -99,7 +99,7 @@ const MyMenteeTable = () => {
                   loading={isLoading}
                   columns={columns}
                   rowKey="_id"
-                  dataSource={menteeData?.mentees}
+                  dataSource={menteeData?.data}
                   bordered={false}
                   className="rounded-lg shadow-sm"
                   rowClassName="hover:bg-gray-50"

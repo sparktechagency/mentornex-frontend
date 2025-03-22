@@ -1,35 +1,48 @@
 import Modal from '@/components/ui/Modal';
-import { Button, Select, Space, Table } from 'antd';
+import { Button, Popconfirm, Select, Space, Table } from 'antd';
 import { useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
-import { RxCross2, RxPencil1 } from 'react-icons/rx';
+import { RxCross2 } from 'react-icons/rx';
 import AddTaskForm from './form/AddTaskForm';
+import { useGetTasksQuery } from '@/redux/features/task/taskApi';
+import { useGetMyMenteesQuery } from '@/redux/features/mentee/menteeApi';
+import formattedSelectOptions from '@/utils/formattedSelectOptions';
+import { toast } from 'react-toastify';
+import { useDeleteTaskMutation } from '@/redux/features/task/taskApi';
 
 const TaskTable = () => {
+      const { data: tasks } = useGetTasksQuery([]);
+      const { data: menteesData } = useGetMyMenteesQuery([]);
+      const [deleteTask] = useDeleteTaskMutation();
+      const menteeOptions = formattedSelectOptions(menteesData?.data || []);
+
+      console.log(tasks);
       const [isModalOpen, setIsModalOpen] = useState(false);
       const columns = [
             {
                   title: 'Task',
-                  dataIndex: 'task',
-                  key: 'task',
+                  dataIndex: 'title',
+                  key: 'title',
             },
             {
                   title: 'Assign Date',
-                  dataIndex: 'assignDate',
-                  key: 'assignDate',
+                  dataIndex: 'createdAt',
+                  key: 'createdAt',
+                  render: (text: string) => new Date(text).toLocaleDateString(),
             },
             {
                   title: 'Deadline',
                   dataIndex: 'deadline',
                   key: 'deadline',
+                  render: (text: string) => new Date(text).toLocaleDateString(),
             },
             {
                   title: 'Status',
                   dataIndex: 'status',
                   key: 'status',
                   render: (status: string) => (
-                        <div className={`flex items-center gap-3 text-${status === 'In Progress' ? 'green' : 'red'}-500`}>
-                              <span className={`w-2 h-2 rounded-full bg-${status === 'In Progress' ? 'green' : 'red'}-500`} />
+                        <div className={`flex items-center gap-3 text-${status === 'complete' ? 'green' : 'red'}-500`}>
+                              <span className={`w-2 h-2 rounded-full bg-${status === 'complete' ? 'green' : 'red'}-500`} />
                               <span>{status}</span>
                         </div>
                   ),
@@ -37,49 +50,41 @@ const TaskTable = () => {
             {
                   title: 'Action',
                   key: 'action',
-                  render: () => (
+                  render: (_text: any, record: { _id: string }) => (
                         <Space size="middle">
-                              <Button icon={<RxPencil1 size={16} />} type="primary" size="small" />
-                              <Button icon={<RxCross2 size={16} />} type="primary" danger size="small" />
+                              {/* <Button icon={<RxPencil1 size={16} />} type="primary" size="small" /> */}
+                              <Popconfirm
+                                    title="Are you sure you want to delete this task?"
+                                    onConfirm={() => handleDelete(record._id)}
+                                    okText="Yes"
+                                    cancelText="No"
+                              >
+                                    <Button icon={<RxCross2 size={16} />} type="primary" danger size="small" />
+                              </Popconfirm>
                         </Space>
                   ),
             },
       ];
 
-      const data = [
-            {
-                  key: '1',
-                  task: 'Design a new website',
-                  assignDate: '2024-01-01',
-                  deadline: '2024-01-15',
-                  status: 'In Progress',
-            },
-            {
-                  key: '2',
-                  task: 'Develop a new website',
-                  assignDate: '2024-01-16',
-                  deadline: '2024-02-01',
-                  status: 'Not Started',
-            },
-      ];
+      const handleDelete = (id: string) => {
+            const tryDelete = async () => {
+                  try {
+                        const res = await deleteTask(id).unwrap();
+                        if (res.success) {
+                              toast.success(res?.message);
+                        }
+                  } catch (error: any) {
+                        toast.error(error?.data?.message);
+                  }
+            };
+            tryDelete();
+      };
 
       return (
             <>
                   <div className="flex justify-between mb-3">
                         <div className="">
-                              <Select
-                                    showSearch
-                                    placeholder="Select a mentee"
-                                    style={{ width: '200px' }}
-                                    options={[
-                                          { value: 'lucy', label: 'Lucy' },
-                                          { value: 'Yiminghe1', label: 'Yiminghe1' },
-                                          { value: 'Yiminghe2', label: 'Yiminghe2' },
-                                          { value: 'Yiminghe3', label: 'Yiminghe3' },
-                                          { value: 'Yiminghe4', label: 'Yiminghe4' },
-                                          { value: 'Yiminghe5', label: 'Yiminghe5' },
-                                    ]}
-                              />
+                              <Select showSearch placeholder="Select a mentee" style={{ width: '200px' }} options={menteeOptions} />
                         </div>
                         <div>
                               <Button onClick={() => setIsModalOpen(true)} icon={<BsPlus color="white" />} type="primary">
@@ -88,7 +93,7 @@ const TaskTable = () => {
                         </div>
                   </div>
 
-                  <Table columns={columns} dataSource={data} />
+                  <Table rowKey="_id" columns={columns} dataSource={tasks} />
 
                   <Modal title="Add Task" visible={isModalOpen} onCancel={() => setIsModalOpen(false)} width={600}>
                         <AddTaskForm />
