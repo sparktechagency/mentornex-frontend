@@ -2,7 +2,7 @@ import Modal from '@/components/ui/Modal';
 import { Button, Popconfirm, Select, Space, Table } from 'antd';
 import { useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
-import { RxCross2 } from 'react-icons/rx';
+import { RxCross2, RxEyeOpen } from 'react-icons/rx';
 import AddTaskForm from './form/AddTaskForm';
 import { useGetTasksQuery } from '@/redux/features/task/taskApi';
 import { useGetMyMenteesQuery } from '@/redux/features/mentee/menteeApi';
@@ -45,6 +45,12 @@ const TaskTable = () => {
                   key: 'title',
             },
             {
+                  title: 'Assign To',
+                  dataIndex: 'mentee_id',
+                  key: 'mentee_id',
+                  render: (text: { name: string }) => <h2>{text.name}</h2>,
+            },
+            {
                   title: 'Assign Date',
                   dataIndex: 'createdAt',
                   key: 'createdAt',
@@ -81,6 +87,13 @@ const TaskTable = () => {
                               >
                                     <Button icon={<RxCross2 size={16} />} type="primary" danger size="small" />
                               </Popconfirm>
+
+                              <Button
+                                    href={`/dashboard/mentor/tasks-and-notes/${record._id}`}
+                                    icon={<RxEyeOpen size={16} />}
+                                    type="primary"
+                                    size="small"
+                              />
                         </Space>
                   ),
             },
@@ -134,7 +147,7 @@ const TaskTable = () => {
                   />
 
                   <Modal title="Add Task" visible={isModalOpen} onCancel={() => setIsModalOpen(false)} width={600}>
-                        <AddTaskForm />
+                        <AddTaskForm setIsModalOpen={setIsModalOpen} />
                   </Modal>
             </>
       );

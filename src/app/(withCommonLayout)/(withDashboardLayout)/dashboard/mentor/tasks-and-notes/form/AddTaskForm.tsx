@@ -7,7 +7,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useCreateTaskMutation } from '@/redux/features/task/taskApi';
 import { toast } from 'react-toastify';
 
-const AddTaskForm = () => {
+const AddTaskForm = ({ setIsModalOpen }: { setIsModalOpen: (value: boolean) => void }) => {
       const { data: menteesData } = useGetMyMenteesQuery([]);
       const [addTask] = useCreateTaskMutation();
       const [form] = Form.useForm();
@@ -27,9 +27,11 @@ const AddTaskForm = () => {
                   const res = await addTask(formData).unwrap();
                   if (res.success) {
                         toast.success(res?.message);
+                        setIsModalOpen(false);
                   }
             } catch (error: any) {
                   toast.error(error?.data?.message);
+                  setIsModalOpen(false);
             }
       };
 
