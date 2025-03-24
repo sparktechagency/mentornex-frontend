@@ -25,7 +25,10 @@ const NoteTable = () => {
 
                   <div className="grid grid-cols-3 gap-4 my-4">
                         {Array.from({ length: 6 }).map((_, index) => (
-                              <TaskCard key={index} />
+                              <TaskCard
+                                    note={{ title: `Note ${index + 1}`, description: `Description for note ${index + 1}` }}
+                                    key={index}
+                              />
                         ))}
                   </div>
             </>
