@@ -4,9 +4,12 @@ import { useState } from 'react';
 import { BsPlus } from 'react-icons/bs';
 import TaskCard from '@/components/ui/TaskCard';
 import AddNoteForm from './form/AddNoteForm';
+import { useGetNotesQuery } from '@/redux/features/note/noteApi';
 
 const NoteTable = () => {
       const [isModalOpen, setIsModalOpen] = useState(false);
+      const { data: notes } = useGetNotesQuery([]);
+      console.log(notes);
 
       return (
             <>
@@ -39,7 +42,7 @@ const NoteTable = () => {
                         ))}
                   </div>
                   <Modal title="Add Note" visible={isModalOpen} onCancel={() => setIsModalOpen(false)} width={600}>
-                        <AddNoteForm />
+                        <AddNoteForm setIsModalOpen={setIsModalOpen} />
                   </Modal>
             </>
       );
