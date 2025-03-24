@@ -9,13 +9,28 @@ import { useGetMyMenteesQuery } from '@/redux/features/mentee/menteeApi';
 import formattedSelectOptions from '@/utils/formattedSelectOptions';
 import { toast } from 'react-toastify';
 import { useDeleteTaskMutation } from '@/redux/features/task/taskApi';
+// import { useAppSelector } from '@/redux/hooks';
+// import { useGetChatListMutation } from '@/redux/features/chatlist/chatlistApi';
 
 const TaskTable = () => {
+      const [page, setPage] = useState(1);
       const [menteeId, setMenteeId] = useState('');
-      const { data: tasks } = useGetTasksQuery([
+      // const { chatList } = useAppSelector((state) => state.chat);
+      // const [getChatList] = useGetChatListMutation();
+      // console.log('chat', chatList);
+
+      const { data: taskData } = useGetTasksQuery([
             {
                   name: 'menteeId',
                   value: menteeId,
+            },
+            {
+                  name: 'page',
+                  value: page,
+            },
+            {
+                  name: 'limit',
+                  value: 9,
             },
       ]);
       const { data: menteesData } = useGetMyMenteesQuery([]);
@@ -106,7 +121,17 @@ const TaskTable = () => {
                         </div>
                   </div>
 
-                  <Table rowKey="_id" columns={columns} dataSource={tasks} />
+                  <Table
+                        pagination={{
+                              current: page,
+                              total: taskData?.meta?.total,
+                              pageSize: taskData?.meta?.limit,
+                              onChange: (page: number) => setPage(page),
+                        }}
+                        rowKey="_id"
+                        columns={columns}
+                        dataSource={taskData?.data || []}
+                  />
 
                   <Modal title="Add Task" visible={isModalOpen} onCancel={() => setIsModalOpen(false)} width={600}>
                         <AddTaskForm />

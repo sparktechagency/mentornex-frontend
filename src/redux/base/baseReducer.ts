@@ -4,6 +4,7 @@ import { baseApi } from './baseApi';
 import meetingReducer from '../features/meeting/meetingSlice';
 import authReducer from '../features/auth/authSlice';
 import mentorFilterReducer from '../features/mentor-filter/mentorFilterSlice';
+import chatReducer from '../features/chatlist/chatSlice';
 
 const persistAuthConfig = {
       key: 'auth',
@@ -17,4 +18,5 @@ export const baseReducer = {
       auth: persistedAuthReducer,
       meeting: meetingReducer,
       mentorFilter: mentorFilterReducer,
+      chat: chatReducer,
 };
