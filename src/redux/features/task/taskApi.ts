@@ -1,12 +1,23 @@
 import { baseApi } from '@/redux/base/baseApi';
+import { TQueryParams } from '@/types';
 
 const taskApi = baseApi.injectEndpoints({
       endpoints: (build) => ({
             getTasks: build.query({
-                  query: () => ({
-                        url: '/task/get-all-task',
-                        method: 'GET',
-                  }),
+                  query: (args) => {
+                        const params = new URLSearchParams();
+
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: '/task',
+                              method: 'GET',
+                              params,
+                        };
+                  },
                   providesTags: ['Tasks'],
                   transformResponse: (response: any) => {
                         return response?.data;

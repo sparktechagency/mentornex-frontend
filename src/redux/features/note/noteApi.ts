@@ -1,12 +1,23 @@
 import { baseApi } from '@/redux/base/baseApi';
+import { TQueryParams } from '@/types';
 
 const noteApi = baseApi.injectEndpoints({
       endpoints: (build) => ({
             getNotes: build.query({
-                  query: () => ({
-                        url: '/note/get-all-note',
-                        method: 'GET',
-                  }),
+                  query: (args) => {
+                        const params = new URLSearchParams();
+
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: '/note',
+                              method: 'GET',
+                              params,
+                        };
+                  },
                   providesTags: ['Notes'],
                   transformResponse: (response: any) => {
                         return response?.data;

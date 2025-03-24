@@ -11,12 +11,17 @@ import { toast } from 'react-toastify';
 import { useDeleteTaskMutation } from '@/redux/features/task/taskApi';
 
 const TaskTable = () => {
-      const { data: tasks } = useGetTasksQuery([]);
+      const [menteeId, setMenteeId] = useState('');
+      const { data: tasks } = useGetTasksQuery([
+            {
+                  name: 'menteeId',
+                  value: menteeId,
+            },
+      ]);
       const { data: menteesData } = useGetMyMenteesQuery([]);
       const [deleteTask] = useDeleteTaskMutation();
       const menteeOptions = formattedSelectOptions(menteesData?.data || []);
 
-      console.log(tasks);
       const [isModalOpen, setIsModalOpen] = useState(false);
       const columns = [
             {
@@ -79,12 +84,20 @@ const TaskTable = () => {
             };
             tryDelete();
       };
-
+      const handleFilter = (value: string) => {
+            setMenteeId(value);
+      };
       return (
             <>
                   <div className="flex justify-between mb-3">
                         <div className="">
-                              <Select showSearch placeholder="Select a mentee" style={{ width: '200px' }} options={menteeOptions} />
+                              <Select
+                                    onChange={(value) => handleFilter(value)}
+                                    showSearch
+                                    placeholder="Select a mentee"
+                                    style={{ width: '200px' }}
+                                    options={menteeOptions}
+                              />
                         </div>
                         <div>
                               <Button onClick={() => setIsModalOpen(true)} icon={<BsPlus color="white" />} type="primary">
