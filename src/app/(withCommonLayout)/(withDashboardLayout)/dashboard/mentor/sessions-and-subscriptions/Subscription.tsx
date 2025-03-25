@@ -1,11 +1,7 @@
 import Modal from '@/components/ui/Modal';
-import {
-      useAddSubscriptionMutation,
-      useDeleteSubscriptionMutation,
-      useUpdateSubscriptionMutation,
-} from '@/redux/features/subscription/subscriptionApi';
+import { useAddSubscriptionMutation, useUpdateSubscriptionMutation } from '@/redux/features/subscription/subscriptionApi';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Button, Form, Input, InputNumber, Popconfirm, Radio, Select } from 'antd';
+import { Button, Form, Input, InputNumber, Radio, Select } from 'antd';
 import { useEffect, useState } from 'react';
 import { BsCurrencyDollar, BsPlus } from 'react-icons/bs';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
@@ -35,7 +31,7 @@ const Subscription = ({ pricingPlans }: any) => {
 
       const [addSubscription, { isLoading }] = useAddSubscriptionMutation();
       const [updateSubscription, { isLoading: isUpdating }] = useUpdateSubscriptionMutation();
-      const [deleteSubscription] = useDeleteSubscriptionMutation();
+      // const [deleteSubscription] = useDeleteSubscriptionMutation();
       const [isModalOpen, setIsModalOpen] = useState(false);
       const onFinish = async (values: any) => {
             if (editedPlan) {
@@ -58,16 +54,16 @@ const Subscription = ({ pricingPlans }: any) => {
             }
       };
 
-      const handleDelete = async (id: string) => {
-            try {
-                  const res = await deleteSubscription(id).unwrap();
-                  if (res.success) {
-                        toast.success(res.message);
-                  }
-            } catch (error: any) {
-                  toast.error(error?.data?.message);
-            }
-      };
+      // const handleDelete = async (id: string) => {
+      //       try {
+      //             const res = await deleteSubscription(id).unwrap();
+      //             if (res.success) {
+      //                   toast.success(res.message);
+      //             }
+      //       } catch (error: any) {
+      //             toast.error(error?.data?.message);
+      //       }
+      // };
       return (
             <div>
                   <div className="flex-end mb-1">
@@ -120,7 +116,7 @@ const Subscription = ({ pricingPlans }: any) => {
                                           >
                                                 Edit
                                           </Button>
-                                          <Popconfirm
+                                          {/* <Popconfirm
                                                 title="Are you sure you want to delete this plan?"
                                                 onConfirm={() => handleDelete(plan?._id)}
                                           >
@@ -135,7 +131,7 @@ const Subscription = ({ pricingPlans }: any) => {
                                                 >
                                                       Delete
                                                 </Button>
-                                          </Popconfirm>
+                                          </Popconfirm> */}
                                     </div>
                               </div>
                         ))}

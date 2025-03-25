@@ -4,6 +4,7 @@ import Sessions from './Sessions';
 import Subscription from './Subscription';
 import { useAppSelector } from '@/redux/hooks';
 import { useGetSubscriptionsQuery } from '@/redux/features/subscription/subscriptionApi';
+import Package from './Package';
 
 const SessionsAndSubscriptions = () => {
       const { user } = useAppSelector((state) => state.auth);
@@ -20,6 +21,11 @@ const SessionsAndSubscriptions = () => {
                                           key: 'pay-per-session',
                                           label: 'Pay Per Session',
                                           content: <Sessions sessions={pricingPlans?.payPerSession} />,
+                                    },
+                                    {
+                                          key: 'package',
+                                          label: 'Package',
+                                          content: <Package packages={pricingPlans?.packages} />,
                                     },
                                     {
                                           key: 'subscription',
