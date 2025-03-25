@@ -27,10 +27,10 @@ const messageApi = baseApi.injectEndpoints({
                   providesTags: ['Messages'],
             }),
             createMessage: builder.mutation({
-                  query: (data) => ({
-                        url: '/messages',
+                  query: (args) => ({
+                        url: `/message/${args.id}`,
                         method: 'POST',
-                        body: data,
+                        body: args.data,
                   }),
                   invalidatesTags: ['Messages'],
             }),

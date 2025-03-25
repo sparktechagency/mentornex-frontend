@@ -1,32 +1,71 @@
 'use client';
-import { TMessage, useGetMessagesQuery } from '@/redux/features/message/messageApi';
+import { useEffect, useRef, useState } from 'react';
+import { TMessage, useCreateMessageMutation, useGetMessagesQuery } from '@/redux/features/message/messageApi';
 import { useAppSelector } from '@/redux/hooks';
 import { getImageUrl } from '@/utils/getImageUrl';
-import { Avatar, Badge, Button, Input, Upload } from 'antd';
+import { Avatar, Badge, Button, Form, Input, Upload } from 'antd';
 import Image from 'next/image';
-
 import { IoIosAttach } from 'react-icons/io';
+import { toast } from 'react-toastify';
 
 const ChatWindow = ({ id }: { id: string }) => {
       const { data: messageData } = useGetMessagesQuery(id, { skip: !id });
+      const [createMessage, { isLoading }] = useCreateMessageMutation();
       const { user } = useAppSelector((state) => state.auth);
-      console.log(messageData?.data);
-      // const messages = [
-      //       { text: 'Hello!', mine: true, time: '10:00 AM', isImage: false },
-      //       { text: 'Hi there!', mine: false, time: '10:01 AM', isImage: false },
-      //       { text: 'How are you?', mine: true, time: '10:02 AM', isImage: false },
-      //       { text: 'I am fine, thanks!', mine: false, time: '10:03 AM', isImage: false },
-      //       { text: 'Great!', mine: true, time: '10:04 AM', isImage: false },
-      //       { text: 'How can I help you?', mine: false, time: '10:05 AM', isImage: false },
-      //       { text: 'I need help with my project', mine: true, time: '10:06 AM', isImage: false },
-      //       { text: 'Sure, let me get back to you', mine: false, time: '10:07 AM', isImage: false },
-      //       { text: 'I will get right back to you', mine: true, time: '10:08 AM', isImage: false, image: 'https://picsum.photos/200/3000' },
-      // ];
 
-      console.log(user?.id);
+      const messagesEndRef = useRef<HTMLDivElement>(null);
+      const messagesContainerRef = useRef<HTMLDivElement>(null);
+      const [autoScroll, setAutoScroll] = useState(true);
+
+      // Auto-scroll to bottom when messages change
+      useEffect(() => {
+            if (autoScroll && messagesContainerRef.current && messagesEndRef.current) {
+                  // Scroll the message container, not the window
+                  messagesContainerRef.current.scrollTo({
+                        top: messagesContainerRef.current.scrollHeight,
+                        behavior: 'smooth',
+                  });
+            }
+      }, [messageData, autoScroll]);
+
+      // Handle scroll events to detect user scrolling up
+      const handleScroll = () => {
+            if (messagesContainerRef.current) {
+                  const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
+                  // If user scrolls up, disable auto-scroll
+                  setAutoScroll(scrollHeight - (scrollTop + clientHeight) < 50);
+            }
+      };
+
+      const sendMessage = async (values: any) => {
+            const formData = new FormData();
+            const data = {
+                  message: values.message,
+            };
+
+            formData.append('data', JSON.stringify(data));
+            if (values.file) {
+                  formData.append('image', values.file.fileList[0].originFileObj);
+            }
+            try {
+                  const res = await createMessage({ id: id, data: formData }).unwrap();
+                  if (res.success) {
+                        toast.success('Message sent successfully');
+                        form.resetFields();
+                        // Ensure we scroll to bottom after sending
+                        setAutoScroll(true);
+                  }
+            } catch (error: any) {
+                  console.log(error);
+            }
+      };
+
+      const [form] = Form.useForm();
+
       return (
             <div className="">
-                  <div className="p-4 bg-white  flex items-center gap-4">
+                  {/* Header remains static */}
+                  <div className="p-4 bg-white flex items-center gap-4">
                         <Badge
                               style={{
                                     width: '12px',
@@ -46,12 +85,17 @@ const ChatWindow = ({ id }: { id: string }) => {
                         <h3 className="font-medium">Dianne Russell</h3>
                   </div>
 
-                  <div className="flex-1 bg-[#F5F5F6] p-4 h-[60vh] overflow-y-auto custom-scrollbar">
-                        {messageData?.data.map((msg: TMessage, index: any) => (
-                              <div key={index} className={`flex ${msg.receiver._id === user?.id ? 'justify-end' : 'justify-start'} mb-4`}>
+                  {/* Message container with independent scrolling */}
+                  <div
+                        ref={messagesContainerRef}
+                        onScroll={handleScroll}
+                        className="flex-1 bg-[#F5F5F6] p-4 h-[60vh] overflow-y-auto custom-scrollbar"
+                  >
+                        {messageData?.data.map((msg: TMessage, index: number) => (
+                              <div key={index} className={`flex ${msg.receiver._id !== user?.id ? 'justify-end' : 'justify-start'} mb-4`}>
                                     <div
                                           className={`max-w-xs p-3 rounded-lg ${
-                                                msg.isRead ? 'bg-orange-500 text-white' : 'bg-white border text-title '
+                                                msg.receiver._id !== user?.id ? 'bg-orange-500 text-white' : 'bg-white border text-title'
                                           }`}
                                     >
                                           <p>{msg.message}</p>
@@ -68,24 +112,42 @@ const ChatWindow = ({ id }: { id: string }) => {
                                     </div>
                               </div>
                         ))}
+                        <div ref={messagesEndRef} />
                   </div>
 
-                  <div className="p-4 bg-white border-t flex items-center gap-2">
-                        <Upload accept="image/*" maxCount={1}>
-                              <Button shape="circle" icon={<IoIosAttach color="#9F9F9F" size={24} />} />
-                        </Upload>
-                        <Input.Search
-                              style={{
-                                    backgroundColor: '#F5F5F6',
-                                    borderRadius: '8px',
-                              }}
-                              variant="borderless"
-                              placeholder="Type a message"
-                              allowClear
-                              enterButton="Send"
-                              size="large"
-                        />
-                  </div>
+                  {/* Input form remains static at bottom */}
+                  <Form
+                        form={form}
+                        onFinish={sendMessage}
+                        name="basic"
+                        wrapperCol={{ span: 24 }}
+                        autoComplete="off"
+                        className="p-4  border-t flex w-full  items-center gap-2"
+                  >
+                        <Form.Item name="file">
+                              <Upload accept="image/*" maxCount={1}>
+                                    <Button shape="circle" icon={<IoIosAttach color="#9F9F9F" size={24} />} />
+                              </Upload>
+                        </Form.Item>
+                        <Form.Item style={{ width: '100%' }} name="message">
+                              <Input.Search
+                                    style={{
+                                          backgroundColor: '#F5F5F6',
+                                          borderRadius: '8px',
+                                          width: '100%',
+                                    }}
+                                    variant="borderless"
+                                    placeholder="Type a message"
+                                    allowClear
+                                    enterButton={
+                                          <Button style={{ width: '100%' }} htmlType="submit" type="primary">
+                                                {isLoading ? 'Sending...' : 'Send'}
+                                          </Button>
+                                    }
+                                    size="large"
+                              />
+                        </Form.Item>
+                  </Form>
             </div>
       );
 };
