@@ -9,30 +9,28 @@ import { IoIosAttach } from 'react-icons/io';
 import { toast } from 'react-toastify';
 
 const ChatWindow = ({ id }: { id: string }) => {
-      const { data: messageData } = useGetMessagesQuery(id, { skip: !id });
+      useGetMessagesQuery(id, { skip: !id });
       const [createMessage, { isLoading }] = useCreateMessageMutation();
-      const { user } = useAppSelector((state) => state.auth);
+      const { messages } = useAppSelector((state) => state.message);
 
+      const { user } = useAppSelector((state) => state.auth);
       const messagesEndRef = useRef<HTMLDivElement>(null);
       const messagesContainerRef = useRef<HTMLDivElement>(null);
       const [autoScroll, setAutoScroll] = useState(true);
 
-      // Auto-scroll to bottom when messages change
       useEffect(() => {
             if (autoScroll && messagesContainerRef.current && messagesEndRef.current) {
-                  // Scroll the message container, not the window
                   messagesContainerRef.current.scrollTo({
                         top: messagesContainerRef.current.scrollHeight,
                         behavior: 'smooth',
                   });
             }
-      }, [messageData, autoScroll]);
+      }, [messages, autoScroll]);
 
-      // Handle scroll events to detect user scrolling up
       const handleScroll = () => {
             if (messagesContainerRef.current) {
                   const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current;
-                  // If user scrolls up, disable auto-scroll
+
                   setAutoScroll(scrollHeight - (scrollTop + clientHeight) < 50);
             }
       };
@@ -91,7 +89,7 @@ const ChatWindow = ({ id }: { id: string }) => {
                         onScroll={handleScroll}
                         className="flex-1 bg-[#F5F5F6] p-4 h-[60vh] overflow-y-auto custom-scrollbar"
                   >
-                        {messageData?.data.map((msg: TMessage, index: number) => (
+                        {messages.map((msg: TMessage, index: number) => (
                               <div key={index} className={`flex ${msg.receiver._id !== user?.id ? 'justify-end' : 'justify-start'} mb-4`}>
                                     <div
                                           className={`max-w-xs p-3 rounded-lg ${

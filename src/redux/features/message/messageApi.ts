@@ -14,7 +14,7 @@ export interface TMessage {
       createdAt: string;
 }
 
-const messageApi = baseApi.injectEndpoints({
+export const messageApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
             getMessages: builder.query({
                   query: (id) => {
