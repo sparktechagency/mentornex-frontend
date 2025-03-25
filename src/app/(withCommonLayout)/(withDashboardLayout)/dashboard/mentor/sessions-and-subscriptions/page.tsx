@@ -9,7 +9,7 @@ import Package from './Package';
 const SessionsAndSubscriptions = () => {
       const { user } = useAppSelector((state) => state.auth);
       const { data: pricingPlans } = useGetSubscriptionsQuery(user?.id, { skip: !user });
-      console.log(pricingPlans);
+      // console.log(pricingPlans);
       return (
             <div>
                   <h1 className="text-2xl font-bold mb-2">Sessions and Subscriptions</h1>

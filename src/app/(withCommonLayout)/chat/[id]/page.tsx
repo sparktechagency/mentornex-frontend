@@ -1,9 +1,10 @@
 import ChatWindow from '@/components/pages/chat/ChatWindow';
 
-const Page = () => {
+const Page = ({ params }: { params: { id: string } }) => {
+      const { id } = params;
       return (
             <div>
-                  <ChatWindow />
+                  <ChatWindow id={id} />
             </div>
       );
 };

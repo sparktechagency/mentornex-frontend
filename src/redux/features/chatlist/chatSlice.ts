@@ -7,18 +7,13 @@ interface Participant {
       image: string;
 }
 
-interface LatestMessage {
-      _id: string;
-      type: string; // Assuming 'type' can be 'text', 'file', etc.
-}
-
 export interface ChatItem {
       _id: string;
       participant: Participant;
-      latestMessage: LatestMessage;
+      latestMessage: string;
       isRequest: boolean;
       createdAt: string;
-      updatedAt: string;
+      isRead: boolean;
 }
 
 interface ChatState {

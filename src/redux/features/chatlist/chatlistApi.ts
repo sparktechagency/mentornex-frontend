@@ -3,7 +3,7 @@ import { TQueryParams } from '@/types';
 
 export const chatListApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
-            getChatList: builder.mutation({
+            getChatList: builder.query({
                   query: (args) => {
                         const params = new URLSearchParams();
                         if (args) {
@@ -17,6 +17,7 @@ export const chatListApi = baseApi.injectEndpoints({
                               params,
                         };
                   },
+                  transformResponse: (response: any) => response.data,
             }),
             createChat: builder.mutation({
                   query: (data) => ({
@@ -24,8 +25,9 @@ export const chatListApi = baseApi.injectEndpoints({
                         method: 'POST',
                         body: data,
                   }),
+                  invalidatesTags: ['ChatList'],
             }),
       }),
 });
 
-export const { useGetChatListMutation, useCreateChatMutation } = chatListApi;
+export const { useGetChatListQuery, useCreateChatMutation } = chatListApi;
