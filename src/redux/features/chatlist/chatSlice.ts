@@ -27,12 +27,19 @@ const initialState: ChatState = {
 const chatSlice = createSlice({
       name: 'chat',
       initialState,
-      reducers: {},
+      reducers: {
+            addChat: (state, action) => {
+                  state.chatList.push(action.payload);
+            },
+      },
       extraReducers: (builder) => {
-            builder.addMatcher(chatListApi.endpoints.getChatList.matchFulfilled, (state, action: { payload: { data: ChatItem[] } }) => {
-                  state.chatList = action.payload.data;
+            builder.addMatcher(chatListApi.endpoints.getChatList.matchFulfilled, (state, { payload }) => {
+                  console.log('payload', payload);
+                  state.chatList = payload;
             });
       },
 });
+
+export const { addChat } = chatSlice.actions;
 
 export default chatSlice.reducer;

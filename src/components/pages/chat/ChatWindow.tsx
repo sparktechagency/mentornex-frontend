@@ -6,7 +6,6 @@ import { getImageUrl } from '@/utils/getImageUrl';
 import { Avatar, Badge, Button, Form, Input, Upload } from 'antd';
 import Image from 'next/image';
 import { IoIosAttach } from 'react-icons/io';
-import { toast } from 'react-toastify';
 
 const ChatWindow = ({ id }: { id: string }) => {
       useGetMessagesQuery(id, { skip: !id });
@@ -48,7 +47,7 @@ const ChatWindow = ({ id }: { id: string }) => {
             try {
                   const res = await createMessage({ id: id, data: formData }).unwrap();
                   if (res.success) {
-                        toast.success('Message sent successfully');
+                        // toast.success('Message sent successfully');
                         form.resetFields();
                         // Ensure we scroll to bottom after sending
                         setAutoScroll(true);

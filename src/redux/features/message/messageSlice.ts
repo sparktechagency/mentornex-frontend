@@ -10,7 +10,11 @@ const messageSlice = createSlice({
       initialState: {
             messages: [] as TMessage[],
       } as TInitialState,
-      reducers: {},
+      reducers: {
+            addMessage: (state, action) => {
+                  state.messages.push(action.payload);
+            },
+      },
       extraReducers: (builder) => {
             builder.addMatcher(messageApi.endpoints.getMessages.matchFulfilled, (state, { payload }) => {
                   state.messages = payload.data;
@@ -18,4 +22,5 @@ const messageSlice = createSlice({
       },
 });
 
+export const { addMessage } = messageSlice.actions;
 export default messageSlice.reducer;

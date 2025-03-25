@@ -1,6 +1,7 @@
 'use client';
 import { useGetChatListQuery } from '@/redux/features/chatlist/chatlistApi';
 import { ChatItem } from '@/redux/features/chatlist/chatSlice';
+import { useAppSelector } from '@/redux/hooks';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { Avatar, Badge, Flex, Input, Tabs } from 'antd';
 import { useRouter } from 'next/navigation';
@@ -8,11 +9,11 @@ import { BsSearch } from 'react-icons/bs';
 const { TabPane } = Tabs;
 
 const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => void }) => {
-      const { data: chatList } = useGetChatListQuery([]);
+      useGetChatListQuery([]);
+      const { chatList } = useAppSelector((state) => state.chat);
 
       const router = useRouter();
 
-      // const chatList = [
       //       { name: 'Alice Johnson', message: 'Hello!', time: '1 min ago', unread: 2, active: true, id: 1 },
       //       { name: 'Bob Smith', message: 'Are we still on for lunch?', time: '5 mins ago', unread: 0, active: false, id: 2 },
       //       { name: 'Charlie Brown', message: 'Check this out!', time: '10 mins ago', unread: 1, active: true, id: 3 },
@@ -80,8 +81,8 @@ const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => v
                                                             setIsChatActive(true);
                                                       }}
                                                       className={`${
-                                                            chat?.isRead ? 'bg-gray-100' : 'bg-gray-300'
-                                                      } flex items-center gap-4 p-4 cursor-pointer rounded-lg border-b`}
+                                                            chat?.isRead ? '' : ''
+                                                      } flex items-center gap-4 my-1 p-4 cursor-pointer rounded-lg border-b`}
                                                 >
                                                       {/* <Badge
                                                             style={{

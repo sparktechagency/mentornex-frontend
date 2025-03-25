@@ -14,6 +14,7 @@ import ProfileDropdown from './ProfileDropdown';
 import { useAppSelector } from '@/redux/hooks';
 import { useGetUserProfileQuery } from '@/redux/features/user/userApi';
 import { getImageUrl } from '@/utils/getImageUrl';
+import SocketComponent from './SocketComponent';
 
 const Navbar = () => {
       const [showDrawer, setShowDrawer] = useState(false);
@@ -113,6 +114,10 @@ const Navbar = () => {
                   </nav>
 
                   {/* Mobile Drawer */}
+
+                  <div className="hidden">
+                        <SocketComponent />
+                  </div>
                   <MobileDrawer profile={profile!} open={showDrawer} setOpen={setShowDrawer} items={items} />
             </header>
       );
