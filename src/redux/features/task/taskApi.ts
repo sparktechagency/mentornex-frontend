@@ -23,6 +23,14 @@ const taskApi = baseApi.injectEndpoints({
                         return response?.data;
                   },
             }),
+            submitTask: build.mutation({
+                  query: (args) => ({
+                        url: `/task/submit-task/${args.id}`,
+                        method: 'POST',
+                        body: args.data,
+                  }),
+                  invalidatesTags: ['Tasks'],
+            }),
             getSubmittedTask: build.query({
                   query: (id) => ({
                         url: `/task/submit/${id}`,
@@ -34,6 +42,16 @@ const taskApi = baseApi.injectEndpoints({
                   },
             }),
 
+            getTaskById: build.query({
+                  query: (id) => ({
+                        url: `/task/${id}`,
+                        method: 'GET',
+                  }),
+                  providesTags: ['Tasks'],
+                  transformResponse: (response: any) => {
+                        return response?.data;
+                  },
+            }),
             createTask: build.mutation({
                   query: (task) => ({
                         url: '/task/add-task',
@@ -77,4 +95,6 @@ export const {
       useDeleteTaskMutation,
       useGetSubmittedTaskQuery,
       useTaskFeedbackMutation,
+      useGetTaskByIdQuery,
+      useSubmitTaskMutation,
 } = taskApi;

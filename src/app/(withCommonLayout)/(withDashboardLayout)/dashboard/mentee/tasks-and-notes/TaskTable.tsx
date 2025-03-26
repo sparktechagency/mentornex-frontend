@@ -5,6 +5,7 @@ import { SearchOutlined, EyeOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
 import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
+import { useGetTasksQuery } from '@/redux/features/task/taskApi';
 
 interface Task {
       key: string;
@@ -16,47 +17,25 @@ interface Task {
 }
 
 const TaskTable = () => {
+      const [page, setPage] = useState(1);
       const router = useRouter();
       const [searchText, setSearchText] = useState('');
       const [statusFilter, setStatusFilter] = useState<string[]>([]);
       const [priorityFilter, setPriorityFilter] = useState<string[]>([]);
-
-      // Mock data
-      const data: Task[] = [
-            {
-                  key: '1',
-                  title: 'Complete Frontend Dashboard',
-                  assignedBy: 'John Doe',
-                  dueDate: '2024-03-01',
-                  status: 'In Progress',
-                  priority: 'High',
-            },
-            {
-                  key: '2',
-                  title: 'Implement User Authentication',
-                  assignedBy: 'Jane Smith',
-                  dueDate: '2024-03-05',
-                  status: 'Pending',
-                  priority: 'Medium',
-            },
-            {
-                  key: '3',
-                  title: 'Design System Documentation',
-                  assignedBy: 'Mike Johnson',
-                  dueDate: '2024-02-28',
-                  status: 'Completed',
-                  priority: 'Low',
-            },
-      ];
+      const { data: tasksData } = useGetTasksQuery([
+            { name: 'page', value: page },
+            { name: 'limit', value: 8 },
+            { name: 'status', value: statusFilter },
+            { name: 'priority', value: priorityFilter },
+      ]);
 
       const getStatusColor = (status: string) => {
             switch (status.toLowerCase()) {
-                  case 'completed':
+                  case 'complete':
                         return 'success';
-                  case 'in progress':
-                        return 'processing';
-                  case 'pending':
-                        return 'warning';
+                  case 'incomplete':
+                        return 'incomplete';
+
                   default:
                         return 'default';
             }
@@ -70,6 +49,9 @@ const TaskTable = () => {
                         return 'orange';
                   case 'low':
                         return 'green';
+
+                  case 'urgent':
+                        return 'red';
                   default:
                         return 'blue';
             }
@@ -88,47 +70,36 @@ const TaskTable = () => {
                   title: 'Assigned By',
                   dataIndex: 'assignedBy',
                   key: 'assignedBy',
+                  render: (text, record: any) => <span className="font-medium">{record.mentor_id.name}</span>,
             },
             {
                   title: 'Due Date',
-                  dataIndex: 'dueDate',
-                  key: 'dueDate',
-                  sorter: (a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime(),
+                  dataIndex: 'deadline',
+                  key: 'deadline',
+                  render: (text) => <span className="font-medium">{new Date(text).toLocaleDateString()}</span>,
             },
             {
                   title: 'Status',
                   dataIndex: 'status',
                   key: 'status',
-                  filters: [
-                        { text: 'Completed', value: 'Completed' },
-                        { text: 'In Progress', value: 'In Progress' },
-                        { text: 'Pending', value: 'Pending' },
-                  ],
-                  filteredValue: statusFilter,
-                  onFilter: (value, record) => record.status === value,
+
                   render: (status: string) => <Tag color={getStatusColor(status)}>{status}</Tag>,
             },
             {
                   title: 'Priority',
                   dataIndex: 'priority',
                   key: 'priority',
-                  filters: [
-                        { text: 'High', value: 'High' },
-                        { text: 'Medium', value: 'Medium' },
-                        { text: 'Low', value: 'Low' },
-                  ],
-                  filteredValue: priorityFilter,
-                  onFilter: (value, record) => record.priority === value,
+
                   render: (priority: string) => <Tag color={getPriorityColor(priority)}>{priority}</Tag>,
             },
             {
                   title: 'Action',
                   key: 'action',
-                  render: (_, record) => (
+                  render: (_, record: any) => (
                         <Button
                               type="text"
                               icon={<EyeOutlined />}
-                              onClick={() => router.push(`/dashboard/mentee/tasks-and-notes/${record.key}`)}
+                              onClick={() => router.push(`/dashboard/mentee/tasks-and-notes/${record._id}`)}
                               className="text-[#FF6F3C]"
                         >
                               View Details
@@ -149,39 +120,40 @@ const TaskTable = () => {
                         />
                         <Space>
                               <Select
-                                    mode="multiple"
                                     placeholder="Filter by status"
                                     style={{ minWidth: '150px' }}
                                     value={statusFilter}
                                     onChange={setStatusFilter}
                                     options={[
-                                          { label: 'Completed', value: 'Completed' },
-                                          { label: 'In Progress', value: 'In Progress' },
-                                          { label: 'Pending', value: 'Pending' },
+                                          { label: 'Incomplete', value: 'incomplete' },
+                                          { label: 'Complete', value: 'complete' },
                                     ]}
                               />
                               <Select
-                                    mode="multiple"
                                     placeholder="Filter by priority"
                                     style={{ minWidth: '150px' }}
                                     value={priorityFilter}
                                     onChange={setPriorityFilter}
                                     options={[
-                                          { label: 'High', value: 'High' },
-                                          { label: 'Medium', value: 'Medium' },
-                                          { label: 'Low', value: 'Low' },
+                                          { label: 'High', value: 'high' },
+                                          { label: 'Medium', value: 'medium' },
+                                          { label: 'Low', value: 'low' },
+                                          { label: 'Urgent', value: 'urgent' },
                                     ]}
                               />
                         </Space>
                   </div>
 
                   <Table
+                        rowKey="_id"
                         columns={columns}
-                        dataSource={data}
+                        dataSource={tasksData?.data}
                         className="bg-white rounded-lg"
                         pagination={{
-                              pageSize: 10,
-                              showTotal: (total) => `Total ${total} tasks`,
+                              pageSize: tasksData?.meta?.limit,
+                              total: tasksData?.meta?.total,
+                              current: tasksData?.meta?.page,
+                              onChange: (page) => setPage(page),
                         }}
                   />
             </div>
