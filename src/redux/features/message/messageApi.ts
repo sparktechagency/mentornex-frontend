@@ -25,6 +25,7 @@ export const messageApi = baseApi.injectEndpoints({
                   },
                   transformResponse: (response: any) => response.data,
                   providesTags: ['Messages'],
+                  forceRefetch: () => true,
             }),
             createMessage: builder.mutation({
                   query: (args) => ({

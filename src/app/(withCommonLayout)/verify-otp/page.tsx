@@ -31,6 +31,7 @@ const VerifyOtpPage = () => {
                                     const user = decodedUser(res?.data);
                                     dispatch(setUser({ user, token: res?.data }));
                                     router.push('/');
+                                    router.refresh();
                               }
                         } else if (reason === 'forget-password') {
                               localStorage.setItem('oneTimeToken', res?.data);

@@ -1,16 +1,20 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { TMessage, useCreateMessageMutation, useGetMessagesQuery } from '@/redux/features/message/messageApi';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { getImageUrl } from '@/utils/getImageUrl';
-import { Avatar, Badge, Button, Form, Input, Upload } from 'antd';
+import { Avatar, Badge, Button, Form, Input, Spin, Upload } from 'antd';
 import Image from 'next/image';
 import { IoIosAttach } from 'react-icons/io';
+import { setSelectedChatId } from '@/redux/features/message/messageSlice';
 
 const ChatWindow = ({ id }: { id: string }) => {
-      useGetMessagesQuery(id, { skip: !id });
+      const { isFetching } = useGetMessagesQuery(id, { skip: !id });
+      const dispatch = useAppDispatch();
+
       const [createMessage, { isLoading }] = useCreateMessageMutation();
       const { messages } = useAppSelector((state) => state.message);
+      const { selectedChat } = useAppSelector((state) => state.message);
 
       const { user } = useAppSelector((state) => state.auth);
       const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -18,13 +22,16 @@ const ChatWindow = ({ id }: { id: string }) => {
       const [autoScroll, setAutoScroll] = useState(true);
 
       useEffect(() => {
+            if (id) {
+                  dispatch(setSelectedChatId(id));
+            }
             if (autoScroll && messagesContainerRef.current && messagesEndRef.current) {
                   messagesContainerRef.current.scrollTo({
                         top: messagesContainerRef.current.scrollHeight,
                         behavior: 'smooth',
                   });
             }
-      }, [messages, autoScroll]);
+      }, [messages, autoScroll, id, dispatch]);
 
       const handleScroll = () => {
             if (messagesContainerRef.current) {
@@ -76,10 +83,10 @@ const ChatWindow = ({ id }: { id: string }) => {
                               <Avatar
                                     size={50}
                                     style={{ border: '1px solid gray' }}
-                                    src="https://randomuser.me/api/portraits/women/18.jpg"
+                                    src={getImageUrl(selectedChat?.participant.image as string)}
                               />
                         </Badge>
-                        <h3 className="font-medium">Dianne Russell</h3>
+                        <h3 className="font-medium">{selectedChat?.participant.name}</h3>
                   </div>
 
                   {/* Message container with independent scrolling */}
@@ -88,27 +95,38 @@ const ChatWindow = ({ id }: { id: string }) => {
                         onScroll={handleScroll}
                         className="flex-1 bg-[#F5F5F6] p-4 h-[60vh] overflow-y-auto custom-scrollbar"
                   >
-                        {messages.map((msg: TMessage, index: number) => (
-                              <div key={index} className={`flex ${msg.receiver._id !== user?.id ? 'justify-end' : 'justify-start'} mb-4`}>
-                                    <div
-                                          className={`max-w-xs p-3 rounded-lg ${
-                                                msg.receiver._id !== user?.id ? 'bg-orange-500 text-white' : 'bg-white border text-title'
-                                          }`}
-                                    >
-                                          <p>{msg.message}</p>
-                                          {msg.files && msg.files.length > 0 && (
-                                                <Image
-                                                      width={150}
-                                                      height={150}
-                                                      src={getImageUrl(msg.files[0])}
-                                                      alt={'user'}
-                                                      className="rounded w-44 my-2 h-44"
-                                                />
-                                          )}
-                                          <p className="text-xs mt-1">{new Date(msg.createdAt).toLocaleString()}</p>
-                                    </div>
+                        {isFetching ? (
+                              <div className="flex items-center justify-center h-full">
+                                    <Spin size="large" />
                               </div>
-                        ))}
+                        ) : (
+                              messages.map((msg: TMessage, index: number) => (
+                                    <div
+                                          key={index}
+                                          className={`flex ${msg.receiver._id !== user?.id ? 'justify-end' : 'justify-start'} mb-4`}
+                                    >
+                                          <div
+                                                className={`max-w-xs p-3 rounded-lg ${
+                                                      msg.receiver._id !== user?.id
+                                                            ? 'bg-orange-500 text-white'
+                                                            : 'bg-white border text-title'
+                                                }`}
+                                          >
+                                                <p>{msg.message}</p>
+                                                {msg.files && msg.files.length > 0 && (
+                                                      <Image
+                                                            width={150}
+                                                            height={150}
+                                                            src={getImageUrl(msg.files[0])}
+                                                            alt={'user'}
+                                                            className="rounded w-44 my-2 h-44"
+                                                      />
+                                                )}
+                                                <p className="text-xs mt-1">{new Date(msg.createdAt).toLocaleString()}</p>
+                                          </div>
+                                    </div>
+                              ))
+                        )}
                         <div ref={messagesEndRef} />
                   </div>
 
