@@ -28,6 +28,7 @@ const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => v
       const dispatch = useAppDispatch();
 
       const router = useRouter();
+      const filterChat = chatList?.messages?.filter((chat) => chat?.participant?.name?.toLowerCase()?.includes(search?.toLowerCase()));
 
       return (
             <div className="w-full h-[80vh] overflow-y-auto hide-scrollbar bg-white  rounded-lg ">
@@ -60,7 +61,7 @@ const ChatList = ({ setIsChatActive }: { setIsChatActive: (active: boolean) => v
                         <Tabs defaultActiveKey="1" centered>
                               <TabPane tab="Messages" key="1">
                                     <div className="p-2 h-[60vh] overflow-y-auto custom-scrollbar o custom-scrollbar">
-                                          {chatList?.messages?.map((chat: ChatItem, index: number) => (
+                                          {filterChat?.map((chat: ChatItem, index: number) => (
                                                 <div
                                                       key={index}
                                                       onClick={() => {
