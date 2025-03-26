@@ -5,7 +5,7 @@ const slotManagementApi = baseApi.injectEndpoints({
             getSlots: builder.query({
                   query: (id) => {
                         return {
-                              url: `/schedule/get-schedule-by-mentee/${id}`,
+                              url: `/schedule?mentorId=${id}`,
                               method: 'GET',
                         };
                   },

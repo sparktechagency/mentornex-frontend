@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { XCircleIcon } from 'lucide-react';
@@ -9,10 +10,8 @@ import { toast } from 'react-toastify';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@/redux/hooks';
 
-// Define types for our data structure
 type TimeSlot = {
       time: string;
-      status?: boolean;
 };
 
 type DaySlot = {
@@ -27,7 +26,6 @@ const Page = () => {
       const [createSlot, { isLoading }] = useAddSlotMutation();
       const { data: slotsData, isLoading: isLoadingSlots } = useGetSlotsQuery(user?.id, { skip: !user });
 
-      // Default initial data structure
       const initialSlots: DaySlot[] = [
             { id: '1', day: 'Saturday', isAvailable: false, times: [] },
             { id: '2', day: 'Sunday', isAvailable: false, times: [] },
@@ -40,21 +38,18 @@ const Page = () => {
 
       const [slots, setSlots] = useState<DaySlot[]>(initialSlots);
 
-      // Update slots when data is fetched
       useEffect(() => {
             if (slotsData) {
-                  const apiSchedule = slotsData?.schedule;
+                  const apiSchedule = slotsData;
 
-                  // Map API data to our slot structure
                   const updatedSlots = initialSlots.map((slot) => {
-                        // Find the matching day in API data
-                        const apiDay = apiSchedule?.find((day: any) => day.day.toLowerCase() === slot.day.toLowerCase());
+                        const apiDay = apiSchedule.find((day: any) => day.day.toLowerCase() === slot.day.toLowerCase());
 
                         if (apiDay) {
                               return {
                                     ...slot,
                                     isAvailable: apiDay.times.length > 0,
-                                    times: apiDay.times,
+                                    times: apiDay.times.map((timeSlot: any) => ({ time: timeSlot.time })),
                               };
                         }
                         return slot;
@@ -62,44 +57,33 @@ const Page = () => {
 
                   setSlots(updatedSlots);
             }
-      }, [slotsData]);
+      }, [slotsData, user?.id]);
 
       const timeOptions = [
-            '--:-- am', // Default/placeholder option
-            '06:00 am',
-            '07:00 am',
-            '08:00 am',
-            '09:00 am',
-            '10:00 am',
-            '11:00 am',
-            '12:00 pm',
-            '01:00 pm',
-            '02:00 pm',
-            '03:00 pm',
-            '04:00 pm',
-            '05:00 pm',
-            '06:00 pm',
-            '07:00 pm',
-            '08:00 pm',
-            '09:00 pm',
-            '10:00 pm',
+            '--:-- AM',
+            '06:00 AM',
+            '07:00 AM',
+            '08:00 AM',
+            '09:00 AM',
+            '10:00 AM',
+            '11:00 AM',
+            '12:00 PM',
+            '01:00 PM',
+            '02:00 PM',
+            '03:00 PM',
+            '04:00 PM',
+            '05:00 PM',
+            '06:00 PM',
+            '07:00 PM',
+            '08:00 PM',
+            '09:00 PM',
+            '10:00 PM',
       ];
 
-      // Handler for adding a new time slot
       const addSlot = (dayId: string) => {
-            setSlots((prev) =>
-                  prev.map((slot) =>
-                        slot.id === dayId
-                              ? {
-                                      ...slot,
-                                      times: [...slot.times, { time: '--:-- am', status: false }],
-                                }
-                              : slot
-                  )
-            );
+            setSlots((prev) => prev.map((slot) => (slot.id === dayId ? { ...slot, times: [...slot.times, { time: '--:-- AM' }] } : slot)));
       };
 
-      // Handler for updating day availability
       const handleDayAvailability = (dayId: string, checked: boolean) => {
             setSlots((prev) =>
                   prev.map((slot) =>
@@ -107,15 +91,13 @@ const Page = () => {
                               ? {
                                       ...slot,
                                       isAvailable: checked,
-                                      // If unchecking, keep the times but if checking and no times, add a default time
-                                      times: checked && slot.times.length === 0 ? [{ time: '--:-- am', status: false }] : slot.times,
+                                      times: checked && slot.times.length === 0 ? [{ time: '--:-- AM' }] : slot.times,
                                 }
                               : slot
                   )
             );
       };
 
-      // Handler for updating time slot
       const handleTimeChange = (dayId: string, slotIndex: number, newTime: string) => {
             setSlots((prev) =>
                   prev.map((slot) =>
@@ -131,38 +113,21 @@ const Page = () => {
             );
       };
 
-      // Handler for removing time slot
       const removeTimeSlot = (dayId: string, slotIndex: number) => {
             setSlots((prev) =>
-                  prev.map((slot) =>
-                        slot.id === dayId
-                              ? {
-                                      ...slot,
-                                      times: slot.times.filter((_, idx) => idx !== slotIndex),
-                                }
-                              : slot
-                  )
+                  prev.map((slot) => (slot.id === dayId ? { ...slot, times: slot.times.filter((_, idx) => idx !== slotIndex) } : slot))
             );
       };
 
-      // Handler for saving all changes
       const handleSave = async () => {
             try {
-                  // Prepare the data to send to the backend
                   const slotsToSave = {
-                        timeZone: 'Asia/Dhaka',
                         schedule: slots.map((slot) => ({
-                              day: slot.day.toLowerCase(), // Convert day to lowercase
-                              times: slot.isAvailable
-                                    ? slot.times.map((timeSlot) => ({
-                                            time: timeSlot.time,
-                                            status: timeSlot.status || false,
-                                      }))
-                                    : [],
+                              day: slot.day.toLowerCase(),
+                              times: slot.isAvailable ? slot.times.map((timeSlot) => timeSlot.time) : [],
                         })),
                   };
 
-                  // Call the API to add the slots
                   const res = await createSlot(slotsToSave).unwrap();
                   if (res) {
                         toast.success(res.message || 'Slots created successfully');
