@@ -14,6 +14,7 @@ const ChatWindow = ({ id }: { id: string }) => {
 
       const [createMessage, { isLoading }] = useCreateMessageMutation();
       const { messages } = useAppSelector((state) => state.message);
+      console.log('messagessssssssssssssssssssssssss', messages);
       const { selectedChat } = useAppSelector((state) => state.message);
 
       const { user } = useAppSelector((state) => state.auth);

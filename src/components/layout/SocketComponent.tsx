@@ -27,8 +27,7 @@ const SocketComponent = () => {
 
             // this one for chat update
             socket.on(`newChat::${user.id}`, (chat: ChatItem) => {
-                  console.log('Chat updated:', chat);
-                  dispatch(addChat(chat));
+                  dispatch(addChat({ message: chat, isRequest: chat.isRequest }));
             });
 
             // this one for notification

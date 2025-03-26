@@ -17,11 +17,17 @@ export interface ChatItem {
 }
 
 interface ChatState {
-      chatList: ChatItem[];
+      chatList: {
+            messages: ChatItem[];
+            requests: ChatItem[];
+      };
 }
 
 const initialState: ChatState = {
-      chatList: [],
+      chatList: {
+            messages: [],
+            requests: [],
+      },
 };
 
 const chatSlice = createSlice({
@@ -29,7 +35,11 @@ const chatSlice = createSlice({
       initialState,
       reducers: {
             addChat: (state, action) => {
-                  state.chatList.push(action.payload);
+                  if (action.payload.isRequest) {
+                        state.chatList.requests.push(action.payload.message);
+                  } else {
+                        state.chatList.messages.push(action.payload.message);
+                  }
             },
       },
       extraReducers: (builder) => {
