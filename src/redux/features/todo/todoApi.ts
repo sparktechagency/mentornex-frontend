@@ -1,9 +1,22 @@
 import { baseApi } from '@/redux/base/baseApi';
+import { TQueryParams } from '@/types';
 
 const todoApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
             getTodos: builder.query({
-                  query: () => '/todo',
+                  query: (args) => {
+                        const params = new URLSearchParams();
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: '/todo',
+                              method: 'GET',
+                              params,
+                        };
+                  },
                   providesTags: ['Todos'],
                   transformResponse: (response: any) => {
                         return response.data;

@@ -8,10 +8,14 @@ import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 
 const TodoPage = () => {
+      const [page, setPage] = useState(1);
       const [createTodo, { isLoading }] = useAddTodoMutation();
       const [updateTodo, { isLoading: isUpdating }] = useUpdateTodoMutation();
       const [deleteTodo] = useDeleteTodoMutation();
-      const { data: todos } = useGetTodosQuery([]);
+      const { data: todos } = useGetTodosQuery([
+            { name: 'page', value: page },
+            { name: 'limit', value: 6 },
+      ]);
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [editedData, setEditedData] = useState<any>(null);
       const [form] = Form.useForm();
@@ -133,7 +137,16 @@ const TodoPage = () => {
                         </Button>
                   </div>
 
-                  <Table columns={columns} dataSource={todos?.data} className="bg-white rounded-lg shadow-md" />
+                  <Table
+                        pagination={{
+                              total: todos?.meta?.total,
+                              pageSize: todos?.meta?.limit,
+                              onChange: (page) => setPage(page),
+                        }}
+                        columns={columns}
+                        dataSource={todos?.data}
+                        className="bg-white rounded-lg shadow-md"
+                  />
 
                   <Modal
                         onCancel={() => setIsModalOpen(false)}
