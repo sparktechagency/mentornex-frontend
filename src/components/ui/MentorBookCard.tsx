@@ -1,9 +1,11 @@
+import { useCreateChatMutation } from '@/redux/features/chatlist/chatlistApi';
 import { TMentor } from '@/redux/features/mentor/mentorApi';
 import { useAddWishlistMutation, useGetWishlistQuery } from '@/redux/features/wishlist/wishlistApi';
 import { useAppSelector } from '@/redux/hooks';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { Button } from 'antd';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BsMessenger, BsStarFill } from 'react-icons/bs';
 import { GoHeart, GoHeartFill } from 'react-icons/go';
@@ -12,9 +14,11 @@ import { PiChatsCircle, PiMapPinLight } from 'react-icons/pi';
 import { toast } from 'react-toastify';
 
 const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
+      const router = useRouter();
       const [isWishList, setIsWishList] = useState(false);
       const { user } = useAppSelector((state) => state.auth);
       const [addWishList] = useAddWishlistMutation();
+      const [createChat] = useCreateChatMutation();
       const { data: myWishlist } = useGetWishlistQuery(undefined, {
             skip: !user,
       });
@@ -39,6 +43,21 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
             }
       };
 
+      const handleCreateChat = async () => {
+            if (!user) {
+                  toast.error('Please login to create chat');
+                  return;
+            }
+            try {
+                  const res = await createChat({ id: mentor?._id }).unwrap();
+                  if (res.success) {
+                        toast.success(res?.message || 'Chat created successfully');
+                        router.push(`/chat/${res?.data?.chat?._id}`);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data.message || 'Failed to create chat');
+            }
+      };
       return (
             <div>
                   <div key={mentor?._id}>
@@ -97,7 +116,7 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                               </div>
                               <div>
                                     <Button
-                                          href="/chat/3"
+                                          onClick={handleCreateChat}
                                           // type="primary"
                                           style={{
                                                 width: '100%',
