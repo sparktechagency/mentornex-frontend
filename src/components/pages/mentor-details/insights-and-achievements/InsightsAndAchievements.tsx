@@ -1,16 +1,12 @@
+import { TUser } from '@/redux/features/user/userApi';
 import MentorStats from '../overview/MentorStats';
 
-const InsightAndAchievements = () => {
+const InsightAndAchievements = ({ mentor }: { mentor: Partial<TUser> }) => {
       return (
             <div>
                   <MentorStats />
                   <div className="grid grid-cols-1  my-10 min-h-[400px]">
-                        <video
-                              className="rounded-xl object-cover h-[500px] w-full"
-                              src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                              poster="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
-                              controls
-                        ></video>
+                        <video className="rounded-xl object-cover h-[500px] w-full" src={mentor?.content} controls></video>
                   </div>
             </div>
       );

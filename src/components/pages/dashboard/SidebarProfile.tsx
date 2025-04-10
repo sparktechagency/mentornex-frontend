@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Edit2 } from 'lucide-react';
 import { UploadChangeParam } from 'antd/es/upload';
 import Link from 'next/link';
-import { FaCalendarCheck, FaClipboardList, FaClock, FaGear, FaHourglassEnd, FaUserGear } from 'react-icons/fa6';
+import { FaCalendarCheck, FaClipboardList, FaClock, FaGear, FaHourglassEnd, FaList, FaUserGear } from 'react-icons/fa6';
 import { MdCurrencyExchange, MdDashboard } from 'react-icons/md';
 import { IoHeart, IoLogOut } from 'react-icons/io5';
 import { FaUserFriends } from 'react-icons/fa';
@@ -58,6 +58,12 @@ const ProfileSidebar = () => {
                   icon: <FaUserGear size={20} />,
                   label: 'Profile',
                   href: '/dashboard/mentee/profile',
+            },
+            {
+                  key: 'todos',
+                  icon: <FaList size={20} />,
+                  label: 'Todos',
+                  href: '/dashboard/mentee/todos',
             },
 
             {

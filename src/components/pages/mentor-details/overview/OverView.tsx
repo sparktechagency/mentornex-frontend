@@ -2,21 +2,17 @@ import MentorStats from './MentorStats';
 import { TUser } from '@/redux/features/user/userApi';
 
 const OverView = ({ mentor }: { mentor: Partial<TUser> }) => {
+      console.log(mentor?.content);
       return (
             <div>
                   <MentorStats mentor={mentor!} />
-                  <div className="grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-4 my-10 min-h-[400px]">
+                  <div className="grid grid-cols-1 md:grid-cols-2 justify-between  gap-4 my-10 min-h-[400px]">
                         <div className="text-subtitle space-y-4">
                               <h1 className="text-title font-bold">About Description</h1>
                               <p>{mentor?.about || 'No description available  '}</p>
                         </div>
                         <div>
-                              <video
-                                    className="rounded-xl object-cover h-full w-full"
-                                    src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                                    poster="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
-                                    controls
-                              ></video>
+                              <video className="rounded-xl object-cover h-full w-full" src={mentor?.content} controls></video>
                         </div>
                   </div>
             </div>

@@ -24,6 +24,7 @@ export type TUser = {
       twitter_url: string;
       website_url: string;
       isConnected: boolean;
+      content: string;
 
       expertise: string[];
       focus_area: string;

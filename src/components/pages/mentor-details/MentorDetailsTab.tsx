@@ -17,7 +17,7 @@ const MentorDetailsTab = ({ mentor }: { mentor: TMentor }) => {
                                     {
                                           key: 'insights',
                                           label: 'Insights & Achievements',
-                                          content: <InsightsAndAchievements />,
+                                          content: <InsightsAndAchievements mentor={mentor!} />,
                                     },
                                     { key: 'reviews', label: 'Reviews', content: <MentorReview /> },
                                     { key: 'content', label: 'Premium Content', content: <PremiumContent /> },

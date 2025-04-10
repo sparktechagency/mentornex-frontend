@@ -11,6 +11,14 @@ const contentApi = baseApi.injectEndpoints({
                   transformResponse: (response: any) => response.data,
             }),
 
+            getPremiumContentByMentorId: build.query({
+                  query: () => ({
+                        url: '/content',
+                        method: 'GET',
+                  }),
+                  transformResponse: (response: any) => response.data,
+            }),
+
             getIntroductoryContent: build.query({
                   query: () => ({
                         url: '/content?type=intro',
@@ -53,4 +61,5 @@ export const {
       useCreateContentMutation,
       useUpdateContentMutation,
       useDeleteContentMutation,
+      useGetPremiumContentByMentorIdQuery,
 } = contentApi;
