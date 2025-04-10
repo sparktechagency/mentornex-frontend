@@ -13,7 +13,6 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
       const { data: task } = useGetTaskByIdQuery(params.id, { skip: !params.id });
       const [submitTask, { isLoading }] = useSubmitTaskMutation();
       const { data: submittedTask } = useGetSubmittedTaskQuery(params.id, { skip: !params.id });
-      console.log(submittedTask, 'submittedTask');
 
       const getFileIcon = () => {
             return <FileTextOutlined className="text-2xl text-[#FF6F3C]" />;
@@ -22,11 +21,11 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
       const [form] = Form.useForm();
       const handleSubmit = async (values: any) => {
             const formData = new FormData();
-            // console.log(values.file?.fileList[0]?.originFileObj, 'values');
+            formData.append('answer', values.answer);
+
             if (values?.file?.file) {
-                  formData.append('file', values.file?.file);
+                  formData.append('image', values.file?.fileList[0].originFileObj);
             }
-            formData.append('answer', values.description);
 
             try {
                   const res = await submitTask({ id: params.id, data: formData }).unwrap();
@@ -141,7 +140,14 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
                               key="2"
                         >
                               <div>
-                                    <h2>Not Feedback Yet</h2>
+                                    {submittedTask?.feedback ? (
+                                          <div>
+                                                <h4 className="text-lg  mb-2">Feedback</h4>
+                                                <p className="text-gray-600">{submittedTask?.feedback}</p>
+                                          </div>
+                                    ) : (
+                                          <h2>Not Feedback Yet</h2>
+                                    )}
                               </div>
                         </Panel>
                   </Collapse>

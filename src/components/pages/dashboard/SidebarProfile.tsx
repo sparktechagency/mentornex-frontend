@@ -83,7 +83,7 @@ const ProfileSidebar = () => {
             {
                   key: 'billing',
                   icon: <MdCurrencyExchange size={20} />,
-                  label: 'Billing',
+                  label: 'Transactions',
                   href: '/dashboard/mentee/billing',
             },
             {

@@ -1,32 +1,34 @@
 import { Select } from 'antd';
 
 import TaskCard from '@/components/ui/TaskCard';
+import { useGetNotesQuery } from '@/redux/features/note/noteApi';
+import { useGetMyMentorsQuery } from '@/redux/features/mentor/mentorApi';
+import formattedSelectOptions from '@/utils/formattedSelectOptions';
+import { useState } from 'react';
 
 const NoteTable = () => {
+      const [mentorId, setMentorId] = useState<string | null>(null);
+      const { data: notes } = useGetNotesQuery([]);
+      const { data: mentors } = useGetMyMentorsQuery([{ name: 'mentorId', value: mentorId }]);
+      const mentorOptions = formattedSelectOptions(mentors?.data || []);
       return (
             <>
                   <div className="flex justify-between mb-3">
                         <div className="">
                               <Select
+                                    onChange={(value) => setMentorId(value)}
                                     showSearch
                                     placeholder="Select a mentee"
                                     style={{ width: '200px' }}
-                                    options={[
-                                          { value: 'lucy', label: 'Lucy' },
-                                          { value: 'Yiminghe1', label: 'Yiminghe1' },
-                                          { value: 'Yiminghe2', label: 'Yiminghe2' },
-                                          { value: 'Yiminghe3', label: 'Yiminghe3' },
-                                          { value: 'Yiminghe4', label: 'Yiminghe4' },
-                                          { value: 'Yiminghe5', label: 'Yiminghe5' },
-                                    ]}
+                                    options={mentorOptions}
                               />
                         </div>
                   </div>
 
                   <div className="grid grid-cols-3 gap-4 my-4">
-                        {Array.from({ length: 6 }).map((_, index) => (
+                        {notes?.map((note: { title: string; description: string; createdAt: string }, index: number) => (
                               <TaskCard
-                                    note={{ title: `Note ${index + 1}`, description: `Description for note ${index + 1}` }}
+                                    note={{ title: note.title, description: note.description, createdAt: note.createdAt }}
                                     key={index}
                               />
                         ))}

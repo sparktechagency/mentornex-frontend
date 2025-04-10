@@ -9,7 +9,6 @@ const Favourite = () => {
       const { data: myWishlist } = useGetWishlistQuery(undefined, {
             skip: !user,
       });
-      console.log(myWishlist);
 
       return (
             <div>

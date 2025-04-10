@@ -13,7 +13,7 @@ const noteApi = baseApi.injectEndpoints({
                               });
                         }
                         return {
-                              url: '/note',
+                              url: '/note/both',
                               method: 'GET',
                               params,
                         };

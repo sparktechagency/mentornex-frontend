@@ -26,7 +26,6 @@ const MentorCard = ({ mentor }: { mentor: TMentor }) => {
             setIsWishList(isWishListed);
       }, [myWishlist, mentor._id]);
 
-      console.log(isWishList);
       const handleWishList = async (id: string) => {
             if (!user) {
                   toast.error('Please login to add mentor to wishlist');

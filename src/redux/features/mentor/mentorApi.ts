@@ -46,7 +46,26 @@ const mentorApi = baseApi.injectEndpoints({
                   },
                   providesTags: ['Mentors'],
             }),
+
+            getMyMentors: build.query({
+                  query: (args) => {
+                        const params = new URLSearchParams();
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: `/mentee/mentors`,
+                              method: 'GET',
+                              params,
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+            }),
       }),
 });
 
-export const { useGetAllMentorsQuery, useGetSingleMentorQuery } = mentorApi;
+export const { useGetAllMentorsQuery, useGetSingleMentorQuery, useGetMyMentorsQuery } = mentorApi;
