@@ -18,7 +18,6 @@ const mentorApi = baseApi.injectEndpoints({
                   query: (args) => {
                         const params = new URLSearchParams();
                         if (args) {
-                              console.log(args);
                               args.forEach((item: TQueryParams) => {
                                     if (item.value) {
                                           params.append(item.name, item.value);

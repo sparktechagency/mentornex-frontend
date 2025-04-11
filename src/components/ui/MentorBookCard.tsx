@@ -52,7 +52,7 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                   const res = await createChat({ id: mentor?._id }).unwrap();
                   if (res.success) {
                         toast.success(res?.message || 'Chat created successfully');
-                        router.push(`/chat/${res?.data?.chat?._id}`);
+                        router.push(`/chat`);
                   }
             } catch (error: any) {
                   toast.error(error?.data.message || 'Failed to create chat');
