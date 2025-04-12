@@ -2,7 +2,6 @@ import MentorStats from './MentorStats';
 import { TUser } from '@/redux/features/user/userApi';
 
 const OverView = ({ mentor }: { mentor: Partial<TUser> }) => {
-      console.log(mentor?.content);
       return (
             <div>
                   <MentorStats mentor={mentor!} />

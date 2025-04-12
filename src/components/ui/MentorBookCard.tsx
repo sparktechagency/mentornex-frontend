@@ -99,12 +99,12 @@ const MentorBookCard = ({ mentor }: { mentor: TMentor }) => {
                                     <div className="flex items-center gap-2 mb-3">
                                           <IoBriefcaseOutline size={20} className=" text-gray-500" />
                                           <span className="text-gray-600">
-                                                {mentor?.job_title} at {mentor?.company_name}
+                                                {mentor?.job_title || 'N/A'} at {mentor?.company_name}
                                           </span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-3">
                                           <PiMapPinLight size={20} className=" text-gray-500" />
-                                          <span className="text-gray-600 capitalize">{mentor?.country}</span>
+                                          <span className="text-gray-600 capitalize">{mentor?.country || 'N/A'}</span>
                                     </div>
                                     <div className="flex items-center gap-2 mb-4">
                                           <PiChatsCircle size={20} className=" text-gray-500" />
