@@ -24,10 +24,11 @@ const Navbar = () => {
       });
 
       const items = [
-            { label: 'Home', path: '/' },
+            // { label: 'Home', path: '/' },
             { label: 'Become a Mentor', path: '/signup' },
-            { label: 'Become a Mentee', path: '/signup' },
+
             { label: 'Browse Mentors', path: '/mentors' },
+            { label: 'Community', path: '/community' },
 
             { label: 'About Us', path: '/about-us' },
             { label: 'FAQ', path: '/faqs' },
