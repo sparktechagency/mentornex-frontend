@@ -8,9 +8,7 @@ const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
                               <div key={index} className="border rounded-lg p-4 flex items-center">
                                     <Radio value={item.title} className="flex-grow">
                                           <span className="text-gray-800 font-medium">{item.title}</span>
-                                          <p className="text-gray-500 text-sm">
-                                                {item.duration} minutes, ${item.price} per session
-                                          </p>
+                                          <p className="text-gray-500 text-sm">${item.amount}</p>
                                     </Radio>
                               </div>
                         ))}

@@ -1,6 +1,6 @@
 import { Button, Radio } from 'antd';
 import React from 'react';
-import { BsCheck2, BsDot } from 'react-icons/bs';
+import { BsCheck2 } from 'react-icons/bs';
 
 const PackagesBooking = ({ packages }: { packages: any[] }) => {
       const [selectedPackage, setSelectedPackage] = React.useState<string>(packages[0]?._id || '');

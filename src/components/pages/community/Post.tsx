@@ -1,25 +1,36 @@
-import JoditEditor from 'jodit-react';
 import Image from 'next/image';
 import React from 'react';
 import BannerImage from '@/assets/images/post-banner.png';
 import { Button, Form, Input } from 'antd';
+import Dragger from 'antd/es/upload/Dragger';
+import { IoImage } from 'react-icons/io5';
+import { useCreatePostMutation } from '@/redux/features/community/communityApi';
+import { toast } from 'react-toastify';
 
 const Post = () => {
       const [form] = Form.useForm();
-      const config = {
-            readonly: false,
-            toolbarAdaptive: false,
-            toolbarSticky: false,
-            buttons: ['bold', 'italic', 'link', 'ol', 'ul', 'hr', 'quote', 'paragraph', 'classSpan', 'code', 'source', 'fontsize'],
-            showCharsCounter: false,
-            showWordsCounter: false,
-            showXPathInStatusbar: false,
-            toolbarButtonSize: 'small',
-            theme: 'default',
-      };
+      const [createPost, { isLoading }] = useCreatePostMutation();
 
-      const handleSubmit = (values: any) => {
-            console.log('Form values:', values);
+      const handleSubmit = async (values: any) => {
+            const formData = new FormData();
+
+            if (values.image) {
+                  formData.append('image', values.image.fileList[0].originFileObj);
+            }
+
+            // remove image from values object because it is not needed in the backend
+            delete values.image;
+            formData.append('data', JSON.stringify(values));
+
+            try {
+                  const res = await createPost(formData).unwrap();
+                  if (res.data) {
+                        form.resetFields();
+                        toast.success(res.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error.data.message);
+            }
       };
 
       return (
@@ -41,20 +52,28 @@ const Post = () => {
                               <Input placeholder="Enter title" />
                         </Form.Item>
 
-                        <Form.Item name="content" label="Content" rules={[{ required: true, message: 'Please enter content' }]}>
-                              <JoditEditor
-                                    config={{
-                                          ...config,
-                                          toolbarButtonSize: 'small' as 'small' | 'tiny' | 'xsmall' | 'middle' | 'large',
-                                    }}
-                                    onChange={(newContent) => form.setFieldValue('content', newContent)}
-                              />
+                        <Form.Item
+                              name="description"
+                              label="Description"
+                              rules={[{ required: true, message: 'Please enter a description' }]}
+                        >
+                              <Input.TextArea placeholder="Enter description" />
+                        </Form.Item>
+
+                        <Form.Item name="image" label="Image">
+                              <Dragger accept="image/*">
+                                    <div className="flex-center">
+                                          <IoImage className="text-3xl" />
+                                    </div>
+                                    <p className="ant-upload-text">Upload</p>
+                                    <p className="ant-upload-hint">Upload an image for your post</p>
+                              </Dragger>
                         </Form.Item>
 
                         <Form.Item>
                               <div className="flex justify-end">
                                     <Button type="primary" htmlType="submit">
-                                          Create a post
+                                          {isLoading ? 'Loading...' : 'Create Post'}
                                     </Button>
                               </div>
                         </Form.Item>

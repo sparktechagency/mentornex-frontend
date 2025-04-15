@@ -28,5 +28,7 @@ export const baseApi = createApi({
             'ChatList',
             'Messages',
             'Todos',
+            'Posts',
+            'Comments',
       ],
 });
