@@ -1,28 +1,19 @@
 import { Button, Radio } from 'antd';
-import React from 'react';
 
-const PayPerSessionBooking = () => {
+const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
       return (
             <div className="p-2">
                   <Radio.Group defaultValue="Introductory Call" className="w-full space-y-4">
-                        <div className="border rounded-lg p-4 flex items-center">
-                              <Radio value="Introductory Call" className="flex-grow">
-                                    <span className="text-gray-800 font-medium">Introductory Call</span>
-                                    <p className="text-gray-500 text-sm">Free</p>
-                              </Radio>
-                        </div>
-                        <div className="border rounded-lg p-4 flex items-center">
-                              <Radio value="Career Guidance Session" className="flex-grow">
-                                    <span className="text-gray-800 font-medium">Career Guidance Session</span>
-                                    <p className="text-gray-500 text-sm">30 minutes, $99 per session</p>
-                              </Radio>
-                        </div>
-                        <div className="border rounded-lg p-4 flex items-center">
-                              <Radio value="Career Strategy" className="flex-grow">
-                                    <span className="text-gray-800 font-medium">Career Strategy</span>
-                                    <p className="text-gray-500 text-sm">45 minutes, $149 per session</p>
-                              </Radio>
-                        </div>
+                        {payPerSessions.map((item: any, index: string) => (
+                              <div key={index} className="border rounded-lg p-4 flex items-center">
+                                    <Radio value={item.title} className="flex-grow">
+                                          <span className="text-gray-800 font-medium">{item.title}</span>
+                                          <p className="text-gray-500 text-sm">
+                                                {item.duration} minutes, ${item.price} per session
+                                          </p>
+                                    </Radio>
+                              </div>
+                        ))}
                   </Radio.Group>
 
                   <Button

@@ -5,9 +5,11 @@ import MentorBookCard from '@/components/ui/MentorBookCard';
 import MentorDetailsTab from './MentorDetailsTab';
 import { useGetSingleMentorQuery } from '@/redux/features/mentor/mentorApi';
 import MentorDetailsBanner from '@/components/shared/MentorDetailsBanner';
+import { useGetSubscriptionsQuery } from '@/redux/features/subscription/subscriptionApi';
 
 const MentorProfileDetails = ({ mentorId }: { mentorId: string }) => {
       const { data: mentor } = useGetSingleMentorQuery(mentorId);
+      const { data: pricingPlans } = useGetSubscriptionsQuery(mentorId);
 
       return (
             <div>
@@ -77,7 +79,7 @@ const MentorProfileDetails = ({ mentorId }: { mentorId: string }) => {
                                           </div>
                                     </div>
                                     <div className="col-span-12 md:col-span-5">
-                                          <MentorshipTabs />
+                                          <MentorshipTabs pricingPlans={pricingPlans} />
                                     </div>
                               </div>
                         </div>

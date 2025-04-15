@@ -9,7 +9,7 @@ import SubscriptionBooking from './session-booking/SubcriptionBooking';
 import PackagesBooking from './session-booking/PackagesBooking';
 import PayPerSessionBooking from './session-booking/PayPerSessionBooking';
 
-const MentorshipTabs = () => {
+const MentorshipTabs = ({ pricingPlans }: { pricingPlans: any }) => {
       const [bookingModal, setBookingModal] = useState(false);
       const [subscribeModal, setSubscribeModal] = useState(false);
 
@@ -19,8 +19,12 @@ const MentorshipTabs = () => {
                         border
                         tabs={[
                               { key: 'subscription', label: 'Subscription', content: <SubscriptionBooking /> },
-                              { key: 'pay-per-session', label: 'Pay Per Session', content: <PayPerSessionBooking /> },
-                              { key: 'packages', label: 'Packages', content: <PackagesBooking /> },
+                              {
+                                    key: 'pay-per-session',
+                                    label: 'Pay Per Session',
+                                    content: <PayPerSessionBooking payPerSessions={pricingPlans?.payPerSession} />,
+                              },
+                              { key: 'packages', label: 'Packages', content: <PackagesBooking packages={pricingPlans?.packages} /> },
                         ]}
                         defaultActiveKey="subscription"
                   />
