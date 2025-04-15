@@ -1,11 +1,17 @@
 'use client';
 import React from 'react';
 import { Avatar, Button, Card, Input, Tooltip } from 'antd';
-import { HeartOutlined, CommentOutlined } from '@ant-design/icons';
+import { CommentOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import Comment from './Comments';
 
 const PostCard: React.FC<{ post: any }> = ({ post }) => {
       const [showComments, setShowComments] = React.useState(false);
+      const [votes, setVotes] = React.useState(post.likes || 0);
+
+      const handleVote = (type: 'up' | 'down') => {
+            setVotes((prev: number) => (type === 'up' ? prev + 1 : prev - 1));
+      };
 
       return (
             <Card className="mb-6">
@@ -18,11 +24,19 @@ const PostCard: React.FC<{ post: any }> = ({ post }) => {
                   </div>
                   <p className="text-gray-700 mb-4">{post.content}</p>
                   <div className="flex gap-6 text-gray-500 border-t border-b py-2">
-                        <Tooltip title="Like">
-                              <button className="flex items-center gap-2 hover:text-primary">
-                                    <HeartOutlined /> {post.likes}
-                              </button>
-                        </Tooltip>
+                        <div className="flex items-center gap-2">
+                              <Tooltip title="Upvote">
+                                    <button className="flex items-center hover:text-green-500" onClick={() => handleVote('up')}>
+                                          <ArrowUpOutlined />
+                                    </button>
+                              </Tooltip>
+                              <span className="mx-2">{votes}</span>
+                              <Tooltip title="Downvote">
+                                    <button className="flex items-center hover:text-red-500" onClick={() => handleVote('down')}>
+                                          <ArrowDownOutlined />
+                                    </button>
+                              </Tooltip>
+                        </div>
                         <Tooltip title="Comment">
                               <button className="flex items-center gap-2 hover:text-primary" onClick={() => setShowComments(!showComments)}>
                                     <CommentOutlined /> {post.comments.length}
