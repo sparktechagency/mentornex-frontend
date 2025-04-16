@@ -60,6 +60,16 @@ const communityApi = baseApi.injectEndpoints({
                   }),
                   invalidatesTags: ['Posts'],
             }),
+
+            votePost: builder.mutation({
+                  query: (args) => ({
+                        url: `/community/vote-to-post/${args.id}`,
+                        method: 'POST',
+                        body: args.data,
+                  }),
+                  invalidatesTags: ['Posts'],
+            }),
+
             getAllPosts: builder.query({
                   query: (args) => {
                         const params = new URLSearchParams();
@@ -80,4 +90,5 @@ const communityApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation, useGetAllPostsQuery } = communityApi;
+export const { useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation, useGetAllPostsQuery, useVotePostMutation } =
+      communityApi;

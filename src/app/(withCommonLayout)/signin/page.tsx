@@ -26,6 +26,7 @@ const SignInPage = () => {
 
                         toast.success(res?.message);
                         router.push('/');
+                        router.refresh();
                   }
             } catch (error: any) {
                   toast.error(error?.data?.message || 'Something went wrong');

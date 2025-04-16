@@ -3,17 +3,25 @@ import React from 'react';
 import { Avatar, Button, Card, Input, Tooltip } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { TPost } from '@/redux/features/community/communityApi';
+import { TPost, useVotePostMutation } from '@/redux/features/community/communityApi';
 import { getImageUrl } from '@/utils/getImageUrl';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 const PostCard: React.FC<{ post: TPost }> = ({ post }) => {
+      const [votePost] = useVotePostMutation();
       const [showComments, setShowComments] = React.useState(false);
-      // const [votes, setVotes] = React.useState(post.likes || 0);
 
-      // const handleVote = (type: 'up' | 'down') => {
-      //       setVotes((prev: number) => (type === 'up' ? prev + 1 : prev - 1));
-      // };
+      const handleVotePost = async (type: 'up' | 'down') => {
+            try {
+                  const res = await votePost({ id: post._id, data: { voteType: type === 'up' ? 'upVote' : 'downVote' } }).unwrap();
+                  if (res.success) {
+                        toast.success(res.message);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Failed to vote');
+            }
+      };
 
       return (
             <Card className="mb-6">
@@ -28,16 +36,17 @@ const PostCard: React.FC<{ post: TPost }> = ({ post }) => {
                   <div className="flex gap-6 text-gray-500 border-t border-b py-2">
                         <div className="flex items-center gap-2">
                               <Tooltip title="Upvote">
-                                    <button className="flex items-center hover:text-green-500">
+                                    <button onClick={() => handleVotePost('up')} className="flex items-center hover:text-green-500">
                                           <ArrowUpOutlined />
                                     </button>
                               </Tooltip>
                               <span className="mx-2">{post.upVotes}</span>
                               <Tooltip title="Downvote">
-                                    <button className="flex items-center hover:text-red-500">
+                                    <button onClick={() => handleVotePost('down')} className="flex items-center hover:text-red-500">
                                           <ArrowDownOutlined />
                                     </button>
                               </Tooltip>
+                              <span className="mx-2">{post.downVotes}</span>
                         </div>
                         <Tooltip title="Comment">
                               <button className="flex items-center gap-2 hover:text-primary" onClick={() => setShowComments(!showComments)}>
