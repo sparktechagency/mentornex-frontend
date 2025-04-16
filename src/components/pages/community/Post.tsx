@@ -6,12 +6,20 @@ import Dragger from 'antd/es/upload/Dragger';
 import { IoImage } from 'react-icons/io5';
 import { useCreatePostMutation } from '@/redux/features/community/communityApi';
 import { toast } from 'react-toastify';
+import { useAppSelector } from '@/redux/hooks';
+import { useRouter } from 'next/navigation';
 
 const Post = () => {
       const [form] = Form.useForm();
+      const router = useRouter();
+      const { user } = useAppSelector((state) => state.auth);
       const [createPost, { isLoading }] = useCreatePostMutation();
 
       const handleSubmit = async (values: any) => {
+            if (!user) {
+                  toast.error('Please login first');
+                  return router.push('/signin');
+            }
             const formData = new FormData();
 
             if (values.image) {
