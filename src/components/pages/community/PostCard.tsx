@@ -3,7 +3,7 @@ import React from 'react';
 import { Avatar, Card, Form, Input, Tooltip } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { TPost, useVotePostMutation } from '@/redux/features/community/communityApi';
+import { TPost, useAddReplayToPostMutation, useVotePostMutation } from '@/redux/features/community/communityApi';
 import { getImageUrl } from '@/utils/getImageUrl';
 import moment from 'moment';
 import { toast } from 'react-toastify';
@@ -12,6 +12,8 @@ import Comment from './Comments';
 const PostCard: React.FC<{ post: TPost }> = ({ post }) => {
       const [votePost] = useVotePostMutation();
       const [showComments, setShowComments] = React.useState(false);
+      const [addReplayToPost, { isLoading }] = useAddReplayToPostMutation();
+      const [form] = Form.useForm();
 
       const handleVotePost = async (type: 'up' | 'down') => {
             try {
@@ -24,6 +26,18 @@ const PostCard: React.FC<{ post: TPost }> = ({ post }) => {
             }
       };
 
+      const handleNewComment = async (values: any) => {
+            try {
+                  const res = await addReplayToPost({ id: post._id, data: { comment: values.comment } }).unwrap();
+                  if (res.success) {
+                        toast.success(res.message);
+                        form.resetFields();
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Failed to add comment');
+            }
+      };
+
       return (
             <Card className="mb-6">
                   <div className="flex items-center gap-4 mb-4">
@@ -33,7 +47,10 @@ const PostCard: React.FC<{ post: TPost }> = ({ post }) => {
                               <div className="text-sm text-gray-500">{moment(post.createdAt).fromNow()}</div>
                         </div>
                   </div>
-                  <p className="text-gray-700 mb-4">{post.description}</p>
+                  <div className="space-y-2 mb-4">
+                        <h2 className="text-lg font-semibold">{post.title}</h2>
+                        <p className="text-gray-700 mb-4">{post.description}</p>
+                  </div>
                   <div className="flex gap-6 text-gray-500 border-t border-b py-2">
                         <div className="flex items-center gap-2">
                               <Tooltip title="Upvote">
@@ -57,27 +74,27 @@ const PostCard: React.FC<{ post: TPost }> = ({ post }) => {
                         </div>
                         <Tooltip title="Comment">
                               <button className="flex items-center gap-2 hover:text-primary" onClick={() => setShowComments(!showComments)}>
-                                    <CommentOutlined />
+                                    {post?.replies?.length} <CommentOutlined />
                               </button>
                         </Tooltip>
                   </div>
                   {showComments && (
                         <div className="mt-4 space-y-4">
                               {post?.replies?.map((comment: any) => (
-                                    <Comment key={comment._id} comment={comment} />
+                                    <Comment key={comment._id} comment={comment} level={0} />
                               ))}
 
-                              <Form layout="vertical">
+                              <Form form={form} onFinish={handleNewComment} layout="vertical">
                                     <Form.Item
                                           name="comment"
-                                          label="Add a comment"
+                                          label="Your Comment"
                                           rules={[{ required: true, message: 'Please type a comment' }]}
                                     >
                                           <Input placeholder="Add a comment" />
                                     </Form.Item>
                                     <Form.Item>
-                                          <button type="button" className="bg-primary-500 text-white px-4 py-1 rounded">
-                                                Comment
+                                          <button type="submit" className="bg-primary-500 text-white px-4 py-1 rounded">
+                                                {isLoading ? 'Adding...' : 'Add Comment'}
                                           </button>
                                     </Form.Item>
                               </Form>

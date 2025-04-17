@@ -30,6 +30,7 @@ const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 
             }
       };
 
+      console.log(level, 'comment');
       return (
             <div className={`flex flex-col gap-4 ${level > 0 ? 'ml-12' : ''}`}>
                   <div className="flex items-start gap-4">
@@ -63,8 +64,8 @@ const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 
                               )}
                         </div>
                   </div>
-                  {comment.replies?.map((reply: any) => (
-                        <Comment key={reply.id} comment={reply} level={level + 1} />
+                  {comment.repliesOfReply?.map((reply: any, index: number) => (
+                        <Comment key={index} comment={reply} level={level + 1} />
                   ))}
             </div>
       );
