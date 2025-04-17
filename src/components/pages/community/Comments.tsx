@@ -1,18 +1,20 @@
 'use client';
 import React from 'react';
-import { Avatar, Button, Form, Input, Collapse } from 'antd';
+import { Avatar, Button, Form, Input, Collapse, Popconfirm } from 'antd';
 import { getImageUrl } from '@/utils/getImageUrl';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/hooks';
-import { useAddReplayToReplayMutation } from '@/redux/features/community/communityApi';
+import { useAddReplayToReplayMutation, useDeleteReplayMutation } from '@/redux/features/community/communityApi';
+import { FiTrash } from 'react-icons/fi';
 
 const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 0 }) => {
       const router = useRouter();
       const { user } = useAppSelector((state) => state.auth);
       const [showReplyInput, setShowReplyInput] = React.useState(false);
       const [addReplayToReplay, { isLoading }] = useAddReplayToReplayMutation();
+      const [deleteReplay] = useDeleteReplayMutation();
 
       const handleReplyPost = async (values: any) => {
             if (!user) {
@@ -30,11 +32,19 @@ const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 
             }
       };
 
-      console.log(level, 'comment');
+      const handleDeleteComment = async (id: string) => {
+            try {
+                  const res = await deleteReplay(id).unwrap();
+                  if (res.success) {
+                        toast.success(res.message);
+                        setShowReplyInput(false);
+                  }
+            } catch (error: any) {
+                  toast.error(error?.data?.message || 'Failed to reply');
+            }
+      };
       return (
             <div className={`relative flex flex-col gap-4 ${level > 0 ? 'ml-12' : ''}`}>
-                  {/* Vertical line for nested replies */}
-
                   <div className="flex items-start gap-4 relative z-10">
                         <Avatar src={getImageUrl(comment.repliedBy?.image)} size="large" />
                         <div className="flex-1">
@@ -47,6 +57,16 @@ const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 
                                     <button className="hover:text-primary" onClick={() => setShowReplyInput(!showReplyInput)}>
                                           Reply
                                     </button>
+                                    {user?.id === comment.repliedBy?._id && (
+                                          <button className="text-primary">
+                                                <Popconfirm
+                                                      title="Are you sure you want to delete this comment?"
+                                                      onConfirm={() => handleDeleteComment(comment._id)}
+                                                >
+                                                      <FiTrash size={18} />
+                                                </Popconfirm>
+                                          </button>
+                                    )}
                               </div>
                               {showReplyInput && (
                                     <Form onFinish={handleReplyPost}>

@@ -85,6 +85,13 @@ const communityApi = baseApi.injectEndpoints({
                   }),
                   invalidatesTags: ['Posts'],
             }),
+            deleteReplay: builder.mutation({
+                  query: (id) => ({
+                        url: `/community/delete-reply/${id}`,
+                        method: 'DELETE',
+                  }),
+                  invalidatesTags: ['Posts'],
+            }),
 
             getAllPosts: builder.query({
                   query: (args) => {
@@ -114,4 +121,5 @@ export const {
       useVotePostMutation,
       useAddReplayToReplayMutation,
       useAddReplayToPostMutation,
+      useDeleteReplayMutation,
 } = communityApi;

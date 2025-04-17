@@ -33,7 +33,17 @@ const Navbar = () => {
             { label: 'FAQ', path: '/faqs' },
       ];
 
-      const items = user ? allItems.filter((item) => item.label !== 'Become a Mentor' && item.label !== 'Become a Mentee') : allItems;
+      const navItems = allItems.filter(item => {
+            if (user) {
+                  // Hide Become a Mentor and Become a Mentee if logged in
+                  if (item.label === 'Become a Mentor' || item.label === 'Become a Mentee') return false;
+                  return true;
+            } else {
+                  // Hide Community if not logged in
+                  if (item.label === 'Community') return false;
+                  return true;
+            }
+      });
 
       return (
             <header className={`bg-white drop-shadow`}>
@@ -45,7 +55,7 @@ const Navbar = () => {
                               </Link>
                               {/* Nav Items for Desktop */}
                               <div className="hidden md:flex bg-secondary/20 p-2 items-center gap-8">
-                                    <NavItems items={items} />
+                                    <NavItems items={navItems} />
                               </div>
                               <div className="hidden md:flex items-center space-x-6">
                                     {/* <Link href="/signin">
@@ -120,7 +130,7 @@ const Navbar = () => {
                   <div className="hidden">
                         <SocketComponent />
                   </div>
-                  <MobileDrawer profile={profile!} open={showDrawer} setOpen={setShowDrawer} items={items} />
+                  <MobileDrawer profile={profile!} open={showDrawer} setOpen={setShowDrawer} items={navItems} />
             </header>
       );
 };
