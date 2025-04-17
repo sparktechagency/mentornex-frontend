@@ -85,10 +85,19 @@ const communityApi = baseApi.injectEndpoints({
                   }),
                   invalidatesTags: ['Posts'],
             }),
+
             deleteReplay: builder.mutation({
                   query: (id) => ({
                         url: `/community/delete-reply/${id}`,
                         method: 'DELETE',
+                  }),
+                  invalidatesTags: ['Posts'],
+            }),
+            updatePostComment: builder.mutation({
+                  query: ({ id, data }) => ({
+                        url: `/community/edit-reply/${id}`,
+                        method: 'PATCH',
+                        body: data,
                   }),
                   invalidatesTags: ['Posts'],
             }),
@@ -122,4 +131,5 @@ export const {
       useAddReplayToReplayMutation,
       useAddReplayToPostMutation,
       useDeleteReplayMutation,
+      useUpdatePostCommentMutation,
 } = communityApi;
