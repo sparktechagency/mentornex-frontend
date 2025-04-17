@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Avatar, Button, Form, Input } from 'antd';
+import { Avatar, Button, Form, Input, Collapse } from 'antd';
 import { getImageUrl } from '@/utils/getImageUrl';
 import moment from 'moment';
 import { toast } from 'react-toastify';
@@ -32,8 +32,10 @@ const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 
 
       console.log(level, 'comment');
       return (
-            <div className={`flex flex-col gap-4 ${level > 0 ? 'ml-12' : ''}`}>
-                  <div className="flex items-start gap-4">
+            <div className={`relative flex flex-col gap-4 ${level > 0 ? 'ml-12' : ''}`}>
+                  {/* Vertical line for nested replies */}
+
+                  <div className="flex items-start gap-4 relative z-10">
                         <Avatar src={getImageUrl(comment.repliedBy?.image)} size="large" />
                         <div className="flex-1">
                               <div className="bg-gray-50 rounded-lg p-3">
@@ -64,9 +66,15 @@ const Comment: React.FC<{ comment: any; level?: number }> = ({ comment, level = 
                               )}
                         </div>
                   </div>
-                  {comment.repliesOfReply?.map((reply: any, index: number) => (
-                        <Comment key={index} comment={reply} level={level + 1} />
-                  ))}
+                  {comment.repliesOfReply && comment.repliesOfReply.length > 0 && (
+                        <Collapse ghost style={{ marginTop: 8 }}>
+                              <Collapse.Panel header={`View Replies (${comment.repliesOfReply.length})`} key="replies">
+                                    {comment.repliesOfReply.map((reply: any, index: number) => (
+                                          <Comment key={index} comment={reply} level={level + 1} />
+                                    ))}
+                              </Collapse.Panel>
+                        </Collapse>
+                  )}
             </div>
       );
 };
