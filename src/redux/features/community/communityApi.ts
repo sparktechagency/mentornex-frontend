@@ -70,6 +70,15 @@ const communityApi = baseApi.injectEndpoints({
                   invalidatesTags: ['Posts'],
             }),
 
+            addReplayToReplay: builder.mutation({
+                  query: (args) => ({
+                        url: `/community/reply-to-reply/${args.id}`,
+                        method: 'POST',
+                        body: args.data,
+                  }),
+                  invalidatesTags: ['Posts'],
+            }),
+
             getAllPosts: builder.query({
                   query: (args) => {
                         const params = new URLSearchParams();
@@ -90,5 +99,11 @@ const communityApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useCreatePostMutation, useUpdatePostMutation, useDeletePostMutation, useGetAllPostsQuery, useVotePostMutation } =
-      communityApi;
+export const {
+      useCreatePostMutation,
+      useUpdatePostMutation,
+      useDeletePostMutation,
+      useGetAllPostsQuery,
+      useVotePostMutation,
+      useAddReplayToReplayMutation,
+} = communityApi;

@@ -1,6 +1,4 @@
-import Image from 'next/image';
 import React from 'react';
-import BannerImage from '@/assets/images/post-banner.png';
 import { Button, Form, Input } from 'antd';
 import Dragger from 'antd/es/upload/Dragger';
 import { IoImage } from 'react-icons/io5';
@@ -9,7 +7,7 @@ import { toast } from 'react-toastify';
 import { useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/navigation';
 
-const Post = () => {
+const Post = ({ setOpenModel }: { setOpenModel: (open: boolean) => void }) => {
       const [form] = Form.useForm();
       const router = useRouter();
       const { user } = useAppSelector((state) => state.auth);
@@ -34,27 +32,17 @@ const Post = () => {
                   const res = await createPost(formData).unwrap();
                   if (res.data) {
                         form.resetFields();
+                        setOpenModel(false);
                         toast.success(res.message);
                   }
             } catch (error: any) {
                   toast.error(error.data.message);
+                  setOpenModel(false);
             }
       };
 
       return (
             <div>
-                  <div className="my-2">
-                        <Image
-                              unoptimized
-                              className="object-cover w-full"
-                              src={BannerImage}
-                              quality={100}
-                              width={1000}
-                              height={1000}
-                              alt="Avatar"
-                        />
-                  </div>
-
                   <Form form={form} layout="vertical" onFinish={handleSubmit}>
                         <Form.Item name="title" label="Title" rules={[{ required: true, message: 'Please enter a title' }]}>
                               <Input placeholder="Enter title" />
