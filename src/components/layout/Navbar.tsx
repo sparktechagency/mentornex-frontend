@@ -23,16 +23,24 @@ const Navbar = () => {
             skip: !user,
       });
 
-      const items = [
+      const allItems = [
             // { label: 'Home', path: '/' },
             { label: 'Become a Mentor', path: '/signup' },
-
+            { label: 'Become a Mentee', path: '/mentee-signup' }, // Add this if you have a mentee signup route
             { label: 'Browse Mentors', path: '/mentors' },
             { label: 'Community', path: '/community' },
-
             { label: 'About Us', path: '/about-us' },
             { label: 'FAQ', path: '/faqs' },
       ];
+
+      // Filter out 'Become a Mentor' and 'Become a Mentee' if user is logged in
+      const items = user
+            ? allItems.filter(
+                  (item) =>
+                        item.label !== 'Become a Mentor' &&
+                        item.label !== 'Become a Mentee'
+              )
+            : allItems;
 
       return (
             <header className={`bg-white drop-shadow`}>
