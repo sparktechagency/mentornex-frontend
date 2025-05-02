@@ -12,6 +12,14 @@ const PackagesBooking = ({ packages }: { packages: any[] }) => {
 
       const currentPackage = packages.find((pkg) => pkg._id === selectedPackage);
 
+      if (!packages || packages.length === 0) {
+            return (
+                  <div className="p-2 text-center">
+                        <p className="text-gray-600 text-lg">No packages available at this time</p>
+                        <p className="text-gray-500 text-sm mt-2">Please check back later for available packages</p>
+                  </div>
+            );
+      }
       return (
             <div className="w-full">
                   <div className="p-4 space-y-6">

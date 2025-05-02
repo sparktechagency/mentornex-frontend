@@ -1,6 +1,15 @@
 import { Button, Radio } from 'antd';
 
 const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
+      if (!payPerSessions || payPerSessions.length === 0) {
+            return (
+                  <div className="p-2 text-center">
+                        <p className="text-gray-600 text-lg">No sessions available at this time</p>
+                        <p className="text-gray-500 text-sm mt-2">Please check back later for available sessions</p>
+                  </div>
+            );
+      }
+
       return (
             <div className="p-2">
                   <Radio.Group defaultValue="Introductory Call" className="w-full space-y-4">
