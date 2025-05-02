@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { FaCalendarCheck, FaClipboardList, FaClock, FaGear, FaHourglassEnd, FaList, FaUserGear } from 'react-icons/fa6';
 import { MdCurrencyExchange, MdDashboard } from 'react-icons/md';
 import { IoHeart, IoLogOut } from 'react-icons/io5';
-import { FaUserFriends } from 'react-icons/fa';
+import { FaDollyFlatbed, FaUserFriends } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { showConfirmModal } from '@/components/ui/LogoutModal';
 import { useAppSelector } from '@/redux/hooks';
@@ -71,6 +71,12 @@ const ProfileSidebar = () => {
                   icon: <FaHourglassEnd size={20} />,
                   label: 'My Session',
                   href: '/dashboard/mentee/my-sessions',
+            },
+            {
+                  key: 'purchase-management',
+                  icon: <FaDollyFlatbed size={20} />,
+                  label: 'Purchase Management',
+                  href: '/dashboard/mentee/purchase-management',
             },
             {
                   key: 'Tasks & Notes',
