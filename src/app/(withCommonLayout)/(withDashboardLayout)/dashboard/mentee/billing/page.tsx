@@ -1,4 +1,4 @@
-import BillingTab from '../../mentor/billing/BillingTab';
+import BillingTab from './BillingTab';
 
 const Billing = () => {
       return (

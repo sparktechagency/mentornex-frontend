@@ -1,14 +1,13 @@
 import Modal from '@/components/ui/Modal';
 import { useAddSubscriptionMutation, useUpdateSubscriptionMutation } from '@/redux/features/subscription/subscriptionApi';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Button, Form, Input, InputNumber, Radio, Select } from 'antd';
+import { Button, Form, InputNumber } from 'antd';
 import { useEffect, useState } from 'react';
 import { BsCurrencyDollar, BsPlus } from 'react-icons/bs';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 
 const Subscription = ({ pricingPlans }: any) => {
-      const [isContent, setIsContent] = useState(false); // State to manage content type
       const [editedPlan, setEditedPlan] = useState<any>(null);
       const [form] = Form.useForm();
 
@@ -24,10 +23,6 @@ const Subscription = ({ pricingPlans }: any) => {
                   });
             }
       }, [editedPlan, form]);
-
-      const handleRadioChange = (e: any) => {
-            setIsContent(e.target.value);
-      };
 
       const [addSubscription, { isLoading }] = useAddSubscriptionMutation();
       const [updateSubscription, { isLoading: isUpdating }] = useUpdateSubscriptionMutation();
@@ -138,83 +133,36 @@ const Subscription = ({ pricingPlans }: any) => {
                   </div>
 
                   <Modal
-                        title={editedPlan ? 'Edit Subscription' : 'Add Subscription'}
+                        title={editedPlan ? 'Edit Premium Content Subscription' : 'Add Premium Content Subscription'}
                         visible={isModalOpen}
                         width={600}
                         onCancel={() => setIsModalOpen(false)}
                   >
+                        <div className="mb-4 text-sm text-gray-600">
+                              This subscription will grant users access to your premium content and exclusive materials.
+                              Users will be able to view all your premium content for the specified fee.
+                        </div>
+                        
                         <Form form={form} onFinish={onFinish} layout="vertical">
-                              {/* Subscription Name */}
-                              <Form.Item
-                                    rules={[{ required: true, message: 'Please enter the subscription name' }]}
-                                    name="title"
-                                    label="Subscription Name"
-                              >
-                                    <Input placeholder="Enter subscription name" />
-                              </Form.Item>
-
-                              {/* Description */}
-                              <Form.Item
-                                    name="description"
-                                    rules={[{ required: true, message: 'Please enter the description' }]}
-                                    label="Description"
-                              >
-                                    <Input.TextArea placeholder="Enter description" />
-                              </Form.Item>
-
                               {/* Fee */}
-                              <Form.Item rules={[{ required: true, message: 'Please enter the fee' }]} name="amount" label="Fee">
+                              <Form.Item 
+                                    rules={[{ required: true, message: 'Please enter the fee' }]} 
+                                    name="amount" 
+                                    label={
+                                          <div>
+                                                Monthly Fee
+                                                <span className="text-sm text-gray-500 block">
+                                                      This is the monthly fee users will pay to access your premium content
+                                                </span>
+                                          </div>
+                                    }
+                              >
                                     <InputNumber
                                           style={{ width: '100%' }}
                                           type="number"
                                           addonBefore={<BsCurrencyDollar />}
-                                          placeholder="Enter fee"
+                                          placeholder="Enter monthly fee"
                                     />
-                              </Form.Item>
-
-                              {/* Type of Subscription (Radio Group) */}
-                              <Form.Item
-                                    name="isContent"
-                                    label="Type of Subscription"
-                                    rules={[{ required: true, message: 'Please select the type of subscription' }]}
-                              >
-                                    <Radio.Group defaultValue={isContent} onChange={handleRadioChange}>
-                                          <Radio value={true}>Content</Radio>
-                                          <Radio value={false}>Sessions</Radio>
-                                    </Radio.Group>
-                              </Form.Item>
-
-                              {/* Conditional Total Sessions (shown only for Non-Content type) */}
-                              {!isContent && (
-                                    <Form.Item
-                                          name="sessions"
-                                          label={
-                                                <p>
-                                                      Total Sessions
-                                                      <span className="text-[#FF6F3C] ms-1 font-semibold">
-                                                            (Enter a negative value for Unlimited Sessions)
-                                                      </span>
-                                                </p>
-                                          }
-                                          rules={[{ required: true, message: 'Please enter the total sessions' }]}
-                                    >
-                                          <InputNumber style={{ width: '100%' }} type="number" placeholder="Enter total sessions" />
-                                    </Form.Item>
-                              )}
-
-                              {/* Features */}
-                              <Form.Item
-                                    name="features"
-                                    label="Features"
-                                    rules={[{ required: true, message: 'Please enter the features' }]}
-                              >
-                                    <Select mode="tags" maxCount={3} maxLength={3} placeholder="Select features">
-                                          <Select.Option value="Chat">Chat</Select.Option>
-                                          <Select.Option value="Response">Response</Select.Option>
-                                          <Select.Option value="One-on-One">One-on-One</Select.Option>
-                                          <Select.Option value="Q&A">Q&A</Select.Option>
-                                          <Select.Option value="Fast Response">Fast Response</Select.Option>
-                                    </Select>
                               </Form.Item>
 
                               {/* Submit Button */}

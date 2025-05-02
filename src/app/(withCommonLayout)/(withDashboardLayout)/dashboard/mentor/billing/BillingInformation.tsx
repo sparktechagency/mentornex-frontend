@@ -2,13 +2,11 @@
 import { useAddBillingMutation, useLoginStripeMutation } from '@/redux/features/billing/billingApi';
 import { useGetUserProfileQuery } from '@/redux/features/user/userApi';
 import { Button } from 'antd';
-import { useRouter } from 'next/navigation';
 
 import { toast } from 'react-toastify';
 
 const BillingInformation = () => {
       const { data: profile } = useGetUserProfileQuery([]);
-      const router = useRouter();
       const [addOrUpdateBilling, { isLoading }] = useAddBillingMutation();
       const [loginStripe, { isLoading: loginLoading }] = useLoginStripeMutation();
 
@@ -17,7 +15,7 @@ const BillingInformation = () => {
                   const res = await addOrUpdateBilling({}).unwrap();
                   console.log(res);
                   if (res?.success) {
-                        router.push(res?.data?.onboardingUrl);
+                        window.open(res?.data?.onboardingUrl, '_blank');
                   }
             } catch (error: any) {
                   toast.error(error?.data?.message);
@@ -27,7 +25,7 @@ const BillingInformation = () => {
             try {
                   const res = await loginStripe({}).unwrap();
                   if (res?.success) {
-                        router.push(res?.data?.loginUrl);
+                        window.open(res?.data?.loginUrl, '_blank');
                   }
             } catch (error: any) {
                   toast.error(error?.data?.message);
