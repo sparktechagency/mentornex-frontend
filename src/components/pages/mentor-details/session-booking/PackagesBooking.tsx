@@ -1,9 +1,12 @@
+import { usePurchasePackageMutation } from '@/redux/features/purchase/purchaseApi';
 import { Button, Radio } from 'antd';
 import React from 'react';
 import { BsCheck2 } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 
 const PackagesBooking = ({ packages }: { packages: any[] }) => {
       const [selectedPackage, setSelectedPackage] = React.useState<string>(packages[0]?._id || '');
+      const [purchasePackage, { isLoading }] = usePurchasePackageMutation();
 
       const options = packages.map((pkg) => ({
             label: pkg.title,
@@ -20,6 +23,18 @@ const PackagesBooking = ({ packages }: { packages: any[] }) => {
                   </div>
             );
       }
+
+      const handlePurchase = async (id: string) => {
+            try {
+                  const res = await purchasePackage({ id }).unwrap();
+                  console.log(res);
+                  if (res.success) {
+                        window.open(res.data, '_blank');
+                  }
+            } catch (error: any) {
+                  toast.error(error.data.message || 'Failed to purchase package');
+            }
+      };
       return (
             <div className="w-full">
                   <div className="p-4 space-y-6">
@@ -55,11 +70,12 @@ const PackagesBooking = ({ packages }: { packages: any[] }) => {
                                     </ul>
 
                                     <Button
+                                          onClick={() => handlePurchase(currentPackage._id)}
                                           type="primary"
                                           block
                                           className="h-12 text-lg font-medium bg-orange-500 hover:bg-orange-600 transition-colors duration-200"
                                     >
-                                          Buy Now
+                                          {isLoading ? 'Loading...' : 'Buy Now'}
                                     </Button>
                               </>
                         )}

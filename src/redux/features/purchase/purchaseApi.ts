@@ -37,4 +37,9 @@ const purchaseApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { usePurchaseSubscriptionMutation, useCancelSubscriptionMutation, usePurchasePayPerSessionMutation } = purchaseApi;
+export const {
+      usePurchaseSubscriptionMutation,
+      useCancelSubscriptionMutation,
+      usePurchasePayPerSessionMutation,
+      usePurchasePackageMutation,
+} = purchaseApi;

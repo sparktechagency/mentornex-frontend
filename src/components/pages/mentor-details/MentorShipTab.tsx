@@ -28,7 +28,11 @@ const MentorshipTabs = ({ profile, pricingPlans }: { profile: any; pricingPlans:
                                     label: 'Pay Per Session',
                                     content: <PayPerSessionBooking payPerSessions={pricingPlans?.payPerSession} />,
                               },
-                              { key: 'packages', label: 'Packages', content: <PackagesBooking packages={pricingPlans?.packages} /> },
+                              {
+                                    key: 'packages',
+                                    label: 'Packages',
+                                    content: <PackagesBooking packages={pricingPlans?.packages} />,
+                              },
                         ]}
                         defaultActiveKey="subscription"
                   />
