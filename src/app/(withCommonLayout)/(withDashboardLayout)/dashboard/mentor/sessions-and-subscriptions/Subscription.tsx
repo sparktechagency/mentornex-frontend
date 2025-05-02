@@ -61,57 +61,60 @@ const Subscription = ({ pricingPlans }: any) => {
       // };
       return (
             <div>
-                  <div className="flex-end mb-1">
-                        <Button
-                              onClick={() => {
-                                    setEditedPlan(null);
-                                    setIsModalOpen(true);
-                              }}
-                              icon={<BsPlus />}
-                              type="primary"
-                        >
-                              Add Subscription
-                        </Button>
-                  </div>
                   <div className="grid grid-cols-3 gap-4">
-                        {pricingPlans?.map((plan: any) => (
-                              <div key={plan?._id} className="p-5 max-w-md h-full flex flex-col rounded-lg custom-shadow">
-                                    <div className="mb-3 uppercase text-title text-2xl font-bold">{plan?.title}</div>
+                        {pricingPlans?.length === 0 ? (
+                              <div className="col-span-3 text-center py-8">
+                                    <Button
+                                          onClick={() => {
+                                                setEditedPlan(null);
+                                                setIsModalOpen(true);
+                                          }}
+                                          icon={<BsPlus />}
+                                          type="primary"
+                                          className="w-full"
+                                    >
+                                          Add Premium Content Subscription
+                                    </Button>
+                              </div>
+                        ) : (
+                              pricingPlans?.map((plan: any) => (
+                                    <div key={plan?._id} className="p-5 max-w-md h-full flex flex-col rounded-lg custom-shadow">
+                                          <div className="mb-3 uppercase text-title text-2xl font-bold">{plan?.title}</div>
 
-                                    <h1 className="text-xl font-semibold">${plan?.amount} / month</h1>
+                                          <h1 className="text-xl font-semibold">${plan?.amount} / month</h1>
 
-                                    <h1 className="text-xl my-3">
-                                          <strong>Total Sessions:</strong>{' '}
-                                          <span className="text-[#FF6F3C]">{plan?.sessions === -1 ? 'Unlimited' : plan?.sessions}</span>
-                                    </h1>
+                                          <div className="text-sm text-gray-500 mt-2 mb-4">
+                                                This is a premium content subscription that grants users access to your exclusive materials.
+                                                <br />
+                                                <span className="font-medium">Note:</span> You can only have one active premium content
+                                                subscription at a time.
+                                          </div>
 
-                                    <p className="text-gray-600 my-4">{plan?.description}</p>
+                                          <ul className="space-y-2 list-disc text-gray-600 flex-grow">
+                                                {plan?.features?.map((feature: any) => (
+                                                      <li key={feature} className="flex items-center">
+                                                            <IoCheckmarkCircleOutline size={20} color="#FF6F3C" className="mr-2" />
+                                                            {feature}
+                                                      </li>
+                                                ))}
+                                          </ul>
 
-                                    <ul className="space-y-2 list-disc text-gray-600 flex-grow">
-                                          {plan?.features?.map((feature: any) => (
-                                                <li key={feature} className="flex items-center">
-                                                      <IoCheckmarkCircleOutline size={20} color="#FF6F3C" className="mr-2" />
-                                                      {feature}
-                                                </li>
-                                          ))}
-                                    </ul>
-
-                                    <div className="flex items-center gap-3 mt-3 bottom-0">
-                                          <Button
-                                                onClick={() => {
-                                                      setEditedPlan(plan);
-                                                      setIsModalOpen(true);
-                                                }}
-                                                type="default"
-                                                style={{
-                                                      width: '100%',
-                                                      border: '1px solid #FF6F3C',
-                                                      color: '#FF6F3C',
-                                                }}
-                                          >
-                                                Edit
-                                          </Button>
-                                          {/* <Popconfirm
+                                          <div className="flex items-center gap-3 mt-3 bottom-0">
+                                                <Button
+                                                      onClick={() => {
+                                                            setEditedPlan(plan);
+                                                            setIsModalOpen(true);
+                                                      }}
+                                                      type="default"
+                                                      style={{
+                                                            width: '100%',
+                                                            border: '1px solid #FF6F3C',
+                                                            color: '#FF6F3C',
+                                                      }}
+                                                >
+                                                      Edit
+                                                </Button>
+                                                {/* <Popconfirm
                                                 title="Are you sure you want to delete this plan?"
                                                 onConfirm={() => handleDelete(plan?._id)}
                                           >
@@ -127,9 +130,10 @@ const Subscription = ({ pricingPlans }: any) => {
                                                       Delete
                                                 </Button>
                                           </Popconfirm> */}
+                                          </div>
                                     </div>
-                              </div>
-                        ))}
+                              ))
+                        )}
                   </div>
 
                   <Modal
@@ -139,15 +143,15 @@ const Subscription = ({ pricingPlans }: any) => {
                         onCancel={() => setIsModalOpen(false)}
                   >
                         <div className="mb-4 text-sm text-gray-600">
-                              This subscription will grant users access to your premium content and exclusive materials.
-                              Users will be able to view all your premium content for the specified fee.
+                              This subscription will grant users access to your premium content and exclusive materials. Users will be able
+                              to view all your premium content for the specified fee.
                         </div>
-                        
+
                         <Form form={form} onFinish={onFinish} layout="vertical">
                               {/* Fee */}
-                              <Form.Item 
-                                    rules={[{ required: true, message: 'Please enter the fee' }]} 
-                                    name="amount" 
+                              <Form.Item
+                                    rules={[{ required: true, message: 'Please enter the fee' }]}
+                                    name="amount"
                                     label={
                                           <div>
                                                 Monthly Fee

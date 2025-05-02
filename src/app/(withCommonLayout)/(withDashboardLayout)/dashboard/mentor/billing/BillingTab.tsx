@@ -10,7 +10,7 @@ const BillingTab = () => {
                               { key: 'billing', label: 'Billing Information', content: <BillingInformation /> },
                               { key: 'transaction', label: 'Transaction', content: <BillingTransactionTable /> },
                         ]}
-                        defaultActiveKey="transaction"
+                        defaultActiveKey="billing"
                   />
             </div>
       );

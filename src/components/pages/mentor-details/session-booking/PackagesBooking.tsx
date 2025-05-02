@@ -59,7 +59,7 @@ const PackagesBooking = ({ packages }: { packages: any[] }) => {
                                           block
                                           className="h-12 text-lg font-medium bg-orange-500 hover:bg-orange-600 transition-colors duration-200"
                                     >
-                                          Subscribe Now
+                                          Buy Now
                                     </Button>
                               </>
                         )}

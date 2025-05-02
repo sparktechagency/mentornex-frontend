@@ -11,7 +11,9 @@ const OverView = ({ mentor }: { mentor: Partial<TUser> }) => {
                               <p>{mentor?.about || 'No description available  '}</p>
                         </div>
                         <div>
-                              <video className="rounded-xl object-cover h-full w-full" src={mentor?.content} controls></video>
+                              {mentor?.content && (
+                                    <video className="rounded-xl object-cover h-full w-full" src={mentor?.content} controls></video>
+                              )}
                         </div>
                   </div>
             </div>

@@ -10,6 +10,7 @@ export type TMentor = TUser & {
       totalSessionCount: number;
       repeatedUserCount: number;
       goalAchievingRate: number;
+      isSubscribed: boolean;
 };
 
 const mentorApi = baseApi.injectEndpoints({
@@ -38,10 +39,14 @@ const mentorApi = baseApi.injectEndpoints({
             }),
 
             getSingleMentor: build.query({
-                  query: (id: string) => ({
-                        url: `/list/mentors/${id}`,
-                        method: 'GET',
-                  }),
+                  query: ({ id, ...params }) => {
+                        console.log(id, params);
+                        return {
+                              url: `/list/mentors/${id}`,
+                              method: 'GET',
+                              params,
+                        };
+                  },
                   transformResponse: (response: any) => {
                         return response.data;
                   },

@@ -6,9 +6,15 @@ import MentorDetailsTab from './MentorDetailsTab';
 import { useGetSingleMentorQuery } from '@/redux/features/mentor/mentorApi';
 import MentorDetailsBanner from '@/components/shared/MentorDetailsBanner';
 import { useGetSubscriptionsQuery } from '@/redux/features/subscription/subscriptionApi';
+import { useAppSelector } from '@/redux/hooks';
 
 const MentorProfileDetails = ({ mentorId }: { mentorId: string }) => {
-      const { data: mentor } = useGetSingleMentorQuery(mentorId);
+      const { user } = useAppSelector((state: any) => state.auth);
+      const queryParams = user ? { mentee: user.id } : {};
+      const { data: mentor } = useGetSingleMentorQuery({
+            id: mentorId,
+            ...queryParams,
+      });
       const { data: pricingPlans } = useGetSubscriptionsQuery(mentorId);
 
       return (
@@ -71,7 +77,7 @@ const MentorProfileDetails = ({ mentorId }: { mentorId: string }) => {
                                                             <div>
                                                                   <h2 className="text-title font-semibold">{mentor?.institution_name}</h2>
                                                                   <div className="flex gap-4 items-center">
-                                                                        <p>{mentor?.education}</p>
+                                                                        <p>{mentor?.education ? mentor?.education : 'N/A'}</p>
                                                                   </div>
                                                             </div>
                                                       </div>
@@ -79,7 +85,7 @@ const MentorProfileDetails = ({ mentorId }: { mentorId: string }) => {
                                           </div>
                                     </div>
                                     <div className="col-span-12 md:col-span-5">
-                                          <MentorshipTabs pricingPlans={pricingPlans} />
+                                          <MentorshipTabs profile={mentor} pricingPlans={pricingPlans} />
                                     </div>
                               </div>
                         </div>
