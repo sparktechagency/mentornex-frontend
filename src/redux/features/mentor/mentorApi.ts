@@ -40,7 +40,6 @@ const mentorApi = baseApi.injectEndpoints({
 
             getSingleMentor: build.query({
                   query: ({ id, ...params }) => {
-                        console.log(id, params);
                         return {
                               url: `/list/mentors/${id}`,
                               method: 'GET',

@@ -12,12 +12,12 @@ const BookingForm = () => {
                   <DateSelection />
                   <TimeSelection />
 
-                  <div>
+                  {/* <div>
                         <h3 className="text-lg mb-2 font-semibold">Select Topic</h3>
                         <div className="border border-gray-200 p-2 rounded-lg">
                               <h2 className="text-lg ">Career Guidance Session - $99</h2>
                         </div>
-                  </div>
+                  </div> */}
 
                   <div>
                         <h3 className="text-lg mb-4 font-semibold">

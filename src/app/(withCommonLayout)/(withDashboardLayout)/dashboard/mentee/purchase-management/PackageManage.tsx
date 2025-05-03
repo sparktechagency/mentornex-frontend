@@ -1,9 +1,12 @@
+import BookingForm from '@/components/pages/mentor-details/booking-modal/BookingForm';
+import Modal from '@/components/ui/Modal';
 import { getImageUrl } from '@/utils/getImageUrl';
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
 const PackageManage = ({ packages }: { packages: any }) => {
+      const [showBookingModal, setShowBookingModal] = useState(false);
       const columns = [
             {
                   title: 'Mentor Name',
@@ -49,6 +52,16 @@ const PackageManage = ({ packages }: { packages: any }) => {
                   key: 'createdAt',
                   render: (date: string) => new Date(date).toLocaleDateString(),
             },
+            {
+                  title: 'Action',
+                  dataIndex: '_id',
+                  key: '_id',
+                  render: () => (
+                        <Button onClick={() => setShowBookingModal(true)} type="primary">
+                              Book Session
+                        </Button>
+                  ),
+            },
       ];
 
       return (
@@ -69,6 +82,9 @@ const PackageManage = ({ packages }: { packages: any }) => {
                               className="custom-shadow"
                         />
                   )}
+                  <Modal visible={showBookingModal} onCancel={() => setShowBookingModal(false)} title="Book Session" width={600}>
+                        <BookingForm />
+                  </Modal>
             </div>
       );
 };
