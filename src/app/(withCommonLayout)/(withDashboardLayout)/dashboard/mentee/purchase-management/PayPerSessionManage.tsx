@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Select, Table } from 'antd';
 import React from 'react';
 
 const PayPerSessionManage = () => {
@@ -93,6 +93,21 @@ const PayPerSessionManage = () => {
       return (
             <div className="p-4">
                   <h2 className="text-2xl font-bold mb-4">Pay Per Session History</h2>
+
+                  <div className="flex justify-between mb-3">
+                        <div className="">
+                              <Select
+                                    showSearch
+                                    placeholder="Select a mentor"
+                                    style={{ width: '200px' }}
+                                    options={[
+                                          { value: 'all', label: 'All' },
+                                          { value: 'active', label: 'Active' },
+                                          { value: 'inactive', label: 'Inactive' },
+                                    ]}
+                              />
+                        </div>
+                  </div>
 
                   {!sessions || sessions.length === 0 ? (
                         <div className="text-center py-8">

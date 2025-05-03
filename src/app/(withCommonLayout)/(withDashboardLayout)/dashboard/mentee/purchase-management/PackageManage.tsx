@@ -1,46 +1,34 @@
+import { getImageUrl } from '@/utils/getImageUrl';
 import { Table } from 'antd';
+import Image from 'next/image';
 import React from 'react';
 
-const PackageManage = () => {
-      const packages = [
-            {
-                  _id: '1',
-                  title: 'Basic Package',
-                  amount: 99,
-                  sessions: 5,
-                  takenSessions: 2,
-                  remainingSessions: 3,
-                  createdAt: '2025-04-01T00:00:00.000Z',
-                  expiryDate: '2025-05-01T00:00:00.000Z',
-            },
-            {
-                  _id: '2',
-                  title: 'Premium Package',
-                  amount: 199,
-                  sessions: 10,
-                  takenSessions: 5,
-                  remainingSessions: 5,
-                  createdAt: '2025-04-15T00:00:00.000Z',
-                  expiryDate: '2025-05-15T00:00:00.000Z',
-            },
-            {
-                  _id: '3',
-                  title: 'Ultimate Package',
-                  amount: 299,
-                  sessions: 20,
-                  takenSessions: 8,
-                  remainingSessions: 12,
-                  createdAt: '2025-04-20T00:00:00.000Z',
-                  expiryDate: '2025-05-20T00:00:00.000Z',
-            },
-      ];
-
+const PackageManage = ({ packages }: { packages: any }) => {
       const columns = [
             {
-                  title: 'Package Name',
-                  dataIndex: 'title',
-                  key: 'title',
-                  render: (text: string) => <span className="font-medium">{text}</span>,
+                  title: 'Mentor Name',
+                  dataIndex: 'mentor_id',
+                  key: 'mentor_id',
+                  render: (text: string, record: any) => {
+                        return (
+                              <div className="flex items-center space-x-2">
+                                    <Image
+                                          className="rounded-full size-10"
+                                          src={getImageUrl(record?.mentor_id?.image)}
+                                          width={50}
+                                          height={50}
+                                          alt="mentor"
+                                    />
+                                    <span>{record.mentor_id.name}</span>
+                              </div>
+                        );
+                  },
+            },
+            {
+                  title: 'TotalSession',
+                  dataIndex: 'session',
+                  key: 'session',
+                  render: (session: number, record: any) => <span>{record.package_id.sessions}</span>,
             },
             {
                   title: 'Price',
@@ -49,30 +37,16 @@ const PackageManage = () => {
                   render: (amount: number) => <span>${amount}</span>,
             },
             {
-                  title: 'Total Sessions',
-                  dataIndex: 'sessions',
-                  key: 'sessions',
+                  title: 'Status',
+                  dataIndex: 'status',
+                  key: 'status',
+                  render: (status: string) => <span className="text-green-500">{status}</span>,
             },
-            {
-                  title: 'Taken Sessions',
-                  dataIndex: 'takenSessions',
-                  key: 'takenSessions',
-            },
-            {
-                  title: 'Remaining Sessions',
-                  dataIndex: 'remainingSessions',
-                  key: 'remainingSessions',
-            },
+
             {
                   title: 'Purchase Date',
                   dataIndex: 'createdAt',
                   key: 'createdAt',
-                  render: (date: string) => new Date(date).toLocaleDateString(),
-            },
-            {
-                  title: 'Expiry Date',
-                  dataIndex: 'expiryDate',
-                  key: 'expiryDate',
                   render: (date: string) => new Date(date).toLocaleDateString(),
             },
       ];
@@ -80,7 +54,7 @@ const PackageManage = () => {
       return (
             <div className="p-4">
                   <h2 className="text-2xl font-bold mb-4">Purchased Packages</h2>
-                  
+
                   {!packages || packages.length === 0 ? (
                         <div className="text-center py-8">
                               <p className="text-gray-600">No packages purchased yet</p>

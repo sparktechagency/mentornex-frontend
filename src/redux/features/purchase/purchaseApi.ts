@@ -34,6 +34,15 @@ const purchaseApi = baseApi.injectEndpoints({
                   },
                   invalidatesTags: ['Purchase'],
             }),
+
+            getSubscriptionPackages: builder.query({
+                  query: () => ({
+                        url: '/purchase/all-package-and-subscription',
+                        method: 'GET',
+                  }),
+                  providesTags: ['Purchase'],
+                  transformResponse: (response: any) => response.data,
+            }),
       }),
 });
 
@@ -42,4 +51,5 @@ export const {
       useCancelSubscriptionMutation,
       usePurchasePayPerSessionMutation,
       usePurchasePackageMutation,
+      useGetSubscriptionPackagesQuery,
 } = purchaseApi;
