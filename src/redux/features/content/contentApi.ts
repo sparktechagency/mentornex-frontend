@@ -12,8 +12,8 @@ const contentApi = baseApi.injectEndpoints({
             }),
 
             getPremiumContentByMentorId: build.query({
-                  query: () => ({
-                        url: '/content',
+                  query: (id) => ({
+                        url: `/content/mentor/${id}`,
                         method: 'GET',
                   }),
                   transformResponse: (response: any) => response.data,

@@ -37,6 +37,18 @@ const mentorApi = baseApi.injectEndpoints({
                         return response.data;
                   },
             }),
+            getMentorReviews: build.query({
+                  query: (id) => {
+                        return {
+                              url: `/review/${id}`,
+                              method: 'GET',
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+                  providesTags: ['Mentors'],
+            }),
 
             getSingleMentor: build.query({
                   query: ({ id, ...params }) => {
@@ -74,4 +86,4 @@ const mentorApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useGetAllMentorsQuery, useGetSingleMentorQuery, useGetMyMentorsQuery } = mentorApi;
+export const { useGetAllMentorsQuery, useGetSingleMentorQuery, useGetMyMentorsQuery, useGetMentorReviewsQuery } = mentorApi;
