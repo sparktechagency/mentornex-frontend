@@ -28,7 +28,7 @@ const MentorLayout: React.FC = () => {
 
             ...(tools.length > 0 ? tools.map((tool) => ({ name: 'tools', value: tool })) : []),
       ];
-      const { data: mentorData } = useGetAllMentorsQuery(queryParameters);
+      const { data: mentorData, isFetching } = useGetAllMentorsQuery(queryParameters);
 
       const [collapsed, setCollapsed] = useState(false);
 
@@ -97,9 +97,28 @@ const MentorLayout: React.FC = () => {
                                     }}
                               >
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                          {mentorData?.mentors?.map((mentor: TMentor) => (
-                                                <MentorCard key={mentor._id} mentor={mentor!} />
-                                          ))}
+                                          {isFetching
+                                                ? Array.from({ length: 6 }).map((_, idx) => (
+                                                        <div key={idx} className="p-4">
+                                                              <div className="bg-white rounded-lg shadow-md p-4">
+                                                                    <div className="flex items-center mb-4">
+                                                                          <div className="mr-4">
+                                                                                <div className="w-20 h-20 rounded-full bg-gray-200" />
+                                                                          </div>
+                                                                          <div className="flex-1">
+                                                                                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                                                                                <div className="h-3 bg-gray-100 rounded w-1/2" />
+                                                                          </div>
+                                                                    </div>
+                                                                    <div className="h-3 bg-gray-100 rounded mb-2" />
+                                                                    <div className="h-3 bg-gray-100 rounded mb-2" />
+                                                                    <div className="h-3 bg-gray-100 rounded w-5/6" />
+                                                              </div>
+                                                        </div>
+                                                  ))
+                                                : mentorData?.mentors?.map((mentor: TMentor) => (
+                                                        <MentorCard key={mentor._id} mentor={mentor!} />
+                                                  ))}
                                     </div>
                                     <div className="flex justify-center my-10">
                                           <Pagination
