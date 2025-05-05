@@ -140,13 +140,13 @@ const Sessions = ({ sessions }: any) => {
                               <Form.Item rules={[{ required: true, message: 'Please enter the fee' }]} name="amount" label="Fee">
                                     <InputNumber type="number" placeholder="Enter fee" style={{ width: '100%' }} />
                               </Form.Item>
-                              <Form.Item
+                              {/* <Form.Item
                                     rules={[{ required: true, message: 'Please enter the duration' }]}
                                     name="duration"
                                     label="Duration"
                               >
                                     <Input addonBefore="Min" placeholder="Enter duration" />
-                              </Form.Item>
+                              </Form.Item> */}
                               <Form.Item className="flex-end">
                                     <Button type="primary" htmlType="submit">
                                           {editedSession ? 'Update' : 'Add'} {isCreating || isUpdating ? '...' : ''}

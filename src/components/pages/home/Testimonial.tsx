@@ -26,7 +26,7 @@ const testimonials = [
             id: 3,
             name: 'Tawsif',
             role: 'Software Engineer',
-            image: 'https://randomuser.me/api/portraits/men/56.jpg',
+            image: 'https://randomuser.me/api/portraits/men/30.jpg',
             content: 'I was really struggling with my software engineering skills until I started working with Tawsif. He is very patient and was able to break down the problems into smaller steps that I could understand. He is also very knowledgeable and was able to provide a lot of useful information. I would definitely recommend him to anyone who needs help with software engineering.',
       },
       {
@@ -40,7 +40,7 @@ const testimonials = [
             id: 5,
             name: 'Abdul Kadir',
             role: 'Project Manager',
-            image: 'https://randomuser.me/api/portraits/men/32.jpg',
+            image: 'https://randomuser.me/api/portraits/men/34.jpg',
             content: 'Abdul is a great project manager. He helped organize my team and kept us on track throughout a challenging project. His communication and leadership skills are outstanding, and he always knows how to motivate the team to achieve their best results.',
       },
 ];
@@ -79,12 +79,12 @@ function Testimonial() {
                               >
                                     {testimonials.map((testimonial) => (
                                           <div key={testimonial.id} className="p-4 bg-transparent ">
-                                                <div className="relative  rounded-xl  overflow-hidden p-6 bg-white drop-shadow">
+                                                <div className="relative h-full rounded-xl  overflow-hidden p-6 bg-white drop-shadow">
                                                       {/* Shape in the bottom-left corner */}
                                                       {/* <div className="absolute -z-10 -bottom-20 -left-20 size-[205px] bg-[#fff1ec]  rounded-full"></div> */}
 
-                                                      <div className="space-y-6">
-                                                            <p className="text-base font-normal leading-relaxed line-clamp-5">
+                                                      <div className="space-y-6  min-h-[150px] ">
+                                                            <p className="text-base h-full font-normal leading-relaxed line-clamp-5">
                                                                   {testimonial.content}
                                                             </p>
                                                       </div>

@@ -29,24 +29,27 @@ const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
       };
       return (
             <div className="p-2">
-                  <Radio.Group
-                        onChange={(e) => {
-                              const selectedTitle = e.target.value;
-                              const session = payPerSessions.find((item: any) => item.title === selectedTitle);
-                              setSelectedSession(session);
-                        }}
-                        defaultValue="Introductory Call"
-                        className="w-full space-y-4"
-                  >
-                        {payPerSessions.map((item: any, index: string) => (
-                              <div key={index} className="border rounded-lg p-4 flex items-center">
-                                    <Radio value={item.title} className="flex-grow">
-                                          <span className="text-gray-800 font-medium">{item.title}</span>
-                                          <p className="text-gray-500 text-sm">${item.amount}</p>
-                                    </Radio>
-                              </div>
-                        ))}
-                  </Radio.Group>
+                  <div className="max-h-[300px] overflow-y-auto hide-scrollbar">
+                        <Radio.Group
+                              onChange={(e) => {
+                                    const selectedTitle = e.target.value;
+                                    const session = payPerSessions.find((item: any) => item.title === selectedTitle);
+                                    setSelectedSession(session);
+                              }}
+                              defaultValue="Introductory Call"
+                              className="w-full space-y-4"
+                        >
+                              {payPerSessions.map((item: any, index: string) => (
+                                    <div key={index} className="border rounded-lg p-4 flex items-center">
+                                          <Radio value={item.title} className="flex-grow">
+                                                <span className="text-gray-800 font-medium">{item.title}</span>
+                                                <p className="text-gray-500 text-sm">${item.amount}</p>
+                                          </Radio>
+                                    </div>
+                              ))}
+                        </Radio.Group>
+                        {payPerSessions.length > 3 && <p className="text-center my-2">Scroll down for more sessions</p>}
+                  </div>
 
                   <Button
                         onClick={handleBookPayPerSession}
