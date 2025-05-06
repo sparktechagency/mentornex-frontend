@@ -1,35 +1,180 @@
 'use client';
 
-import { Input, Button } from 'antd';
+import { Form, Input, Button, Carousel } from 'antd';
 import DateSelection from './DateSelection';
-import TimeSelection from './TimeSelection';
+import React, { useRef, useState } from 'react';
+import dayjs from 'dayjs';
+import { useGetAvailableSlotsQuery } from '@/redux/features/slot-management/slotManagementApi';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { addSelectedTimeSlot, addSelectedTime } from '@/redux/features/booking/bookingSlice';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { convertTo12HourFormat } from '@/utils/getConvertedTime';
 
 const { TextArea } = Input;
 
-const BookingForm = () => {
+const BookingForm = ({ profile }: any) => {
+      const [form] = Form.useForm();
+      const dispatch = useAppDispatch();
+      const { selectedTimeSlot, selectedTime } = useAppSelector((state) => state.booking);
+      const carouselRef = useRef<any>();
+      const [formError, setFormError] = useState('');
+
+      const next = () => carouselRef.current?.next();
+      const previous = () => carouselRef.current?.prev();
+
+      const [selectedDate, setSelectedDate] = useState(dayjs());
+
+      const { data: slotsData, isFetching } = useGetAvailableSlotsQuery({
+            sessionId: profile?._id,
+            date: dayjs(selectedDate).format('DD-MM-YYYY'),
+      });
+
+      // Reset form when date changes
+      React.useEffect(() => {
+            if (selectedDate) {
+                  dispatch(addSelectedTime({ time: '', isAvailable: false }));
+                  setFormError('');
+            }
+      }, [selectedDate, dispatch]);
+
+      const handleFinish = (values: any) => {
+            if (!selectedTimeSlot?.date) {
+                  setFormError('Please select a date');
+                  return;
+            }
+
+            if (!selectedTime?.time) {
+                  setFormError('Please select a time slot');
+                  return;
+            }
+
+            const formData = {
+                  ...values,
+                  selectedDate: selectedTimeSlot.date,
+                  selectedTime: selectedTime.time,
+                  isTimeAvailable: selectedTime.isAvailable,
+            };
+
+            console.log('Form submitted:', formData);
+
+            form.resetFields();
+      };
+
       return (
             <div className="space-y-8">
-                  <DateSelection />
-                  <TimeSelection />
-
-                  {/* <div>
-                        <h3 className="text-lg mb-2 font-semibold">Select Topic</h3>
-                        <div className="border border-gray-200 p-2 rounded-lg">
-                              <h2 className="text-lg ">Career Guidance Session - $99</h2>
-                        </div>
-                  </div> */}
-
-                  <div>
-                        <h3 className="text-lg mb-4 font-semibold">
-                              What final result do you want to obtain from this session? <span className="text-red-500">*</span>
-                        </h3>
-                        <TextArea placeholder="Your answer" maxLength={100} rows={3} className="mt-2" />
-                        <p className="text-sm text-gray-400 text-right">*Max 100 Characters</p>
+                  <DateSelection selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+                  <div className="flex space-x-4">
+                        {isFetching
+                              ? Array.from({ length: 3 }).map((_, idx) => (
+                                      <div key={idx} className="p-2 w-full rounded-lg text-center bg-gray-100 animate-pulse">
+                                            <div className="h-4 bg-gray-300 rounded w-1/2 mx-auto mb-2" />
+                                            <div className="h-6 bg-gray-300 rounded w-2/3 mx-auto mb-2" />
+                                            <div className="h-4 bg-gray-200 rounded w-1/3 mx-auto" />
+                                      </div>
+                                ))
+                              : slotsData?.map((slot: any, index: any) => (
+                                      <div
+                                            key={index}
+                                            className={`p-2 border cursor-pointer w-full rounded-lg text-center
+                                                      ${
+                                                            selectedTimeSlot?.date == slot.date
+                                                                  ? 'bg-[#FFF1EC] border-orange-300'
+                                                                  : 'border-gray-200'
+                                                      }
+                                                  `}
+                                            onClick={() => {
+                                                  dispatch(addSelectedTimeSlot(slot));
+                                                  setFormError('');
+                                            }}
+                                      >
+                                            <p className="text-sm text-subtitle font-medium">{slot?.day}</p>
+                                            <p className="text-xl text-primary font-semibold">{slot?.date}</p>
+                                            <p className="text-sm text-gray-400">Total Slots - {slot?.slotCount}</p>
+                                      </div>
+                                ))}
                   </div>
 
-                  <Button type="primary" block className="bg-orange-500 hover:bg-orange-600">
-                        Book Session
-                  </Button>
+                  <div>
+                        <div className="flex justify-between">
+                              <h3 className="text-lg font-semibold">Time Slot</h3>
+                              <div className="flex gap-4">
+                                    <button onClick={previous}>
+                                          <ChevronLeft size={30} />
+                                    </button>
+                                    <button onClick={next}>
+                                          <ChevronRight size={30} />
+                                    </button>
+                              </div>
+                        </div>
+
+                        <Carousel
+                              key={selectedTimeSlot?.date}
+                              infinite={false}
+                              ref={carouselRef}
+                              dots={false}
+                              slidesToShow={4}
+                              slidesToScroll={1}
+                              className="mt-4"
+                        >
+                              {selectedTimeSlot?.slots?.map((slot: any, index: number) => (
+                                    <div key={index} className="px-2">
+                                          <div
+                                                className={`${
+                                                      slot.time === selectedTime.time
+                                                            ? 'bg-[#fff2ea] border-orange-300'
+                                                            : 'bg-white border-gray-200'
+                                                } p-2 text-center rounded-lg cursor-pointer border`}
+                                                onClick={() => {
+                                                      dispatch(addSelectedTime(slot));
+                                                      setFormError('');
+                                                }}
+                                          >
+                                                <p className="text-sm font-medium">{convertTo12HourFormat(slot.time)}</p>
+                                                <p className={`text-sm ${slot.isAvailable ? 'text-green-500' : 'text-red-500'}`}>
+                                                      {slot?.isAvailable ? 'Available' : 'Reserved'}
+                                                </p>
+                                          </div>
+                                    </div>
+                              ))}
+                        </Carousel>
+                  </div>
+                  <Form form={form} layout="vertical" onFinish={handleFinish}>
+                        <Form.Item
+                              name="expected_outcome"
+                              label={
+                                    <span>
+                                          What final result do you want to obtain from this session? <span className="text-red-500">*</span>
+                                    </span>
+                              }
+                              rules={[{ required: true, message: 'Please enter your expected outcome' }]}
+                        >
+                              <TextArea
+                                    placeholder="Your expected outcome"
+                                    maxLength={100}
+                                    rows={3}
+                                    className="mt-2"
+                                    disabled={
+                                          !selectedTime?.time ||
+                                          !selectedTimeSlot?.slots?.some((slot: any) => slot.isAvailable) ||
+                                          !selectedTimeSlot?.date
+                                    }
+                              />
+                        </Form.Item>
+
+                        {formError && <div className="mb-4 text-red-500 text-sm">{formError}</div>}
+
+                        <p className="text-sm text-gray-400 text-right">*Max 100 Characters</p>
+
+                        <Button
+                              type="primary"
+                              htmlType="submit"
+                              block
+                              className="bg-orange-500 hover:bg-orange-600"
+                              disabled={!selectedTime?.time || !selectedTimeSlot?.slots?.some((slot: any) => slot.isAvailable)}
+                        >
+                              Book Session
+                        </Button>
+                  </Form>
             </div>
       );
 };

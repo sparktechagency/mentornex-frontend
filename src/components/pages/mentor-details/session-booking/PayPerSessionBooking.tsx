@@ -1,11 +1,15 @@
 import { Button, Radio } from 'antd';
 import React, { useState } from 'react';
-import { usePurchasePayPerSessionMutation } from '@/redux/features/purchase/purchaseApi';
-import { toast } from 'react-toastify';
 
-const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
-      const [selectedSession, setSelectedSession] = useState<any>(null);
-      const [purchasePayPerSession, { isLoading }] = usePurchasePayPerSessionMutation();
+import Modal from '@/components/ui/Modal';
+import BookingForm from '../booking-modal/BookingForm';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { addSelectedSessionId } from '@/redux/features/booking/bookingSlice';
+
+const PayPerSessionBooking = ({ profile, payPerSessions }: { profile: any; payPerSessions: any }) => {
+      const dispatch = useAppDispatch();
+      const [bookingModal, setBookingModal] = useState(false);
+      const { selectedSessionId } = useAppSelector((state) => state.booking);
 
       if (!payPerSessions || payPerSessions.length === 0) {
             return (
@@ -16,17 +20,6 @@ const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
             );
       }
 
-      const handleBookPayPerSession = async () => {
-            try {
-                  const res = await purchasePayPerSession({ id: selectedSession._id }).unwrap();
-                  console.log(res);
-                  if (res.success) {
-                        window.open(res.data, '_blank');
-                  }
-            } catch (error: any) {
-                  toast.error(error.data.message || 'Failed to purchase package');
-            }
-      };
       return (
             <div className="p-2">
                   <div className="max-h-[300px] overflow-y-auto hide-scrollbar">
@@ -34,7 +27,7 @@ const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
                               onChange={(e) => {
                                     const selectedTitle = e.target.value;
                                     const session = payPerSessions.find((item: any) => item.title === selectedTitle);
-                                    setSelectedSession(session);
+                                    dispatch(addSelectedSessionId(session._id));
                               }}
                               defaultValue="Introductory Call"
                               className="w-full space-y-4"
@@ -52,14 +45,18 @@ const PayPerSessionBooking = ({ payPerSessions }: { payPerSessions: any }) => {
                   </div>
 
                   <Button
-                        onClick={handleBookPayPerSession}
+                        onClick={() => setBookingModal(true)}
                         type="primary"
                         block
                         className="mt-2 bg-orange-500 hover:bg-orange-600"
-                        disabled={!selectedSession}
+                        disabled={!selectedSessionId}
                   >
-                        {isLoading ? 'Loading...' : 'Book Now'}
+                        Book Now
                   </Button>
+
+                  <Modal title="Book a Session" visible={bookingModal} onCancel={() => setBookingModal(false)} width={700}>
+                        <BookingForm profile={profile} />
+                  </Modal>
             </div>
       );
 };

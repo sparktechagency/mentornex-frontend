@@ -1,32 +1,19 @@
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
+import { convertTo12HourFormat } from '@/utils/getConvertedTime';
 import { Carousel } from 'antd';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { useRef } from 'react';
+import { addSelectedTime } from '@/redux/features/booking/bookingSlice';
 
 const TimeSelection = () => {
-      const carouselRef = React.useRef<any>();
+      const dispatch = useAppDispatch();
+      const { selectedTimeSlot, selectedTime } = useAppSelector((state) => state.booking);
+      const carouselRef = useRef<any>();
+
       const next = () => carouselRef.current?.next();
       const previous = () => carouselRef.current?.prev();
-      const [selectedTimeSlot, setSelectedTimeSlot] = useState<{ time: string; available: boolean }>();
-      const timeSlots = [
-            { time: '10:00 AM', available: true },
-            { time: '12:00 PM', available: true },
-            { time: '02:00 PM', available: false },
-            { time: '04:00 PM', available: true },
-            { time: '06:00 PM', available: false },
-            { time: '08:00 PM', available: true },
-            { time: '10:00 PM', available: true },
-            { time: '12:00 AM', available: true },
-      ];
 
-      const handleSlotClick = (slot: { time: string; available: boolean }) => {
-            if (!slot.available) {
-                  toast.error('This slot is already reserved!');
-                  return;
-            }
-            setSelectedTimeSlot(slot);
-      };
-
+      console.log({ selectedTimeSlot, selectedTime });
       return (
             <div>
                   <div className="flex justify-between">
@@ -41,17 +28,27 @@ const TimeSelection = () => {
                         </div>
                   </div>
 
-                  <Carousel ref={carouselRef} dots={false} slidesToShow={4} slidesToScroll={1} className="mt-4">
-                        {timeSlots.map((slot, index) => (
+                  <Carousel
+                        key={selectedTimeSlot?.date}
+                        infinite={false}
+                        ref={carouselRef}
+                        dots={false}
+                        slidesToShow={4}
+                        slidesToScroll={1}
+                        className="mt-4"
+                  >
+                        {selectedTimeSlot?.slots?.map((slot: any, index: number) => (
                               <div key={index} className="px-2">
                                     <div
-                                          onClick={() => handleSlotClick(slot)}
-                                          className={`p-2  text-center rounded-lg cursor-pointer border  
-                         ${slot.available ? '' : 'bg-[#F52135] text-white'} 
-                         ${selectedTimeSlot?.time === slot.time && slot.available ? 'bg-[#FFF1EC] ' : ''}`}
+                                          onClick={() => dispatch(addSelectedTime(slot))}
+                                          className={` ${
+                                                slot.time === selectedTime.time ? 'bg-[#fff2ea]' : 'bg-white'
+                                          } p-2 text-center rounded-lg cursor-pointer border`}
                                     >
-                                          <p className="text-sm font-medium">{slot.time}</p>
-                                          <p className="text-xs">{slot.available ? 'Available' : 'Reserved'}</p>
+                                          <p className="text-sm font-medium">{convertTo12HourFormat(slot.time)}</p>
+                                          <p className={`text-sm ${slot.isAvailable ? 'text-green-500' : 'text-red-500'}`}>
+                                                {slot?.isAvailable ? 'Available' : 'Reserved'}
+                                          </p>
                                     </div>
                               </div>
                         ))}

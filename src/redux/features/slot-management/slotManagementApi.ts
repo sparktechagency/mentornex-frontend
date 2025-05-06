@@ -12,6 +12,18 @@ const slotManagementApi = baseApi.injectEndpoints({
                   transformResponse: (response: any) => response.data,
             }),
 
+            getAvailableSlots: builder.query({
+                  query: ({ sessionId, date }) => {
+                        return {
+                              url: `/schedule/available-slots/${sessionId}?date=${date}`,
+                              method: 'GET',
+                              cache: 'no-cache',
+                        };
+                  },
+                  transformResponse: (response: any) => response.data,
+                  keepUnusedDataFor: 0,
+            }),
+
             addSlot: builder.mutation({
                   query: (slot) => ({
                         url: '/schedule/create-schedule',
@@ -22,4 +34,4 @@ const slotManagementApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useGetSlotsQuery, useAddSlotMutation } = slotManagementApi;
+export const { useGetSlotsQuery, useAddSlotMutation, useGetAvailableSlotsQuery } = slotManagementApi;
