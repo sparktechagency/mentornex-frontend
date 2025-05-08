@@ -1,81 +1,68 @@
 'use client';
 
-import { List, Button } from 'antd';
+import { useGetNotificationQuery } from '@/redux/features/notification/notificationApi';
+import { List, Pagination } from 'antd';
+import moment from 'moment';
+import { useState } from 'react';
 import { IoNotificationsOutline } from 'react-icons/io5';
 
-const notifications = [
-      {
-            id: 1,
-            title: 'New Mentor Match!',
-            description: "We've found a mentor who matches your profile and learning goals.",
-            actionText: 'Check them out now',
-            isUnread: true,
-      },
-      {
-            id: 2,
-            title: 'Session Reminder!',
-            description: 'Your session with Mark Taylor is scheduled for tomorrow at 3:00 PM. Don’t miss it!',
-            isUnread: true,
-      },
-      {
-            id: 3,
-            title: 'Subscription Renewed',
-            description: 'Your monthly subscription has been successfully renewed. Keep learning with uninterrupted access.',
-            isUnread: false,
-      },
-      {
-            id: 4,
-            title: 'Milestone Achieved',
-            description: 'You’ve completed 5 sessions! Keep learning and growing with our expert mentors.',
-            isUnread: false,
-      },
-];
+interface Notification {
+      _id: string;
+      type: 'success' | 'error' | 'info' | 'warning';
+      message: string;
+      description?: string;
+      read?: boolean;
+      createdAt: string;
+}
 
 const NotificationDropdown = () => {
+      const [page, setPage] = useState(1);
+      const { data: notificationData } = useGetNotificationQuery([
+            {
+                  name: 'page',
+                  value: page,
+            },
+            {
+                  name: 'limit',
+                  value: 4,
+            },
+      ]);
+
       return (
             <div className="bg-white rounded-lg shadow-lg max-w-md  mx-auto p-6">
                   {/* Notification List */}
                   <List
                         itemLayout="horizontal"
-                        dataSource={notifications}
-                        renderItem={(item) => (
+                        dataSource={notificationData?.data}
+                        locale={{ emptyText: 'No notifications found' }}
+                        renderItem={(item: Notification) => (
                               <List.Item className="border-b last:border-b-0 pb-4">
                                     <List.Item.Meta
-                                          avatar={<IoNotificationsOutline size={24} color={item.isUnread ? '#FF6F3C' : '#384853'} />}
+                                          avatar={<IoNotificationsOutline size={24} color={item.read ? '#FF6F3C' : '#384853'} />}
                                           title={
                                                 <span>
-                                                      {item.title}{' '}
-                                                      {item.actionText && (
+                                                      {item.message}{' '}
+                                                      {item.description && (
                                                             <a href="#" className="text-orange-500 font-medium">
-                                                                  {item.actionText}
+                                                                  {item.description}
                                                             </a>
                                                       )}
                                                 </span>
                                           }
-                                          description={<p className="text-gray-600">{item.description}</p>}
+                                          description={<p className="text-gray-600">{moment(item.createdAt).fromNow()}</p>}
                                     />
                               </List.Item>
                         )}
                   />
 
-                  <div className="flex justify-between mt-4">
-                        <Button
-                              style={{
-                                    color: '#FF6F3C',
-                              }}
-                              type="link"
-                        >
-                              View all notifications
-                        </Button>
-                        <Button
-                              style={{
-                                    color: '#384853',
-                              }}
-                              type="link"
-                        >
-                              Mark all as read
-                        </Button>
-                  </div>
+                  <Pagination
+                        total={notificationData?.meta?.total}
+                        pageSize={notificationData?.meta?.limit}
+                        showSizeChanger={false}
+                        current={page}
+                        onChange={setPage}
+                        className="mt-4 text-center"
+                  />
             </div>
       );
 };

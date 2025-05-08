@@ -1,17 +1,28 @@
 import { baseApi } from '@/redux/base/baseApi';
+import { TQueryParams } from '@/types';
 
 export const notificationApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
             getNotification: builder.query({
-                  query: () => ({
-                        url: '/notification',
-                        method: 'GET',
-                  }),
+                  query: (args) => {
+                        const params = new URLSearchParams();
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: '/notification',
+                              method: 'GET',
+                              params,
+                        };
+                  },
                   providesTags: ['Notification'],
+                  transformResponse: (response: any) => response.data,
             }),
             markNotificationAsRead: builder.mutation({
-                  query: (id) => ({
-                        url: `/notification/${id}`,
+                  query: () => ({
+                        url: `/notification`,
                         method: 'PATCH',
                   }),
                   invalidatesTags: ['Notification'],

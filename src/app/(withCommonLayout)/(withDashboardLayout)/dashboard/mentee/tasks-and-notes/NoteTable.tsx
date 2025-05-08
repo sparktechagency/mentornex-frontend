@@ -8,8 +8,8 @@ import { useState } from 'react';
 
 const NoteTable = () => {
       const [mentorId, setMentorId] = useState<string | null>(null);
-      const { data: notes } = useGetNotesQuery([]);
-      const { data: mentors } = useGetMyMentorsQuery([{ name: 'mentorId', value: mentorId }]);
+      const { data: notes } = useGetNotesQuery([{ name: 'mentorId', value: mentorId }]);
+      const { data: mentors } = useGetMyMentorsQuery([]);
       const mentorOptions = formattedSelectOptions(mentors?.data || []);
       return (
             <>

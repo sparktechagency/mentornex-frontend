@@ -8,14 +8,17 @@ import { useGetAvailableSlotsQuery } from '@/redux/features/slot-management/slot
 import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { addSelectedTimeSlot, addSelectedTime } from '@/redux/features/booking/bookingSlice';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { convertTo12HourFormat } from '@/utils/getConvertedTime';
+import { useBookSessionMutation } from '@/redux/features/booking/bookingApi';
+import { LoadingOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 
 const { TextArea } = Input;
 
-const BookingForm = ({ profile }: any) => {
+const BookingForm = ({ profile, sessionId }: any) => {
       const [form] = Form.useForm();
       const dispatch = useAppDispatch();
       const { selectedTimeSlot, selectedTime } = useAppSelector((state) => state.booking);
+      const [bookSession, { isLoading }] = useBookSessionMutation();
       const carouselRef = useRef<any>();
       const [formError, setFormError] = useState('');
 
@@ -37,7 +40,7 @@ const BookingForm = ({ profile }: any) => {
             }
       }, [selectedDate, dispatch]);
 
-      const handleFinish = (values: any) => {
+      const handleFinish = async (values: any) => {
             if (!selectedTimeSlot?.date) {
                   setFormError('Please select a date');
                   return;
@@ -49,13 +52,25 @@ const BookingForm = ({ profile }: any) => {
             }
 
             const formData = {
-                  ...values,
-                  selectedDate: selectedTimeSlot.date,
-                  selectedTime: selectedTime.time,
+                  expected_outcome: values.expected_outcome,
+                  date: dayjs(selectedDate).format('YYYY-MM-DD'),
+                  slot: selectedTime.time,
                   isTimeAvailable: selectedTime.isAvailable,
+                  session_plan_type: 'PayPerSession',
+                  pay_per_session_id: sessionId,
             };
 
-            console.log('Form submitted:', formData);
+            try {
+                  const response = await bookSession({
+                        mentorId: profile?._id,
+                        data: formData,
+                  }).unwrap();
+                  if (response.success) {
+                        window.open(response.data.paymentUrl, '_blank');
+                  }
+            } catch (error: any) {
+                  toast.error(error.data.message || 'Failed to book session');
+            }
 
             form.resetFields();
       };
@@ -129,7 +144,7 @@ const BookingForm = ({ profile }: any) => {
                                                       setFormError('');
                                                 }}
                                           >
-                                                <p className="text-sm font-medium">{convertTo12HourFormat(slot.time)}</p>
+                                                <p className="text-sm font-medium">{slot.time}</p>
                                                 <p className={`text-sm ${slot.isAvailable ? 'text-green-500' : 'text-red-500'}`}>
                                                       {slot?.isAvailable ? 'Available' : 'Reserved'}
                                                 </p>
@@ -172,7 +187,7 @@ const BookingForm = ({ profile }: any) => {
                               className="bg-orange-500 hover:bg-orange-600"
                               disabled={!selectedTime?.time || !selectedTimeSlot?.slots?.some((slot: any) => slot.isAvailable)}
                         >
-                              Book Session
+                              {isLoading ? <LoadingOutlined /> : 'Book Session'}
                         </Button>
                   </Form>
             </div>

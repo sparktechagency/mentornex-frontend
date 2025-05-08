@@ -44,7 +44,6 @@ const chatSlice = createSlice({
       },
       extraReducers: (builder) => {
             builder.addMatcher(chatListApi.endpoints.getChatList.matchFulfilled, (state, { payload }) => {
-                  console.log('payload', payload);
                   state.chatList = payload;
             });
       },

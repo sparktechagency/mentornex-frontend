@@ -33,7 +33,7 @@ const Navbar = () => {
             { label: 'FAQ', path: '/faqs' },
       ];
 
-      const navItems = allItems.filter(item => {
+      const navItems = allItems.filter((item) => {
             if (user) {
                   // Hide Become a Mentor and Become a Mentee if logged in
                   if (item.label === 'Become a Mentor' || item.label === 'Become a Mentee') return false;
@@ -85,7 +85,7 @@ const Navbar = () => {
                                                       trigger={['click']}
                                                       dropdownRender={() => <NotificationDropdown />}
                                                 >
-                                                      <Badge count={9} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
+                                                      <Badge count={0} overflowCount={9} style={{ backgroundColor: '#FF6F3C' }}>
                                                             <Bell style={{ fontSize: '24px', color: '#333' }} />
                                                       </Badge>
                                                 </Dropdown>

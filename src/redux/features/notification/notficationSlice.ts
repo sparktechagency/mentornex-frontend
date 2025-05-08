@@ -29,7 +29,7 @@ const notificationSlice = createSlice({
       extraReducers: (builder) => {
             builder.addMatcher(notificationApi.endpoints.getNotification.matchFulfilled, (state, { payload }) => {
                   console.log('payload', payload);
-                  state.notifications = payload;
+                  state.notifications = payload.data;
             });
       },
 });

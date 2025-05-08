@@ -7,6 +7,7 @@ import mentorFilterReducer from '../features/mentor-filter/mentorFilterSlice';
 import chatReducer from '../features/chatlist/chatSlice';
 import messageReducer from '../features/message/messageSlice';
 import bookingReducer from '../features/booking/bookingSlice';
+import notificationReducer from '../features/notification/notficationSlice';
 
 const persistAuthConfig = {
       key: 'auth',
@@ -23,4 +24,5 @@ export const baseReducer = {
       chat: chatReducer,
       message: messageReducer,
       booking: bookingReducer,
+      notification: notificationReducer,
 };
