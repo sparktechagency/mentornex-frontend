@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 
 const PackageManage = ({ packages }: { packages: any }) => {
       const [showBookingModal, setShowBookingModal] = useState(false);
+      const [selectedPackage, setSelectedPackage] = useState<any>(null);
+
       const columns = [
             {
                   title: 'Mentor Name',
@@ -28,22 +30,28 @@ const PackageManage = ({ packages }: { packages: any }) => {
                   },
             },
             {
-                  title: 'TotalSession',
+                  title: 'Package Name',
+                  dataIndex: 'package_id',
+                  key: 'package_id',
+                  render: (package_id: any) => <span>{package_id.title}</span>,
+            },
+            {
+                  title: 'Total Session',
                   dataIndex: 'session',
                   key: 'session',
                   render: (session: number, record: any) => <span>{record.package_id.sessions}</span>,
+            },
+            {
+                  title: 'Remaining Session',
+                  dataIndex: 'remaining_session',
+                  key: 'remaining_session',
+                  render: (remaining_session: number) => <span>{remaining_session || 0}</span>,
             },
             {
                   title: 'Price',
                   dataIndex: 'amount',
                   key: 'amount',
                   render: (amount: number) => <span>${amount}</span>,
-            },
-            {
-                  title: 'Status',
-                  dataIndex: 'status',
-                  key: 'status',
-                  render: (status: string) => <span className="text-green-500">{status}</span>,
             },
 
             {
@@ -56,8 +64,14 @@ const PackageManage = ({ packages }: { packages: any }) => {
                   title: 'Action',
                   dataIndex: '_id',
                   key: '_id',
-                  render: () => (
-                        <Button onClick={() => setShowBookingModal(true)} type="primary">
+                  render: (text: string, record: any) => (
+                        <Button
+                              onClick={() => {
+                                    setSelectedPackage(record);
+                                    setShowBookingModal(true);
+                              }}
+                              type="primary"
+                        >
                               Book Session
                         </Button>
                   ),
@@ -82,8 +96,13 @@ const PackageManage = ({ packages }: { packages: any }) => {
                               className="custom-shadow"
                         />
                   )}
-                  <Modal visible={showBookingModal} onCancel={() => setShowBookingModal(false)} title="Book Session" width={600}>
-                        <BookingForm />
+                  <Modal visible={showBookingModal} onCancel={() => setShowBookingModal(false)} title="Book Session" width={700}>
+                        <BookingForm
+                              bookingType={'package'}
+                              profile={selectedPackage?.mentor_id}
+                              sessionId={selectedPackage?.package_id._id}
+                              setShowBookingModal={setShowBookingModal}
+                        />
                   </Modal>
             </div>
       );

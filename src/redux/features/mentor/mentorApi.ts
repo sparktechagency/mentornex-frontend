@@ -50,6 +50,14 @@ const mentorApi = baseApi.injectEndpoints({
                   providesTags: ['Mentors'],
             }),
 
+            addReview: build.mutation({
+                  query: (args) => ({
+                        url: `/review/review/add/${args.mentorId}`,
+                        method: 'POST',
+                        body: args.data,
+                  }),
+            }),
+
             getSingleMentor: build.query({
                   query: ({ id, ...params }) => {
                         return {
@@ -87,4 +95,5 @@ const mentorApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useGetAllMentorsQuery, useGetSingleMentorQuery, useGetMyMentorsQuery, useGetMentorReviewsQuery } = mentorApi;
+export const { useGetAllMentorsQuery, useGetSingleMentorQuery, useGetMyMentorsQuery, useGetMentorReviewsQuery, useAddReviewMutation } =
+      mentorApi;

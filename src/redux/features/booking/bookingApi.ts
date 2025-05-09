@@ -1,4 +1,5 @@
 import { baseApi } from '@/redux/base/baseApi';
+import { TQueryParams } from '@/types';
 
 const bookingApi = baseApi.injectEndpoints({
       endpoints: (builder) => ({
@@ -9,7 +10,26 @@ const bookingApi = baseApi.injectEndpoints({
                         body: args.data,
                   }),
             }),
+
+            getSession: builder.query({
+                  query: (args) => {
+                        const params = new URLSearchParams();
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: '/session/all-bookings',
+                              method: 'GET',
+                              params,
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+            }),
       }),
 });
 
-export const { useBookSessionMutation } = bookingApi;
+export const { useBookSessionMutation, useGetSessionQuery } = bookingApi;

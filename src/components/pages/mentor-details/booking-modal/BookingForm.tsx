@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 
 const { TextArea } = Input;
 
-const BookingForm = ({ profile, sessionId }: any) => {
+const BookingForm = ({ bookingType, profile, sessionId, setShowBookingModal }: any) => {
       const [form] = Form.useForm();
       const dispatch = useAppDispatch();
       const { selectedTimeSlot, selectedTime } = useAppSelector((state) => state.booking);
@@ -41,32 +41,46 @@ const BookingForm = ({ profile, sessionId }: any) => {
       }, [selectedDate, dispatch]);
 
       const handleFinish = async (values: any) => {
-            if (!selectedTimeSlot?.date) {
-                  setFormError('Please select a date');
-                  return;
-            }
+            const isPackage = bookingType === 'package';
 
-            if (!selectedTime?.time) {
-                  setFormError('Please select a time slot');
-                  return;
-            }
-
-            const formData = {
-                  expected_outcome: values.expected_outcome,
-                  date: dayjs(selectedDate).format('YYYY-MM-DD'),
-                  slot: selectedTime.time,
-                  isTimeAvailable: selectedTime.isAvailable,
-                  session_plan_type: 'PayPerSession',
-                  pay_per_session_id: sessionId,
-            };
+            const formData = isPackage
+                  ? {
+                          topic: values.topic,
+                          expected_outcome: values.expected_outcome,
+                          date: dayjs(selectedDate).format('YYYY-MM-DD'),
+                          slot: selectedTime.time,
+                          isTimeAvailable: selectedTime.isAvailable,
+                          session_plan_type: 'Package',
+                          package_id: sessionId,
+                    }
+                  : {
+                          expected_outcome: values.expected_outcome,
+                          date: dayjs(selectedDate).format('YYYY-MM-DD'),
+                          slot: selectedTime.time,
+                          isTimeAvailable: selectedTime.isAvailable,
+                          session_plan_type: 'PayPerSession',
+                          pay_per_session_id: sessionId,
+                    };
 
             try {
-                  const response = await bookSession({
-                        mentorId: profile?._id,
-                        data: formData,
-                  }).unwrap();
-                  if (response.success) {
-                        window.open(response.data.paymentUrl, '_blank');
+                  if (isPackage) {
+                        const response = await bookSession({
+                              mentorId: profile?._id,
+                              data: formData,
+                        }).unwrap();
+                        if (response.success) {
+                              toast.success(response.message || 'Session booked successfully');
+                              setShowBookingModal(false);
+                        }
+                  } else {
+                        const response = await bookSession({
+                              mentorId: profile?._id,
+                              data: formData,
+                        }).unwrap();
+                        if (response.success) {
+                              window.open(response.data.paymentUrl, '_blank');
+                              setShowBookingModal(false);
+                        }
                   }
             } catch (error: any) {
                   toast.error(error.data.message || 'Failed to book session');
@@ -154,6 +168,28 @@ const BookingForm = ({ profile, sessionId }: any) => {
                         </Carousel>
                   </div>
                   <Form form={form} layout="vertical" onFinish={handleFinish}>
+                        {bookingType === 'package' && (
+                              <Form.Item
+                                    name="topic"
+                                    label={
+                                          <span>
+                                                Topic <span className="text-red-500">*</span>
+                                          </span>
+                                    }
+                                    rules={[{ required: true, message: 'Please enter the topic' }]}
+                              >
+                                    <Input
+                                          placeholder="Topic for this session"
+                                          maxLength={100}
+                                          className="mt-2"
+                                          disabled={
+                                                !selectedTime?.time ||
+                                                !selectedTimeSlot?.slots?.some((slot: any) => slot.isAvailable) ||
+                                                !selectedTimeSlot?.date
+                                          }
+                                    />
+                              </Form.Item>
+                        )}
                         <Form.Item
                               name="expected_outcome"
                               label={

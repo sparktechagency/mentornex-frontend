@@ -55,7 +55,7 @@ const PayPerSessionBooking = ({ profile, payPerSessions }: { profile: any; payPe
                   </Button>
 
                   <Modal title="Book a Session" visible={bookingModal} onCancel={() => setBookingModal(false)} width={700}>
-                        <BookingForm sessionId={selectedSessionId} profile={profile} />
+                        <BookingForm bookingType={'payPerSession'} sessionId={selectedSessionId} profile={profile} />
                   </Modal>
             </div>
       );
