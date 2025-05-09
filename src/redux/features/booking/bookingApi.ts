@@ -11,6 +11,15 @@ const bookingApi = baseApi.injectEndpoints({
                   }),
             }),
 
+            updateSession: builder.mutation({
+                  query: (args: any) => ({
+                        url: `/session/${args.id}`,
+                        method: 'PATCH',
+                        body: args.data,
+                  }),
+                  invalidatesTags: ['Session'],
+            }),
+
             getSession: builder.query({
                   query: (args) => {
                         const params = new URLSearchParams();
@@ -25,6 +34,7 @@ const bookingApi = baseApi.injectEndpoints({
                               params,
                         };
                   },
+                  providesTags: ['Session'],
                   transformResponse: (response: any) => {
                         return response.data;
                   },
@@ -32,4 +42,4 @@ const bookingApi = baseApi.injectEndpoints({
       }),
 });
 
-export const { useBookSessionMutation, useGetSessionQuery } = bookingApi;
+export const { useBookSessionMutation, useGetSessionQuery, useUpdateSessionMutation } = bookingApi;

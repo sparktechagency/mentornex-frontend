@@ -32,5 +32,6 @@ export const baseApi = createApi({
             'Comments',
             'Purchase',
             'Notification',
+            'Session',
       ],
 });
