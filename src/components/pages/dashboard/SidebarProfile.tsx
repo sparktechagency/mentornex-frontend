@@ -15,9 +15,13 @@ import { useAppSelector } from '@/redux/hooks';
 import { useGetUserProfileQuery, useUpdateUserProfileMutation } from '@/redux/features/user/userApi';
 import { getImageUrl } from '@/utils/getImageUrl';
 import { usePathname } from 'next/navigation';
+import { useAppDispatch } from '@/redux/hooks';
+import { removeUser } from '@/redux/features/auth/authSlice';
+import { removeAccessToken } from '@/utils/accessToken';
 
 const ProfileSidebar = () => {
       const pathname = usePathname();
+      const dispatch = useAppDispatch();
       const activeKey = pathname?.split('/').pop();
       const { user } = useAppSelector((state) => state.auth);
       const { data: profile } = useGetUserProfileQuery(undefined, {
@@ -186,6 +190,10 @@ const ProfileSidebar = () => {
                   cancelText: 'Cancel',
                   onConfirm: () => {
                         toast.success('Logout successful!');
+
+                        dispatch(removeUser());
+                        removeAccessToken();
+                        window.location.href = '/';
                   },
             });
       };
