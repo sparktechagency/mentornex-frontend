@@ -7,7 +7,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { GrCalendar } from 'react-icons/gr';
 import { toast } from 'react-toastify';
 import Modal from '@/components/ui/Modal';
-import BookingForm from '@/components/pages/mentor-details/booking-modal/BookingForm';
+import RescheduleForm from '@/components/pages/mentor-details/booking-modal/RescheduleForm';
 
 const SessionRequestTable = () => {
       const [page, setPage] = useState(1);
@@ -160,7 +160,7 @@ const SessionRequestTable = () => {
                   />
 
                   <Modal title="Update Session" visible={openModal} onCancel={() => setOpenModal(false)} width={600}>
-                        <BookingForm profile={selectedSession?.mentor_id} bookingType="session" session={selectedSession} />
+                        <RescheduleForm setOpenModal={setOpenModal} selectedSession={selectedSession} />
                   </Modal>
             </div>
       );

@@ -19,14 +19,13 @@ const SessionPage: React.FC = () => {
                   try {
                         const appID = Number(process.env.NEXT_PUBLIC_ZEGOCLOUD_APP_ID);
                         const roomID = '111111';
-                        const userid = userProfile?._id;
 
                         const serverSecret = process.env.NEXT_PUBLIC_ZEGOCLOUD_SERVER_SECRET!;
                         const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
                               appID,
                               serverSecret,
                               roomID,
-                              userid as string,
+                              userProfile?._id as string,
                               userProfile?.name as string
                         );
 
@@ -80,7 +79,7 @@ const SessionPage: React.FC = () => {
                         alert('Failed to join the meeting. Please check your setup and try again.');
                   }
             },
-            [user]
+            [userProfile?._id, userProfile?.name, user]
       );
 
       useEffect(() => {

@@ -13,9 +13,9 @@ const slotManagementApi = baseApi.injectEndpoints({
             }),
 
             getAvailableSlots: builder.query({
-                  query: ({ sessionId, date }) => {
+                  query: ({ mentorId, date }) => {
                         return {
-                              url: `/schedule/available-slots/${sessionId}?date=${date}`,
+                              url: `/schedule/available-slots/${mentorId}?date=${date}`,
                               method: 'GET',
                               cache: 'no-cache',
                         };
