@@ -92,8 +92,66 @@ const mentorApi = baseApi.injectEndpoints({
                         return response.data;
                   },
             }),
+
+            getMentorGeneralStats: build.query({
+                  query: () => {
+                        return {
+                              url: `/mentor-dashboard/general-stats`,
+                              method: 'GET',
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+            }),
+
+            getMentorSessionRate: build.query({
+                  query: (args) => {
+                        const params = new URLSearchParams();
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: `/mentor-dashboard/session-rate`,
+                              method: 'GET',
+                              params,
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+            }),
+
+            getMentorEarningRate: build.query({
+                  query: (args) => {
+                        const params = new URLSearchParams();
+                        if (args) {
+                              args.forEach((item: TQueryParams) => {
+                                    params.append(item.name, item.value);
+                              });
+                        }
+                        return {
+                              url: `/mentor-dashboard/earnings`,
+                              method: 'GET',
+                              params,
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response.data;
+                  },
+            }),
       }),
 });
 
-export const { useGetAllMentorsQuery, useGetSingleMentorQuery, useGetMyMentorsQuery, useGetMentorReviewsQuery, useAddReviewMutation } =
-      mentorApi;
+export const {
+      useGetAllMentorsQuery,
+      useGetSingleMentorQuery,
+      useGetMyMentorsQuery,
+      useGetMentorReviewsQuery,
+      useAddReviewMutation,
+      useGetMentorGeneralStatsQuery,
+      useGetMentorSessionRateQuery,
+      useGetMentorEarningRateQuery,
+} = mentorApi;

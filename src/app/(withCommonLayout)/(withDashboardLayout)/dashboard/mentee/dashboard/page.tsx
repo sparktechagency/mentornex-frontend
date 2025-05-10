@@ -1,3 +1,4 @@
+'use client';
 import ActiveMentorTable from './ActiveMentorTable';
 import DashboardStats from './DashboardStats';
 

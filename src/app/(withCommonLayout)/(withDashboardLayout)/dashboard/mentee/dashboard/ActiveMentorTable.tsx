@@ -1,117 +1,116 @@
 'use client';
 import React from 'react';
-import { Table, Avatar } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { IoMdStar } from 'react-icons/io';
-
-interface Mentor {
-      key: string;
-      name: string;
-      avatar: string;
-      rating: number;
-      expertise: string;
-      sessionType: string;
-      nextSession: string;
-}
+import { Table } from 'antd';
+import { useGetSessionQuery } from '@/redux/features/booking/bookingApi';
+import moment from 'moment';
 
 const ActiveMentorTable = () => {
-      const data: Mentor[] = [
+      const { data: upcommingSessionData, isLoading } = useGetSessionQuery([
             {
-                  key: '1',
-                  name: 'Henry, Arthur',
-                  avatar: 'https://picsum.photos/40',
-                  rating: 4.8,
-                  expertise: 'Career Growth, Interviews',
-                  sessionType: 'Pay Per Session',
-                  nextSession: 'Last: 1 Jan 2025',
+                  name: 'status',
+                  value: 'upcoming',
             },
             {
-                  key: '2',
-                  name: 'Miles, Esther',
-                  avatar: 'https://picsum.photos/40',
-                  rating: 4.8,
-                  expertise: 'Career Growth, Interviews',
-                  sessionType: 'Pay Per Session',
-                  nextSession: 'Last: 1 Jan 2025',
+                  name: 'limit',
+                  value: 4,
             },
-            {
-                  key: '3',
-                  name: 'Cooper, Kristin',
-                  avatar: 'https://picsum.photos/40',
-                  rating: 4.8,
-                  expertise: 'Career Growth, Interviews',
-                  sessionType: 'Pay Per Session',
-                  nextSession: 'Last: 1 Jan 2025',
-            },
-            {
-                  key: '4',
-                  name: 'Nguyen, Shane',
-                  avatar: 'https://picsum.photos/40',
-                  rating: 4.8,
-                  expertise: 'Career Growth, Interviews',
-                  sessionType: 'Pay Per Session',
-                  nextSession: 'Last: 1 Jan 2025',
-            },
-      ];
+      ]);
 
       const columns = [
             {
-                  title: 'Name',
-                  dataIndex: 'name',
-                  key: 'name',
-                  render: (text: string, record: Mentor) => (
-                        <div className="flex items-center space-x-3">
-                              <Avatar src={record.avatar} />
-                              <span className="font-medium">{text}</span>
+                  title: 'Booking Date',
+                  dataIndex: 'createdAt',
+                  key: 'createdAt',
+                  render: (text: string) => <span>{moment(text).format('DD MMM YYYY')}</span>,
+            },
+            {
+                  title: 'Menter',
+                  dataIndex: 'mentor',
+                  key: 'mentor',
+                  render: (text: string, record: any) => (
+                        <div className="flex items-center space-x-2">
+                              <span>{record?.mentor_id?.name}</span>
                         </div>
                   ),
             },
             {
-                  title: 'Avg. Rating',
-                  dataIndex: 'rating',
-                  key: 'rating',
-                  render: (rating: number) => (
-                        <div className="flex items-center gap-1">
-                              <span>{rating}</span>
-                              <IoMdStar color="#FF6F3C" size={20} />
-                        </div>
-                  ),
+                  title: 'Topic',
+                  dataIndex: 'topic',
+                  key: 'topic',
             },
+
             {
-                  title: 'Expertise',
-                  dataIndex: 'expertise',
-                  key: 'expertise',
-                  render: (text: string) => <span className="text-gray-600">{text}</span>,
+                  title: 'Status',
+                  dataIndex: 'status',
+                  key: 'status',
+                  render: (status: string) => {
+                        let bgColor = '';
+
+                        switch (status) {
+                              case 'pending':
+                                    bgColor = 'bg-yellow-500';
+
+                                    break;
+                              case 'accepted':
+                                    bgColor = 'bg-green-500';
+
+                                    break;
+                              case 'rescheduled':
+                                    bgColor = 'bg-gray-500';
+
+                                    break;
+                              case 'cancelled':
+                                    bgColor = 'bg-red-500';
+
+                                    break;
+                              case 'completed':
+                                    bgColor = 'bg-green-500';
+
+                                    break;
+                              default:
+                                    break;
+                        }
+
+                        return <span className={`px-3 py-1 text-white rounded-lg ${bgColor} `}>{status}</span>;
+                  },
             },
+
             {
-                  title: 'Session Type',
-                  dataIndex: 'sessionType',
-                  key: 'sessionType',
-                  render: (text: string) => <span className="text-gray-600">{text}</span>,
-            },
-            {
-                  title: 'Next Session',
-                  dataIndex: 'nextSession',
-                  key: 'nextSession',
-                  render: (text: string) => <span className="text-gray-600">{text}</span>,
-            },
-            {
-                  title: '',
-                  key: 'actions',
-                  render: () => <EllipsisOutlined className="text-gray-500 cursor-pointer" />,
+                  title: 'Session Time',
+                  dataIndex: 'scheduled_time',
+                  key: 'scheduled_time',
+                  render: (text: string) => {
+                        const countDownDate = new Date(text).getTime();
+
+                        const now = new Date().getTime();
+
+                        const timeLeft = countDownDate - now;
+
+                        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+
+                        return (
+                              <span>
+                                    {days} days, {hours} hours, {minutes} minutes
+                              </span>
+                        );
+                  },
             },
       ];
 
       return (
             <div className="my-4">
-                  <h1 className="text-xl font-semibold my-4">Active Mentors</h1>
+                  <h1 className="text-xl font-semibold my-4">Recent Activity</h1>
                   <Table
+                        loading={isLoading}
                         columns={columns}
-                        dataSource={data}
+                        dataSource={upcommingSessionData?.data}
                         pagination={false}
                         bordered={false}
                         className="rounded-lg"
                         rowClassName="hover:bg-gray-50"
+                        rowKey="_id"
                   />
             </div>
       );

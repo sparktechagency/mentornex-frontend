@@ -1,35 +1,39 @@
+'use client';
+import { useGetMentorGeneralStatsQuery } from '@/redux/features/mentor/mentorApi';
+import { useGetUserProfileQuery } from '@/redux/features/user/userApi';
 import React from 'react';
 
-const data = [
-      {
-            title: 'Active Mentee',
-            value: '09',
-
-            bgColor: 'bg-[#E4F6FE]',
-            textColor: 'text-green-500',
-      },
-      {
-            title: 'Total Session',
-            value: '35',
-
-            bgColor: 'bg-[#FADEF27D]',
-            textColor: 'text-green-500',
-      },
-      {
-            title: 'Total Earning',
-            value: '$1500',
-
-            bgColor: 'bg-[#E8FAE99E]',
-            textColor: 'text-green-500',
-      },
-];
-
 const DashboardCards = () => {
+      const { data: generalStats } = useGetMentorGeneralStatsQuery([]);
+      const { data: profile } = useGetUserProfileQuery([]);
+      const data = [
+            {
+                  title: 'Active Mentee',
+                  value: generalStats?.totalMentee || 0,
+
+                  bgColor: 'bg-[#E4F6FE]',
+                  textColor: 'text-green-500',
+            },
+            {
+                  title: 'Total Session',
+                  value: generalStats?.totalSession || 0,
+
+                  bgColor: 'bg-[#FADEF27D]',
+                  textColor: 'text-green-500',
+            },
+            {
+                  title: 'Total Earning',
+                  value: generalStats?.totalEarning || 0,
+
+                  bgColor: 'bg-[#E8FAE99E]',
+                  textColor: 'text-green-500',
+            },
+      ];
       return (
             <div>
                   <div className="space-y-3 mb-2">
                         <h1>
-                              Welcome back, <span className="font-bold">Sazzad</span>! 👋
+                              Welcome back, <span className="font-bold">{profile?.name}</span>! 👋
                         </h1>
                         <p>We’re thrilled to have you here.</p>
                   </div>

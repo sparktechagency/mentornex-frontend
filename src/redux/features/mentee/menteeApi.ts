@@ -21,7 +21,19 @@ const menteeApi = baseApi.injectEndpoints({
                         return response?.data;
                   },
             }),
+
+            getMenteeGeneralStats: build.query({
+                  query: () => {
+                        return {
+                              url: `/mentee/general-stat`,
+                              method: 'GET',
+                        };
+                  },
+                  transformResponse: (response: any) => {
+                        return response?.data;
+                  },
+            }),
       }),
 });
 
-export const { useGetMyMenteesQuery } = menteeApi;
+export const { useGetMyMenteesQuery, useGetMenteeGeneralStatsQuery } = menteeApi;
