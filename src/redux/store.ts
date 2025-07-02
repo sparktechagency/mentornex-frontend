@@ -5,14 +5,14 @@ import { baseReducer } from './base/baseReducer';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({
-      reducer: baseReducer,
+  reducer: baseReducer,
 
-      middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware({
-                  serializableCheck: {
-                        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-                  },
-            }).concat(baseApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(baseApi.middleware),
 });
 
 export const persistor = persistStore(store);

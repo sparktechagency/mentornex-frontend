@@ -7,37 +7,37 @@ import { useGetSubscriptionsQuery } from '@/redux/features/subscription/subscrip
 import Package from './Package';
 
 const SessionsAndSubscriptions = () => {
-      const { user } = useAppSelector((state) => state.auth);
-      const { data: pricingPlans } = useGetSubscriptionsQuery(user?.id, { skip: !user });
-      // console.log(pricingPlans);
-      return (
-            <div>
-                  <h1 className="text-2xl font-bold mb-2">Sessions and Subscriptions</h1>
+  const { user } = useAppSelector((state) => state.auth);
+  const { data: pricingPlans } = useGetSubscriptionsQuery(user?.id, { skip: !user });
+  // console.log(pricingPlans);
+  return (
+    <div>
+      <h1 className="text-2xl font-bold mb-2">Sessions and Subscriptions</h1>
 
-                  <div>
-                        <CustomTab
-                              tabs={[
-                                    {
-                                          key: 'pay-per-session',
-                                          label: 'Pay Per Session',
-                                          content: <Sessions sessions={pricingPlans?.payPerSession} />,
-                                    },
-                                    {
-                                          key: 'package',
-                                          label: 'Package',
-                                          content: <Package packages={pricingPlans?.packages} />,
-                                    },
-                                    {
-                                          key: 'subscription',
-                                          label: 'Subscription',
-                                          content: <Subscription pricingPlans={pricingPlans?.subscriptions} />,
-                                    },
-                              ]}
-                              key={'session'}
-                        />
-                  </div>
-            </div>
-      );
+      <div>
+        <CustomTab
+          tabs={[
+            {
+              key: 'pay-per-session',
+              label: 'Pay Per Session',
+              content: <Sessions sessions={pricingPlans?.payPerSession} />,
+            },
+            {
+              key: 'package',
+              label: 'Package',
+              content: <Package packages={pricingPlans?.packages} />,
+            },
+            {
+              key: 'subscription',
+              label: 'Subscription',
+              content: <Subscription pricingPlans={pricingPlans?.subscriptions} />,
+            },
+          ]}
+          key={'session'}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default SessionsAndSubscriptions;
