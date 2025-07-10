@@ -26,6 +26,7 @@ const SignInPage = () => {
         console.log(user);
 
         toast.success(res?.message);
+        //@ts-ignore
         router.push(`/dashboard/${user?.role === 'MENTEE' ? 'mentee' : 'mentor'}/dashboard`);
         router.refresh();
       }
