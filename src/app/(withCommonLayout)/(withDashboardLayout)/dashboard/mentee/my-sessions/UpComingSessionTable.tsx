@@ -2,6 +2,7 @@
 import { useGetSessionQuery } from '@/redux/features/booking/bookingApi';
 import { Button, Space, Table, Tooltip } from 'antd';
 import moment from 'moment';
+import Link from 'next/link';
 import { useState } from 'react';
 import { MdGroupAdd } from 'react-icons/md';
 
@@ -126,30 +127,31 @@ const UpComingSessionTable = () => {
                               <Tooltip
                                     title={
                                           new Date(record?.scheduled_time).getTime() - Date.now() <= 5 * 60 * 1000 &&
-                                          new Date(record?.scheduled_time).getTime() - Date.now() >= 0
+                                                new Date(record?.scheduled_time).getTime() - Date.now() >= 0
                                                 ? 'Join Session'
                                                 : 'Session is not started yet'
                                     }
                               >
-                                    <Button
-                                          disabled={
-                                                // Disable unless scheduled_time is within the next 5 minutes
-                                                !(
-                                                      new Date(record?.scheduled_time).getTime() - Date.now() <= 5 * 60 * 1000 &&
-                                                      new Date(record?.scheduled_time).getTime() - Date.now() >= 0
-                                                )
-                                          }
-                                          icon={<MdGroupAdd size={17} className="text-green-500" />}
-                                          style={{
-                                                backgroundColor: 'transparent',
-                                                color: 'green',
-                                                padding: '10px',
-                                          }}
-                                          type="primary"
-                                          size="small"
-                                    >
-                                          Join
-                                    </Button>
+                                    <Link href={`/session`}>
+                                          <Button
+                                                // disabled={
+                                                //       // Disable unless scheduled_time is within the next 5 minutes
+                                                //       !(
+                                                //             new Date(record?.scheduled_time).getTime() - Date.now() <= 5 * 60 * 1000 &&
+                                                //             new Date(record?.scheduled_time).getTime() - Date.now() >= 0
+                                                //       )
+                                                // }
+                                                icon={<MdGroupAdd size={17} className="text-green-500" />}
+                                                style={{
+                                                      backgroundColor: 'transparent',
+                                                      color: 'green',
+                                                      padding: '10px',
+                                                }}
+                                                type="primary"
+                                                size="small"
+                                          >
+                                                Join
+                                          </Button></Link>
                               </Tooltip>
                         </Space>
                   ),
